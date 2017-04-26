@@ -1,4 +1,39 @@
+﻿Testfall Anwendungsfall 1 (Quizfragen beantworten)
+	Vorbedingung: 		6 Bonuspunkte
+				10 unbeantwortete Fragen in Gebiet x, der Schwierigkeit 1
+	Eingaben:		Benutzer wählt Gebiet x
+				Spieleinsatz = 1
+				Benutzer beantwortet 10 Fragen richtig
+	Ablauf: 		Anzeige der Übersicht, dass alle Fragen richtig beantwortet wurden
+				addieren des Spieleinsatzes zu den Bonuspunkten (6+1)
+				Abzug der beantworteten Fragen von den unbeantworteten Fragen (10-10)
+	erwartetes Ergebnis: 	7 Bonuspunkte
+				0 unbeantworte Fragen in Gebiet x
 
+
+Testfall Unteranwendungsfall 1.1 (Fragegebiet wählen)
+	Vorbedingung: 		6 Bonuspunkte
+				je 10 unbeantwortete Fragen in Gebieten x,y,z
+	Eingaben:		Spieler hält kurz die Luft an(A3) um bei Fragegebiet y zu stoppen.
+	Ablauf:			Filterung nach unbeantworteten Fragen aus Gebiet y
+	erwartetes Ergebnis:	10 unbeantwortete Fragen aus Gebiet y
+
+
+Testfall Unteranwendungsfall 1.2 (Spieleinsatz wählen)
+	1.
+	Vorbedingung:		Fragegebiet x ausgewählt
+				10 unbeantwortete Fragen der Schwierigkeit 1
+	Eingaben		Spieleinsatz ist nicht wählbar
+	Ablauf			Schwierigkeit 1 wird automatisch gesetzt
+	erwartetes Ergebnis	10 unbeantwortete Fragen der Schwierigkeit 1 sind ausgewählt.
+
+	2.
+	Vorbedingung:		Fragegebiet x ausgewählt
+				10 unbeantwortete FRagen der Schwierigkeit 1 in Gebiet x
+				10 unbeantwortete Fragen der Schwierigkeit 2 in Gebiet x
+	Eingaben		Auswahl der Schwierigkeit 2 durch Atemaktion
+	Ablauf			Filtern der Quizfragen in Gebiet x nach Schwierigkeitsgrad 2
+	erwartetes Ergebnis	10 unbeantwortete FRagen der Schwierigkeit 2 aus Gebiet x
 
 Testfall für Anwendungsfall 2:
 
