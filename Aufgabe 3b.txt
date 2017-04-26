@@ -1,6 +1,4 @@
-
-
-Antwort zu Frage Nr. i:
+﻿Antwort zu Frage Nr. i:
 
 Wenn der Spieler die Bonuspunkte durch die Beantwortung von Quizfragen erhalten will, wird typischerweiserweise der Anwendungsfall 1 "Quizfragen beantworten" mit den Unter-
 anwendungsfällen 1.1 "Fragegebiet wählen", 1.2 "Spieleinsatz wählen" und 1.3 "Antwort wählen" durchlaufen.
@@ -23,13 +21,19 @@ Wie diese mit der Beantwortung von Quizfragen zusammenhängen, wird durch die 5 
 
 Antwort zu Frage Nr. iii:
 
-Die Therapie eines Patienten wird im Spiel durch bestimmte Einstellung hinsichtlich des Schwierigkeitsgrades u.Ä. abgebildet, vgl. Anwendungsfall 2 "Konfiguration der mobilen
-Anwendung / Therapie".
+Die Therapie wird über die Quizsequenzen in den Antwort wählen Modi abgebildet
 
 
 Antwort zu Frage Nr. iv:
 
+Der Therapieplan eines Patienten wird im Anwendungsfall 2 "Konfiguration der mobilen Anwendung / Therapie" implementiert
+
+
 Antwort zu Frage Nr. v:
+
+Der Spieler kann die App neustarten. Bei jedem Appaufruf stehen wieder 6 initiale Bonuspunkte zur Verfügung.
+Der Spieler kann die Anwendungsdaten löschen. Damit wird alles zurückgesetzt inklusive stehen wieder die 6 initialen Bonuspunkte zur Verfügung.
+
 
 Antwort zu Frage Nr. vi:
 
