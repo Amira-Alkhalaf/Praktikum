@@ -39,7 +39,7 @@ Testfall Unteranwendungsfall 1.2 (Spieleinsatz wählen)
     Testfall für Anwendungsfall 1.3.1 :	
     Vorbedingungen:	10 Quizfragen
     Eingaben :      Wiederholtes Ausatmen und Einatmen (A2)
-    Ablauf	:       Der Spieler bnutzt Atemungsaktion (A2) , eine Antwort Y zu wählen
+    Ablauf	:       Der Spieler bnutzt Atemungsaktion (A2) , um eine Antwort Y zu wählen
                     Ein abwärts Timer beinnt bereits zu laufen
                     Nach dem Ablaufen des Timers ist die ausgewählte Antwort fixiert
     erwartetes Ergebnis : Die ausgewählte Antwort Y wird markiert
