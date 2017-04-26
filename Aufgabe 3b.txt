@@ -1,13 +1,40 @@
+
+
 Antwort zu Frage Nr. i:
+
+Wenn der Spieler die Bonuspunkte durch die Beantwortung von Quizfragen erhalten will, wird typischerweiserweise der Anwendungsfall 1 "Quizfragen beantworten" mit den Unter-
+anwendungsfällen 1.1 "Fragegebiet wählen", 1.2 "Spieleinsatz wählen" und 1.3 "Antwort wählen" durchlaufen.
+
+Wenn der Spieler die Bonuspunkte hingegen aus seinem Vorrat im Safe erhalten will, wird typischerweise der Anwendungsfall 4 "Bonuspunkte aus dem Safe" durchlaufen.
+
 
 Antwort zu Frage Nr. ii:
 
+Es gibt 4 Atmungsaktionen:
+
+A1: Ausatmen und Einatmen
+A2: Wiederholtes Ausatmen und Einatmen
+A3: Luft anhalten: -Ausatmen
+-Einatmen
+A4: Stufenweises Ausatmen und Einatmen
+
+Wie diese mit der Beantwortung von Quizfragen zusammenhängen, wird durch die 5 verschiedenen wählbaren Modi spezifiziert, s. Unteranwendungsfälle 1.3.1 bis 1.3.5.
+
+
 Antwort zu Frage Nr. iii:
+
+Die Therapie eines Patienten wird im Spiel durch bestimmte Einstellung hinsichtlich des Schwierigkeitsgrades u.Ä. abgebildet, vgl. Anwendungsfall 2 "Konfiguration der mobilen
+Anwendung / Therapie".
+
 
 Antwort zu Frage Nr. iv:
 
 Antwort zu Frage Nr. v:
 
 Antwort zu Frage Nr. vi:
+
+Der Unteranwendungsfall 1.2 "Spieleinsatz wählen" ist ausführbar, wenn bereits ein Fragegebiet gewählt wurde und in diesem noch mindestens 10 unbeantwortete Quizfragen zweier
+unterschiedlicher Schwierigkeitsgrade vorhanden sind. Ist eine dieser Bedingung verletzt, so ist der Anwendungsfall nicht ausführbar.
+
 
 Antwort zu Frage Nr. vii:
