@@ -1,0 +1,30 @@
+
+
+Testfall für Anwendungsfall 2:
+
+Vorbedingungen: keine
+Testeingaben / Testsequenz: Der Benutzer versucht, die Anzahl der Quizfragen pro Spielrunde auf 8 zu setzen und den Antwortmodus 1 auszuwählen.
+erwartetes Testergebnis: Die Anwendung gibt einen Fehler aus, da die Mindestanzahl an Quizfragen pro Spielrunde (10) unterschritten wird.
+
+
+Testfall für Anwendungsfall 3:
+
+Vorbedingungen: Eine Sequenz von Quizfragen wurde erfolgreich absolviert.
+Testeingaben / Testsequenz: Der Benutzer öffnet den Safe durch eine korrekte Atmungsaktion und zahlt anschließend 1 der gerade erhaltenen Bonuspunkte ein.
+erwartetes Testergebnis: Das Guthaben des Benutzers im Safe wird um 1 erhöht. Der Kontostand des Benutzers wird dafür um 1 verringert.
+
+
+Testfall für Anwendungsfall 4:
+
+Vorbedingungen: Eine Sequenz von Quizfragen wurde erfolgreich absolviert. Das Guthaben des Benutzers im Safe beträgt mindestens 1.
+Testeingaben / Testsequenz: Der Benutzer öffnet den Safe durch eine korrekte Atmungsaktion und hebt anschließend 1 Bonuspunkt ab.
+erwartetes Testergebnis: Der Kontostand des Benutzers wird um 1 erhöht. Das Guthaben des Benutzers im Safe wird dafür um 1 verringert.
+
+
+Testfall für Anwendungsfall 5:
+
+Vorbedingungen: keine
+Testeingaben / Testsequenz: Der Benutzer löscht die Anwendungsdaten.
+erwartetes Testergebnis: Die mobile Anwendung ist hinsichtlich der Daten identisch mit einer neu installierten Anwendung. Der initiale Kontostand von 6 Bonuspunkten ist verfügbar.
+
+
