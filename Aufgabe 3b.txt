@@ -42,3 +42,4 @@ unterschiedlicher Schwierigkeitsgrade vorhanden sind. Ist eine dieser Bedingung 
 
 
 Antwort zu Frage Nr. vii:
+Ja wenn der Spieler alle Quizfragen beantwortet hat oder wenn der Spieler Bonuspunkte weniger als 0 und auch keine Bonuspunkte im Safe hat
