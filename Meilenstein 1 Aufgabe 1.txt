@@ -1,0 +1,106 @@
+Testfälle Anwendungsfall 1 (Quizfragen beantworten)
+
+    1.
+	Vorbedingung: 		6 Bonuspunkte
+				10 unbeantwortete Fragen in Gebiet x, der Schwierigkeit 1
+	Eingaben:		Benutzer wählt Gebiet x
+				Spieleinsatz = 1
+				Benutzer beantwortet 10 Fragen richtig
+	Ablauf: 		Anzeige der Übersicht, dass alle Fragen richtig beantwortet wurden
+				addieren des Spieleinsatzes zu den Bonuspunkten (6+1)
+				Abzug der beantworteten Fragen von den unbeantworteten Fragen (10-10)
+	erwartetes Ergebnis: 	7 Bonuspunkte
+				0 unbeantworte Fragen in Gebiet x
+                
+    2.
+	Vorbedingung: 		6 Bonuspunkte
+				10 unbeantwortete Fragen in Gebiet x, der Schwierigkeit 2
+	Eingaben:		Benutzer wählt Gebiet x
+				Spieleinsatz = 2
+				Benutzer beantwortet nicht alle 10 Fragen richtig
+	Ablauf: 		Anzeige der Übersicht, dass nicht alle Fragen richtig beantwortet wurden
+				subtrahieren des Spieleinsatzes zu den Bonuspunkten (6-2)
+				Abzug der beantworteten Fragen von den unbeantworteten Fragen (10-10)
+	erwartetes Ergebnis: 	4Bonuspunkte
+				0 unbeantworte Fragen in Gebiet x
+
+
+Testfälle Unteranwendungsfall 1.1 (Fragegebiet wählen)
+
+    1.
+	Vorbedingung: 		6 Bonuspunkte
+				je 10 unbeantwortete Fragen in Gebieten x,y,z
+	Eingaben:		Spieler hält kurz die Luft an(A3) um bei Fragegebiet y zu stoppen.
+	Ablauf:			Filterung nach unbeantworteten Fragen aus Gebiet y
+	erwartetes Ergebnis:	10 unbeantwortete Fragen aus Gebiet y
+    
+    2.
+    Vorbedingung:       6 Bonuspunkte
+                je 15 unbeantwortete Fragen in Gebieten x,y, 5 unbeantwortete Fragen in Gebiet z
+    Eingaben:       Spieler hält kurz die Luft an(A3) um bei Fragegebiet z zu stoppen
+    Ablauf:         Versuch der Filterung nach unbeantworteten Fragen aus Gebiet z schlägt fehl
+    erwartetes Ergebnis:    Fehlermeldung wegen zu weniger Fragen im Gebiet z, Rückkehr in vorheriges Menü
+    Anmerkungen:    könnte alternativ auch so gelöst werden, dass Gebiete mit zu wenigen unbeantworteten
+                    Fragen bei der Auswahl erst gar nicht angezeigt werden
+
+
+Testfälle Unteranwendungsfall 1.2 (Spieleinsatz wählen)
+
+	1.
+	Vorbedingung:		Fragegebiet x ausgewählt
+				10 unbeantwortete Fragen der Schwierigkeit 1
+	Eingaben		Spieleinsatz ist nicht wählbar
+	Ablauf			Schwierigkeit 1 wird automatisch gesetzt
+	erwartetes Ergebnis	10 unbeantwortete Fragen der Schwierigkeit 1 sind ausgewählt.
+
+	2.
+	Vorbedingung:		Fragegebiet x ausgewählt
+				10 unbeantwortete Fragen der Schwierigkeit 1 in Gebiet x
+				10 unbeantwortete Fragen der Schwierigkeit 2 in Gebiet x
+	Eingaben		Auswahl der Schwierigkeit 2 durch Atemaktion
+	Ablauf			Filtern der Quizfragen in Gebiet x nach Schwierigkeitsgrad 2
+	erwartetes Ergebnis	10 unbeantwortete FRagen der Schwierigkeit 2 aus Gebiet x
+    
+    3.
+    Vorbedingung:       Fragegebiet x ausgewählt
+                10 unbeantwortete Fragen der Schwierigkeit 2 in Gebiet x
+                Spieler hat nur 1 Bonuspunkt
+    Eingaben:   Auswahl der Schwierigkeit 2 durch Atemaktion
+    Ablauf:     Auswahl der Schiwerigkeit schlägt fehl, da zu geringes Bonuspunktetkonto
+    erwartetes Ergebnis: Fehlermeldung wegen zu weniger Bonuspunkte, Rückkehr in vorheriges Menü
+    
+    
+Testfälle Unteranwendungsfall 1.3 (Antwort wählen)
+
+    1.
+	Vorbedingung:		Fragegebiet x ausgewählt
+                        Spieleinsatz y ausgewählt
+	Eingaben		Atemaktion (A1-A4)
+	Ablauf			Der Spieler schafft es, mithilfe einer geeigneten Atemaktion die Antwort auszuwählen,
+                    die er wollte
+	erwartetes Ergebnis	Die ausgewählte Antwort wird eingelogt und gespeichert
+    
+    2.
+	Vorbedingung:		Fragegebiet x ausgewählt
+                        Spieleinsatz y ausgewählt
+	Eingaben		Atemaktion (A1-A4)
+	Ablauf			Der Spieler schafft es nicht, mithilfe einer geeigneten Atemaktion die Antwort auszuwählen,
+                    die er wollte
+	erwartetes Ergebnis	Die räumlich nächste Antwort zur gewünschten wird ausgewählt, eingelogt und gespeichert
+
+
+Testfall Unteranwendungsfall 1.3.3 :	
+    Vorbedingungen:	10 Quizfragen
+    Eingaben :      Ausatmen und Einatmen(A1)
+    Ablauf	:       Der Spieler bnutzt stufenloses Einatmen , um ein Cursor auf eine Antwort Y zu bewegen
+                    Die ausgewählte Antwort ist durch das Einatmen fixiert
+    erwartetes Ergebnis : Die ausgewählte Antwort Y wird markiert
+    
+Testfall Unteranwendungsfall 1.3.6 :	
+    Vorbedingungen:	10 Quizfragen
+                    Aufruf der Unteranwendungsfälle 1.3.1 bis 1.3.5
+    Eingaben :      Luft anhalten, gefolgt von Ausatmen (A3)
+    Ablauf	:       Der Spieler bedient den Atemtrainer und hält zunächst die Luft an und atmet anschließend aus
+                    Die mobile Anwendung übermittelt die Atemaktion an die Unteranwendungsfälle 1.3.1 bis 1.3.5
+    erwartetes Ergebnis : Gemäß der Spielmodi aus den Anwendungsfällen 1.3.1 bis 1.3.5 kann mit der Atemaktion
+                          eine Antwort auf eine Quizfrage ausgewählt werden
