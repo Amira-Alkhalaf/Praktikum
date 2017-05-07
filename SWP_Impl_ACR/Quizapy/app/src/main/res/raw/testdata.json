@@ -1,0 +1,37 @@
+{
+  "topics": [
+    {
+      "id": 1,
+      "name": "Fragegebiet 1",
+      "questions": [
+        {
+          "id": 1,
+          "name": "Testfrage 1",
+          "difficulty": 1,
+          "answers": [
+            {
+              "id": 1,
+              "name": "falsche Antwort",
+              "correctAnswer": false
+            },
+            {
+              "id": 2,
+              "name": "falsche Antwort",
+              "correctAnswer": false
+            },
+            {
+              "id": 3,
+              "name": "falsche Antwort",
+              "correctAnswer": false
+            },
+            {
+              "id": 4,
+              "name": "richtige Antwort",
+              "correctAnswer": true
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
