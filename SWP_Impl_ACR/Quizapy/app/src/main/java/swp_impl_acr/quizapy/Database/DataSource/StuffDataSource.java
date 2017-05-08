@@ -13,12 +13,14 @@ public class StuffDataSource {
     private QuizapyDataSource instance;
 
     public StuffDataSource() throws Exception {
-        this.instance=QuizapyDataSource.getInstance();
-        this.db= instance.getConnection();
+        this.instance = QuizapyDataSource.getInstance();
+        this.db = instance.getConnection();
     }
 
-    public String getValue(String key){
-        Cursor cursor = db.query(QuizapyContract.StuffTable.TABLE_NAME, null, QuizapyContract.StuffTable.COLUMN_NAME + " = ?", new String[]{key}, null, null, null);
+    public String getValue(String key) {
+        Cursor cursor = db.query(QuizapyContract.StuffTable.TABLE_NAME,
+                null, QuizapyContract.StuffTable.COLUMN_NAME + " = ?",
+                new String[]{key}, null, null, null);
         cursor.moveToFirst();
         return cursor.getString(cursor.getColumnIndex(QuizapyContract.StuffTable.COLUMN_VALUE));
     }
@@ -27,6 +29,9 @@ public class StuffDataSource {
         ContentValues contentValues = new ContentValues();
         contentValues.put(QuizapyContract.StuffTable.COLUMN_VALUE, value);
 
-        db.update(QuizapyContract.StuffTable.TABLE_NAME, contentValues, QuizapyContract.StuffTable.COLUMN_NAME + " = ?", new String[]{key});
+        db.update(QuizapyContract.StuffTable.TABLE_NAME,
+                contentValues,
+                QuizapyContract.StuffTable.COLUMN_NAME + " = ?",
+                new String[]{key});
     }
 }

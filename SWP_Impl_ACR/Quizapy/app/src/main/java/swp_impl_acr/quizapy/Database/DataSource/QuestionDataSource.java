@@ -34,7 +34,9 @@ public class QuestionDataSource {
     }
 
     public void saveQuestion(Question question) throws SQLException {
-        if (instance.checkIfDataExistsInDb(QuizapyContract.QuestionTable.TABLE_NAME, QuizapyContract.QuestionTable._ID, Integer.toString(question.getId()))) {
+        if (instance.checkIfDataExistsInDb(QuizapyContract.QuestionTable.TABLE_NAME,
+                QuizapyContract.QuestionTable._ID,
+                Integer.toString(question.getId()))) {
             updateQuestion(question);
         } else {
             addQuestion(question);
@@ -53,7 +55,9 @@ public class QuestionDataSource {
     }
 
     public void deleteQuestion(final int id) throws SQLException {
-        db.delete(QuizapyContract.QuestionTable.TABLE_NAME, QuizapyContract.QuestionTable._ID + " = ?", new String[]{Integer.toString(id)});
+        db.delete(QuizapyContract.QuestionTable.TABLE_NAME,
+                QuizapyContract.QuestionTable._ID + " = ?",
+                new String[]{Integer.toString(id)});
     }
 
     public List<Question> getAllQuestions() throws SQLException {
@@ -91,11 +95,17 @@ public class QuestionDataSource {
         contentValues.put(QuizapyContract.QuestionTable.COLUMN_ANSWERED, intValueAnswered);
         contentValues.put(QuizapyContract.QuestionTable.COLUMN_CORRECTLY, intValueCorrectly);
 
-        db.update(QuizapyContract.QuestionTable.TABLE_NAME, contentValues, QuizapyContract.QuestionTable._ID + " = ?", new String[]{Integer.toString(id)});
+        db.update(QuizapyContract.QuestionTable.TABLE_NAME,
+                contentValues,
+                QuizapyContract.QuestionTable._ID + " = ?",
+                new String[]{Integer.toString(id)});
     }
 
     public Answer getCorrectAnswer(final int id) throws SQLException {
-        Cursor cursor = db.query(QuizapyContract.AnswerTable.TABLE_NAME, null, QuizapyContract.AnswerTable.COLUMN_QUESTION + " = ? AND " + QuizapyContract.AnswerTable.COLUMN_CORRECT_ANSWER + " = 1", new String[]{Integer.toString(id)}, null, null, null);
+        Cursor cursor = db.query(QuizapyContract.AnswerTable.TABLE_NAME,
+                null,
+                QuizapyContract.AnswerTable.COLUMN_QUESTION + " = ? AND " + QuizapyContract.AnswerTable.COLUMN_CORRECT_ANSWER + " = 1",
+                new String[]{Integer.toString(id)}, null, null, null);
 
         cursor.moveToFirst();
         Answer answer = createAnswer(cursor);
@@ -104,10 +114,31 @@ public class QuestionDataSource {
         return answer;
     }
 
+    public List<Answer> getWrongAnswers(final int id) throws SQLException {
+        List<Answer> answers = new ArrayList<>();
+
+        Cursor cursor = db.query(QuizapyContract.AnswerTable.TABLE_NAME,
+                null,
+                QuizapyContract.AnswerTable.COLUMN_QUESTION + " = ? AND " + QuizapyContract.AnswerTable.COLUMN_CORRECT_ANSWER + " = 0",
+                new String[]{Integer.toString(id)}, null, null, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                answers.add(createAnswer(cursor));
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        return answers;
+    }
+
     public List<Answer> getAllAnswers(final int id) throws SQLException {
         List<Answer> answers = new ArrayList<>();
 
-        Cursor cursor = db.query(QuizapyContract.AnswerTable.TABLE_NAME, null, QuizapyContract.AnswerTable.COLUMN_QUESTION + " = ?", new String[]{Integer.toString(id)}, null, null, null);
+        Cursor cursor = db.query(QuizapyContract.AnswerTable.TABLE_NAME,
+                null,
+                QuizapyContract.AnswerTable.COLUMN_QUESTION + " = ?",
+                new String[]{Integer.toString(id)}, null, null, null);
 
         if (cursor.moveToFirst()) {
             do {
@@ -122,7 +153,10 @@ public class QuestionDataSource {
     public List<Question> getAllUnansweredQuestions() throws SQLException {
         List<Question> questions = new ArrayList<>();
 
-        Cursor cursor = db.query(QuizapyContract.QuestionTable.TABLE_NAME, columns, QuizapyContract.QuestionTable.COLUMN_ANSWERED + " = 0", null, null, null, null);
+        Cursor cursor = db.query(QuizapyContract.QuestionTable.TABLE_NAME,
+                columns,
+                QuizapyContract.QuestionTable.COLUMN_ANSWERED + " = 0",
+                null, null, null, null);
 
         if (cursor.moveToFirst()) {
             do {
@@ -137,7 +171,10 @@ public class QuestionDataSource {
     public List<Question> getAllAnsweredQuestions() throws SQLException {
         List<Question> questions = new ArrayList<>();
 
-        Cursor cursor = db.query(QuizapyContract.QuestionTable.TABLE_NAME, columns, QuizapyContract.QuestionTable.COLUMN_ANSWERED + " = 1", null, null, null, null);
+        Cursor cursor = db.query(QuizapyContract.QuestionTable.TABLE_NAME,
+                columns,
+                QuizapyContract.QuestionTable.COLUMN_ANSWERED + " = 1",
+                null, null, null, null);
 
         if (cursor.moveToFirst()) {
             do {
@@ -150,11 +187,17 @@ public class QuestionDataSource {
     }
 
     public int getAllUnansweredQuestionsCount() throws SQLException {
-        return db.query(QuizapyContract.QuestionTable.TABLE_NAME, columns, QuizapyContract.QuestionTable.COLUMN_ANSWERED + " = 0", null, null, null, null).getCount();
+        return db.query(QuizapyContract.QuestionTable.TABLE_NAME,
+                columns,
+                QuizapyContract.QuestionTable.COLUMN_ANSWERED + " = 0",
+                null, null, null, null).getCount();
     }
 
     public int getAllAnsweredQuestionsCount() throws SQLException {
-        return db.query(QuizapyContract.QuestionTable.TABLE_NAME, columns, QuizapyContract.QuestionTable.COLUMN_ANSWERED + " = 1", null, null, null, null).getCount();
+        return db.query(QuizapyContract.QuestionTable.TABLE_NAME,
+                columns,
+                QuizapyContract.QuestionTable.COLUMN_ANSWERED + " = 1",
+                null, null, null, null).getCount();
     }
 
     @NonNull

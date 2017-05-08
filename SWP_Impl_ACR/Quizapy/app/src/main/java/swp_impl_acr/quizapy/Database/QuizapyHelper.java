@@ -6,12 +6,12 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-public class QuizapyHelper extends SQLiteOpenHelper{
+public class QuizapyHelper extends SQLiteOpenHelper {
 
     private final String TAG = QuizapyHelper.class.getSimpleName();
 
-    public QuizapyHelper(Context context){
-        super(context, QuizapyContract.DATABASE_NAME,null, QuizapyContract.DATABASE_VERSION);
+    public QuizapyHelper(Context context) {
+        super(context, QuizapyContract.DATABASE_NAME, null, QuizapyContract.DATABASE_VERSION);
     }
 
     @Override

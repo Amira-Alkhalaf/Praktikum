@@ -12,10 +12,10 @@ public class TooltipTouchListener implements View.OnTouchListener {
     }
 
     public boolean onTouch(View v, MotionEvent event) {
-        if(event.getAction() == MotionEvent.ACTION_DOWN){
+        if (event.getAction() == MotionEvent.ACTION_DOWN) {
             this.helpText.setVisibility(View.VISIBLE);
         }
-        if(event.getAction() == MotionEvent.ACTION_UP){
+        if (event.getAction() == MotionEvent.ACTION_UP) {
             this.helpText.setVisibility(View.INVISIBLE);
         }
         return true;

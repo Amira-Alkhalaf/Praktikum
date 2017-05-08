@@ -20,9 +20,9 @@ public class QuizapyDataSource {
         openConnection();
     }
 
-    public static QuizapyDataSource getInstance (Context context) throws SQLException {
+    public static QuizapyDataSource getInstance(Context context) throws SQLException {
         if (QuizapyDataSource.instance == null) {
-            QuizapyDataSource.instance = new QuizapyDataSource (context);
+            QuizapyDataSource.instance = new QuizapyDataSource(context);
         }
         return QuizapyDataSource.instance;
     }
@@ -36,16 +36,16 @@ public class QuizapyDataSource {
     }
 
     public void openConnection() throws SQLException {
-        if(!isOpen) {
+        if (!isOpen) {
             db = dbHelper.getWritableDatabase();
-            isOpen=true;
+            isOpen = true;
         }
     }
 
     public void closeConnection() throws SQLException {
         if (db.isOpen()) {
             db.close();
-            isOpen=false;
+            isOpen = false;
         }
     }
 
@@ -60,7 +60,7 @@ public class QuizapyDataSource {
     public boolean checkIfDataExistsInDb(String tableName, String dbField, String fieldValue) {
         Cursor cursor = db.query(tableName, null, dbField + " = ?", new String[]{fieldValue}, null, null, null);
 
-        if(cursor.getCount() <= 0){
+        if (cursor.getCount() <= 0) {
             cursor.close();
             return false;
         }

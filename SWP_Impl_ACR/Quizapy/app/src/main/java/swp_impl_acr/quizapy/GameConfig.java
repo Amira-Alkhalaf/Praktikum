@@ -1,6 +1,6 @@
 package swp_impl_acr.quizapy;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import swp_impl_acr.quizapy.Database.Entity.Answer;
@@ -16,7 +16,7 @@ public class GameConfig {
     private Map<Question, Answer> questionAnswerMap;
 
     private GameConfig() {
-        questionAnswerMap = new HashMap<>();
+        questionAnswerMap = new LinkedHashMap<>();
     }
 
     public static GameConfig getInstance () {

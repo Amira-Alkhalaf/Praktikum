@@ -25,12 +25,14 @@ public class TopicDataSource {
     };
 
     public TopicDataSource() throws Exception {
-        this.instance=QuizapyDataSource.getInstance();
-        this.db= instance.getConnection();
+        this.instance = QuizapyDataSource.getInstance();
+        this.db = instance.getConnection();
     }
 
     public void saveTopic(Topic topic) throws SQLException {
-        if(instance.checkIfDataExistsInDb(QuizapyContract.TopicTable.TABLE_NAME, QuizapyContract.TopicTable._ID, Integer.toString(topic.getId()))) {
+        if (instance.checkIfDataExistsInDb(QuizapyContract.TopicTable.TABLE_NAME,
+                QuizapyContract.TopicTable._ID,
+                Integer.toString(topic.getId()))) {
             updateTopic(topic);
         } else {
             addTopic(topic);
@@ -45,7 +47,9 @@ public class TopicDataSource {
     }
 
     public void deleteTopic(final int id) throws SQLException {
-        db.delete(QuizapyContract.TopicTable.TABLE_NAME, QuizapyContract.TopicTable._ID +" = ?", new String[]{Integer.toString(id)});
+        db.delete(QuizapyContract.TopicTable.TABLE_NAME,
+                QuizapyContract.TopicTable._ID + " = ?",
+                new String[]{Integer.toString(id)});
     }
 
     public List<Topic> getAllTopics() throws SQLException {
@@ -75,13 +79,21 @@ public class TopicDataSource {
 
         contentValues.put(QuizapyContract.TopicTable.COLUMN_NAME, name);
 
-        db.update(QuizapyContract.TopicTable.TABLE_NAME, contentValues, QuizapyContract.TopicTable._ID + " = ?", new String[]{Integer.toString(id)});
+        db.update(QuizapyContract.TopicTable.TABLE_NAME,
+                contentValues,
+                QuizapyContract.TopicTable._ID + " = ?",
+                new String[]{Integer.toString(id)});
     }
 
     public List<Question> getAllUnansweredQuestionsByDifficulty(final int id, final int difficulty) throws SQLException {
         List<Question> questions = new ArrayList<>();
 
-        Cursor cursor = db.query(QuizapyContract.QuestionTable.TABLE_NAME, null, QuizapyContract.QuestionTable.COLUMN_TOPIC + " = ? AND " + QuizapyContract.QuestionTable.COLUMN_DIFFICULTY + " = ? AND " + QuizapyContract.QuestionTable.COLUMN_ANSWERED + " = 0" , new String[]{Integer.toString(id), Integer.toString(difficulty)}, null, null, null);
+        Cursor cursor = db.query(QuizapyContract.QuestionTable.TABLE_NAME,
+                null,
+                QuizapyContract.QuestionTable.COLUMN_TOPIC + " = ? " +
+                        "AND " + QuizapyContract.QuestionTable.COLUMN_DIFFICULTY + " = ? " +
+                        "AND " + QuizapyContract.QuestionTable.COLUMN_ANSWERED + " = 0",
+                new String[]{Integer.toString(id), Integer.toString(difficulty)}, null, null, null);
 
         cursor.moveToFirst();
         Question question = createQuestion(cursor);
@@ -91,20 +103,24 @@ public class TopicDataSource {
     }
 
     public int getAllUnansweredQuestionsByDifficultyCount(final int id, final int difficulty) throws SQLException {
-        return db.query(QuizapyContract.QuestionTable.TABLE_NAME, null, QuizapyContract.QuestionTable.COLUMN_TOPIC + " = ? AND " + QuizapyContract.QuestionTable.COLUMN_DIFFICULTY + " = ? AND " + QuizapyContract.QuestionTable.COLUMN_ANSWERED + " = 0" , new String[]{Integer.toString(id), Integer.toString(difficulty)}, null, null, null).getCount();
+        return db.query(QuizapyContract.QuestionTable.TABLE_NAME,
+                null, QuizapyContract.QuestionTable.COLUMN_TOPIC + " = ? " +
+                        "AND " + QuizapyContract.QuestionTable.COLUMN_DIFFICULTY + " = ? " +
+                        "AND " + QuizapyContract.QuestionTable.COLUMN_ANSWERED + " = 0",
+                new String[]{Integer.toString(id), Integer.toString(difficulty)}, null, null, null).getCount();
     }
 
     public List<Topic> getChoosableTopics() throws SQLException {
         List<Topic> topics = getAllTopics();
         List<Topic> topicsFiltered = new ArrayList<>();
-        for(Topic topic:topics){
+        for (Topic topic : topics) {
             boolean hasEnoughQuestions = false;
-            for(int i = 1; i<=3;i++){
-                if(getAllUnansweredQuestionsByDifficultyCount(topic.getId(),i) >= 10){
+            for (int i = 1; i <= 3; i++) {
+                if (getAllUnansweredQuestionsByDifficultyCount(topic.getId(), i) >= 10) {
                     hasEnoughQuestions = true;
                 }
             }
-            if(hasEnoughQuestions) {
+            if (hasEnoughQuestions) {
                 topicsFiltered.add(topic);
             }
         }

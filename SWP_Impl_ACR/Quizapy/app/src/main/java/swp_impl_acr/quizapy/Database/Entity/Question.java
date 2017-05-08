@@ -13,7 +13,8 @@ public class Question {
     private boolean correctly;
     private List<Answer> answers;
 
-    public Question(int id, int topic, String name, int difficulty, boolean answered, boolean correctly) {
+    public Question(int id, int topic, String name, int difficulty, boolean answered,
+                    boolean correctly) {
         this.id = id;
         this.topic = topic;
         this.name = name;
@@ -25,7 +26,9 @@ public class Question {
 
     public Question() {
         answers = new ArrayList<>();
-    };
+    }
+
+    ;
 
     public int getId() {
         return id;
@@ -75,11 +78,11 @@ public class Question {
         this.correctly = correctly;
     }
 
-    public void addAnswer(Answer answer){
-      answers.add(answer);
+    public void addAnswer(Answer answer) {
+        answers.add(answer);
     }
 
-    public List<Answer> getAnswers(){
+    public List<Answer> getAnswers() {
         return answers;
     }
 }

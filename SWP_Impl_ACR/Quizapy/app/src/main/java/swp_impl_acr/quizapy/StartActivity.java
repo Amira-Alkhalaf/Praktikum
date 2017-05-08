@@ -64,7 +64,6 @@ public class StartActivity extends AppCompatActivity {
         setContentView(R.layout.activity_start);
 
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
-
         setSupportActionBar(myToolbar);
 
         try {
@@ -77,13 +76,19 @@ public class StartActivity extends AppCompatActivity {
             TextView test = (TextView) findViewById(R.id.allQuestionsText);
             TextView test2 = (TextView) findViewById(R.id.answeredQuestionsText);
             QuestionDataSource questionDataSource = new QuestionDataSource();
-            test.setText(questionDataSource.getAllQuestionsCount());
-            test2.setText(questionDataSource.getAllAnsweredQuestionsCount());
+            test.setText(Integer.toString(questionDataSource.getAllQuestionsCount()));
+            test2.setText(Integer.toString(questionDataSource.getAllAnsweredQuestionsCount()));
         } catch (Exception e) {
             Log.d(SQL_ERROR_TAG, Arrays.toString(e.getStackTrace()));
         }
 
-        Log.d("Atem Trainer", RespiratoryTrainerDetector.isRespiratoryTrainerConnected()? "is connected":"is not connected");
+        Log.d("Atem Trainer", RespiratoryTrainerDetector.isRespiratoryTrainerConnected() ? "is connected" : "is not connected");
+
+        AvailablePoints points = (AvailablePoints)getApplicationContext();
+        points.setPoints(6);
+
+        TextView bonusPoints = (TextView) findViewById(R.id.currentBonusPointsText);
+        bonusPoints.setText(Integer.toString(points.getPoints()));
 
         final TextView bonusPointsText = (TextView) findViewById(R.id.bonusPointsText);
         final ImageButton bonusPointsButton = (ImageButton) findViewById(R.id.bonusPointsButton);

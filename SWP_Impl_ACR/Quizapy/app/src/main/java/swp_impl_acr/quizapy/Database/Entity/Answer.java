@@ -14,7 +14,8 @@ public class Answer {
         this.correctAnswer = correctAnswer;
     }
 
-    public Answer() {}
+    public Answer() {
+    }
 
     public int getId() {
         return id;

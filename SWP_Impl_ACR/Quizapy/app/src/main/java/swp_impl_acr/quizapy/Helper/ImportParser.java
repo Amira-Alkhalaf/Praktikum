@@ -1,5 +1,6 @@
 package swp_impl_acr.quizapy.Helper;
 
+import android.support.annotation.NonNull;
 import android.util.JsonReader;
 
 import java.io.IOException;
@@ -19,72 +20,17 @@ import swp_impl_acr.quizapy.Database.Entity.Topic;
 public class ImportParser {
 
     public static boolean parseQuestionJSON(InputStream in) throws IOException {
-        //todo exctract methods
         JsonReader reader = new JsonReader(new InputStreamReader(in, "UTF-8"));
         List<Topic> topics = new ArrayList<>();
         try {
             reader.beginObject();
-            while(reader.hasNext()){
+            while (reader.hasNext()) {
                 String name = reader.nextName();
-                if(name.equals("topics")) {
+                if (name.equals("topics")) {
                     reader.beginArray();
-                    while(reader.hasNext()){
-                        reader.beginObject();
-                        Topic topic = new Topic();
-                        while(reader.hasNext()){
-                            String name2 = reader.nextName();
-                            if(name2.equals("id")){
-                                topic.setId(reader.nextInt());
-                            } else if(name2.equals("name")){
-                                topic.setName(reader.nextString());
-                            } else if(name2.equals("questions")){
-                                reader.beginArray();
-                                while(reader.hasNext()){
-                                    reader.beginObject();
-                                    Question question = new Question();
-                                    while(reader.hasNext()){
-                                        String name3 = reader.nextName();
-                                        if(name3.equals("id")){
-                                            question.setId(reader.nextInt());
-                                        } else if(name3.equals("name")){
-                                            question.setName(reader.nextString());
-                                        } else if(name3.equals("difficulty")){
-                                            question.setDifficulty(reader.nextInt());
-                                        } else if(name3.equals("answers")){
-                                            reader.beginArray();
-                                            while(reader.hasNext()){
-                                                reader.beginObject();
-                                                Answer answer = new Answer();
-                                                while(reader.hasNext()){
-                                                    String name4 = reader.nextName();
-                                                    if(name4.equals("id")){
-                                                        answer.setId(reader.nextInt());
-                                                    } else if(name4.equals("name")){
-                                                        answer.setName(reader.nextString());
-                                                    } else if(name4.equals("correctAnswer")){
-                                                        answer.setCorrectAnswer(reader.nextBoolean());
-                                                    } else {
-                                                        reader.skipValue();
-                                                    }
-                                                }
-                                                question.addAnswer(answer);
-                                                reader.endObject();
-                                            }
-                                            reader.endArray();
-                                        } else {
-                                            reader.skipValue();
-                                        }
-                                    }
-                                    topic.addQuestion(question);
-                                    reader.endObject();
-                                }
-                                reader.endArray();
-                            } else {
-                                reader.skipValue();
-                            }
-                        }
+                    while (reader.hasNext()) {
+                        Topic topic = parseTopic(reader);
                         topics.add(topic);
-                        reader.endObject();
                     }
                     reader.endArray();
                 }
@@ -100,17 +46,89 @@ public class ImportParser {
         return true;
     }
 
+    @NonNull
+    private static Topic parseTopic(JsonReader reader) throws IOException {
+        reader.beginObject();
+        Topic topic = new Topic();
+        while (reader.hasNext()) {
+            String name = reader.nextName();
+            if (name.equals("id")) {
+                topic.setId(reader.nextInt());
+            } else if (name.equals("name")) {
+                topic.setName(reader.nextString());
+            } else if (name.equals("questions")) {
+                reader.beginArray();
+                while (reader.hasNext()) {
+                    Question question = parseQuestion(reader);
+                    topic.addQuestion(question);
+                }
+                reader.endArray();
+            } else {
+                reader.skipValue();
+            }
+        }
+        reader.endObject();
+        return topic;
+    }
+
+    @NonNull
+    private static Question parseQuestion(JsonReader reader) throws IOException {
+        reader.beginObject();
+        Question question = new Question();
+        while (reader.hasNext()) {
+            String name = reader.nextName();
+            if (name.equals("id")) {
+                question.setId(reader.nextInt());
+            } else if (name.equals("name")) {
+                question.setName(reader.nextString());
+            } else if (name.equals("difficulty")) {
+                question.setDifficulty(reader.nextInt());
+            } else if (name.equals("answers")) {
+                reader.beginArray();
+                while (reader.hasNext()) {
+                    Answer answer = parseAnswer(reader);
+                    question.addAnswer(answer);
+                }
+                reader.endArray();
+            } else {
+                reader.skipValue();
+            }
+        }
+        reader.endObject();
+        return question;
+    }
+
+    @NonNull
+    private static Answer parseAnswer(JsonReader reader) throws IOException {
+        reader.beginObject();
+        Answer answer = new Answer();
+        while (reader.hasNext()) {
+            String name = reader.nextName();
+            if (name.equals("id")) {
+                answer.setId(reader.nextInt());
+            } else if (name.equals("name")) {
+                answer.setName(reader.nextString());
+            } else if (name.equals("correctAnswer")) {
+                answer.setCorrectAnswer(reader.nextBoolean());
+            } else {
+                reader.skipValue();
+            }
+        }
+        reader.endObject();
+        return answer;
+    }
+
     private static void persistToDatabase(List<Topic> topics) {
         try {
             AnswerDataSource answerDataSource = new AnswerDataSource();
             QuestionDataSource questionDataSource = new QuestionDataSource();
             TopicDataSource topicDataSource = new TopicDataSource();
-            for(Topic topic:topics){
+            for (Topic topic:topics) {
                 topicDataSource.saveTopic(topic);
-                for(Question question:topic.getQuestions()){
+                for (Question question:topic.getQuestions()) {
                     question.setTopic(topic.getId());
                     questionDataSource.saveQuestion(question);
-                    for(Answer answer:question.getAnswers()){
+                    for (Answer answer:question.getAnswers()) {
                         answer.setQuestion(question.getId());
                         answerDataSource.saveAnswer(answer);
                     }
