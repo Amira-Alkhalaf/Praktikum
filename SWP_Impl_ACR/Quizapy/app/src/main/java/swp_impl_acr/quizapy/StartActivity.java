@@ -1,5 +1,6 @@
 package swp_impl_acr.quizapy;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -15,8 +16,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.sql.SQLException;
 import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
 
 import swp_impl_acr.quizapy.Database.DataSource.QuestionDataSource;
+import swp_impl_acr.quizapy.Database.Entity.Answer;
+import swp_impl_acr.quizapy.Database.Entity.Question;
 import swp_impl_acr.quizapy.Database.QuizapyDataSource;
 import swp_impl_acr.quizapy.EventListener.TooltipTouchListener;
 import swp_impl_acr.quizapy.Helper.ImportParser;
@@ -82,7 +87,7 @@ public class StartActivity extends AppCompatActivity {
             Log.d(SQL_ERROR_TAG, Arrays.toString(e.getStackTrace()));
         }
 
-        Log.d("Atem Trainer", RespiratoryTrainerDetector.isRespiratoryTrainerConnected() ? "is connected" : "is not connected");
+        Log.d("Atem Trainer", RespiratoryTrainerDetector.isConnected() ? "is connected" : "is not connected");
 
         AvailablePoints points = (AvailablePoints)getApplicationContext();
         points.setPoints(6);
@@ -98,11 +103,26 @@ public class StartActivity extends AppCompatActivity {
         final ImageButton questionsButton = (ImageButton) findViewById(R.id.questionsButton);
         questionsButton.setOnTouchListener(new TooltipTouchListener(questionsText));
 
+
         final Button playButton = (Button) findViewById(R.id.playButton);
         playButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 gameConfig = GameConfig.getInstance();
+                Random rand = new Random();
+                try {
+                    QuestionDataSource questionDataSource = new QuestionDataSource();
+                    List<Question> list = questionDataSource.getAllUnansweredQuestions();
+                    for(Question question:list){
+                        List<Answer> answers = questionDataSource.getAllAnswers(question.getId());
+                        gameConfig.addQuestionAnswer(question,answers.get(rand.nextInt(answers.size())));
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                Intent i = new Intent(getBaseContext(), QuestionListActivity.class);
+                startActivity(i);
+
                 //TODO implement logic
             }
         });

@@ -3,6 +3,7 @@
     package="swp_impl_acr.quizapy">
 
     <application
+        android:name="swp_impl_acr.quizapy.AvailablePoints"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -16,6 +17,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".QuestionListActivity"
+            android:label="@string/title_activity_question_list"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
     </application>
 
 </manifest>

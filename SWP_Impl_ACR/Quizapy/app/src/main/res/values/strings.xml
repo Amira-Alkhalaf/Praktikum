@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Quizapy</string>
+    <string name="title_activity_question_list">QuestionList</string>
 </resources>

@@ -1,7 +1,6 @@
 package swp_impl_acr.quizapy;
 
 import java.util.LinkedHashMap;
-import java.util.Map;
 
 import swp_impl_acr.quizapy.Database.Entity.Answer;
 import swp_impl_acr.quizapy.Database.Entity.Question;
@@ -13,7 +12,7 @@ public class GameConfig {
 
     private int difficulty;
     private Topic topic;
-    private Map<Question, Answer> questionAnswerMap;
+    private LinkedHashMap<Question, Answer> questionAnswerMap;
 
     private GameConfig() {
         questionAnswerMap = new LinkedHashMap<>();
@@ -46,7 +45,7 @@ public class GameConfig {
         questionAnswerMap.put(question, answer);
     }
 
-    public Map getQuestionAnswerMap() {
+    public LinkedHashMap getQuestionAnswerMap() {
         return questionAnswerMap;
     }
 }
