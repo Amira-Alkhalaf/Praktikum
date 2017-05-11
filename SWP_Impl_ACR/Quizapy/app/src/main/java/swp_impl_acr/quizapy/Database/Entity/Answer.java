@@ -3,11 +3,11 @@ package swp_impl_acr.quizapy.Database.Entity;
 public class Answer {
 
     private int id;
-    private int question;
+    private Question question;
     private String name;
     private boolean correctAnswer;
 
-    public Answer(int id, int question, String name, boolean correctAnswer) {
+    public Answer(int id, Question question, String name, boolean correctAnswer) {
         this.id = id;
         this.question = question;
         this.name = name;
@@ -25,11 +25,11 @@ public class Answer {
         this.id = id;
     }
 
-    public int getQuestion() {
+    public Question getQuestion() {
         return question;
     }
 
-    public void setQuestion(int question) {
+    public void setQuestion(Question question) {
         this.question = question;
     }
 

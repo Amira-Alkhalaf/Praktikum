@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import swp_impl_acr.quizapy.Database.Entity.Answer;
+import swp_impl_acr.quizapy.Database.Entity.Question;
 import swp_impl_acr.quizapy.Database.QuizapyContract;
 import swp_impl_acr.quizapy.Database.QuizapyDataSource;
 
@@ -43,7 +44,7 @@ public class AnswerDataSource {
     private void addAnswer(Answer answer) throws SQLException {
         ContentValues contentValues = new ContentValues();
         contentValues.put(QuizapyContract.AnswerTable._ID, answer.getId());
-        contentValues.put(QuizapyContract.AnswerTable.COLUMN_QUESTION, answer.getQuestion());
+        contentValues.put(QuizapyContract.AnswerTable.COLUMN_QUESTION, answer.getQuestion().getId());
         contentValues.put(QuizapyContract.AnswerTable.COLUMN_NAME, answer.getName());
         int intValueCorrectAnswer = (answer.isCorrectAnswer()) ? 1 : 0;
         contentValues.put(QuizapyContract.AnswerTable.COLUMN_CORRECT_ANSWER, intValueCorrectAnswer);
@@ -54,6 +55,19 @@ public class AnswerDataSource {
         db.delete(QuizapyContract.AnswerTable.TABLE_NAME,
                 QuizapyContract.AnswerTable._ID + " = ?",
                 new String[]{Integer.toString(id)});
+    }
+
+    public Answer getAnswerById(final int id) throws SQLException {
+        Cursor cursor = db.query(QuizapyContract.AnswerTable.TABLE_NAME,
+                null,
+                QuizapyContract.AnswerTable._ID + " = ?",
+                new String[]{Integer.toString(id)}, null, null, null);
+
+        cursor.moveToFirst();
+        Answer answer = createAnswer(cursor);
+
+        cursor.close();
+        return answer;
     }
 
     public List<Answer> getAllAnswers() throws SQLException {
@@ -80,11 +94,11 @@ public class AnswerDataSource {
         ContentValues contentValues = new ContentValues();
 
         int id = answer.getId();
-        int question = answer.getQuestion();
+        Question question = answer.getQuestion();
         String name = answer.getName();
         int intValueCorrectAnswer = (answer.isCorrectAnswer()) ? 1 : 0;
 
-        contentValues.put(QuizapyContract.AnswerTable.COLUMN_QUESTION, question);
+        contentValues.put(QuizapyContract.AnswerTable.COLUMN_QUESTION, question.getId());
         contentValues.put(QuizapyContract.AnswerTable.COLUMN_NAME, name);
         contentValues.put(QuizapyContract.AnswerTable.COLUMN_CORRECT_ANSWER, intValueCorrectAnswer);
 
@@ -98,7 +112,12 @@ public class AnswerDataSource {
     private Answer createAnswer(Cursor cursor) {
         Answer answer = new Answer();
         answer.setId(cursor.getInt(cursor.getColumnIndex(QuizapyContract.AnswerTable._ID)));
-        answer.setQuestion(cursor.getInt(cursor.getColumnIndex(QuizapyContract.AnswerTable.COLUMN_QUESTION)));
+        try {
+            QuestionDataSource questionDataSource = new QuestionDataSource();
+            answer.setQuestion(questionDataSource.getQuestionById(cursor.getInt(cursor.getColumnIndex(QuizapyContract.AnswerTable.COLUMN_QUESTION))));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         answer.setName(cursor.getString(cursor.getColumnIndex(QuizapyContract.AnswerTable.COLUMN_NAME)));
         int intValueCorrectAnswer = cursor.getInt(cursor.getColumnIndex(QuizapyContract.AnswerTable.COLUMN_CORRECT_ANSWER));
         boolean isCorrectAnswer = (intValueCorrectAnswer != 0);

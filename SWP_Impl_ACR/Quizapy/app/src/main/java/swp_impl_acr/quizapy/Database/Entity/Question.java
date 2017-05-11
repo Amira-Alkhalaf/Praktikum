@@ -3,17 +3,20 @@ package swp_impl_acr.quizapy.Database.Entity;
 import java.util.ArrayList;
 import java.util.List;
 
+import swp_impl_acr.quizapy.Database.DataSource.AnswerDataSource;
+import swp_impl_acr.quizapy.Database.DataSource.QuestionDataSource;
+
 public class Question {
 
     private int id;
-    private int topic;
+    private Topic topic;
     private String name;
     private int difficulty;
     private boolean answered;
     private boolean correctly;
     private List<Answer> answers;
 
-    public Question(int id, int topic, String name, int difficulty, boolean answered,
+    public Question(int id, Topic topic, String name, int difficulty, boolean answered,
                     boolean correctly) {
         this.id = id;
         this.topic = topic;
@@ -28,8 +31,6 @@ public class Question {
         answers = new ArrayList<>();
     }
 
-    ;
-
     public int getId() {
         return id;
     }
@@ -38,11 +39,11 @@ public class Question {
         this.id = id;
     }
 
-    public int getTopic() {
+    public Topic getTopic() {
         return topic;
     }
 
-    public void setTopic(int topic) {
+    public void setTopic(Topic topic) {
         this.topic = topic;
     }
 
@@ -83,6 +84,14 @@ public class Question {
     }
 
     public List<Answer> getAnswers() {
+        if(answers.size()==0){
+            try {
+                QuestionDataSource questionDataSource = new QuestionDataSource();
+                this.answers = questionDataSource.getAllAnswers(this.id);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
         return answers;
     }
 }

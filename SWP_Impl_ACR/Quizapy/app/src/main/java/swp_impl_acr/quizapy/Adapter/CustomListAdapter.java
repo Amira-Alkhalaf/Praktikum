@@ -4,9 +4,13 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
+import android.widget.ListAdapter;
 import android.widget.TextView;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.Set;
@@ -16,32 +20,31 @@ import swp_impl_acr.quizapy.Database.Entity.Answer;
 import swp_impl_acr.quizapy.Database.Entity.Question;
 import swp_impl_acr.quizapy.R;
 
-public class LinkedHashMapAdapter extends BaseAdapter{
-    private LinkedHashMap<Question, Answer> data;
-    private Question[] positions;
+public class CustomListAdapter extends ArrayAdapter<Answer> {
+    private ArrayList<Answer> answers;
     private Context context;
 
-    public LinkedHashMapAdapter(Context context, LinkedHashMap<Question, Answer> data){
+    public CustomListAdapter(Context context, ArrayList<Answer> answers){
+        super(context, R.layout.list_item_3, answers);
         this.context = context;
-        this.data=data;
-        positions = data.keySet().toArray(new Question[0]);
+        this.answers=answers;
     }
 
 
-    @Override
-    public int getCount() {
-        return data.size();
-    }
-
-    @Override
-    public Question getItem(int position) {
-        return positions[position];
-    }
-
-    @Override
-    public long getItemId(int position) {
-        return position;
-    }
+//    @Override
+//    public int getCount() {
+//        return data.size();
+//    }
+//
+//    @Override
+//    public Question getItem(int position) {
+//        return positions[position];
+//    }
+//
+//    @Override
+//    public long getItemId(int position) {
+//        return position;
+//    }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
@@ -57,13 +60,15 @@ public class LinkedHashMapAdapter extends BaseAdapter{
         }else{
             holder = (ViewHolder) convertView.getTag();
         }
+        Answer answer = getItem(position);
+        Question question = answer.getQuestion();
 
-        holder.userAnswer.setText(data.get(getItem(position)).getName());
-        holder.questionName.setText(getItem(position).getName());
+        holder.userAnswer.setText(answer.getName());
+        holder.questionName.setText(question.getName());
         //holder.questionName.setText(getItem(position).getId()+". Frage");
         try{
             QuestionDataSource qDS = new QuestionDataSource();
-            holder.correctAnswer.setText(qDS.getCorrectAnswer(getItem(position).getId()).getName());
+            holder.correctAnswer.setText(qDS.getCorrectAnswer(question.getId()).getName());
         } catch (Exception e){
             e.printStackTrace();
         }

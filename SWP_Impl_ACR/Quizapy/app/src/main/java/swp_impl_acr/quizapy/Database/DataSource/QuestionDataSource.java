@@ -11,6 +11,7 @@ import java.util.List;
 
 import swp_impl_acr.quizapy.Database.Entity.Answer;
 import swp_impl_acr.quizapy.Database.Entity.Question;
+import swp_impl_acr.quizapy.Database.Entity.Topic;
 import swp_impl_acr.quizapy.Database.QuizapyContract;
 import swp_impl_acr.quizapy.Database.QuizapyDataSource;
 
@@ -43,10 +44,23 @@ public class QuestionDataSource {
         }
     }
 
+    public Question getQuestionById(final int id) throws SQLException {
+        Cursor cursor = db.query(QuizapyContract.QuestionTable.TABLE_NAME,
+                null,
+                QuizapyContract.QuestionTable._ID + " = ?",
+                new String[]{Integer.toString(id)}, null, null, null);
+
+        cursor.moveToFirst();
+        Question question = createQuestion(cursor);
+
+        cursor.close();
+        return question;
+    }
+
     private void addQuestion(Question question) throws SQLException {
         ContentValues contentValues = new ContentValues();
         contentValues.put(QuizapyContract.QuestionTable._ID, question.getId());
-        contentValues.put(QuizapyContract.QuestionTable.COLUMN_TOPIC, question.getTopic());
+        contentValues.put(QuizapyContract.QuestionTable.COLUMN_TOPIC, question.getTopic().getId());
         contentValues.put(QuizapyContract.QuestionTable.COLUMN_NAME, question.getName());
         contentValues.put(QuizapyContract.QuestionTable.COLUMN_DIFFICULTY, question.getDifficulty());
         contentValues.put(QuizapyContract.QuestionTable.COLUMN_ANSWERED, 0);
@@ -83,13 +97,13 @@ public class QuestionDataSource {
         ContentValues contentValues = new ContentValues();
 
         int id = question.getId();
-        int topic = question.getTopic();
+        Topic topic = question.getTopic();
         String name = question.getName();
         int difficulty = question.getDifficulty();
         int intValueAnswered = (question.isAnswered()) ? 1 : 0;
         int intValueCorrectly = (question.isCorrectly()) ? 1 : 0;
 
-        contentValues.put(QuizapyContract.QuestionTable.COLUMN_TOPIC, topic);
+        contentValues.put(QuizapyContract.QuestionTable.COLUMN_TOPIC, topic.getId());
         contentValues.put(QuizapyContract.QuestionTable.COLUMN_NAME, name);
         contentValues.put(QuizapyContract.QuestionTable.COLUMN_DIFFICULTY, difficulty);
         contentValues.put(QuizapyContract.QuestionTable.COLUMN_ANSWERED, intValueAnswered);
@@ -204,7 +218,12 @@ public class QuestionDataSource {
     private Question createQuestion(Cursor cursor) {
         Question question = new Question();
         question.setId(cursor.getInt(cursor.getColumnIndex(QuizapyContract.QuestionTable._ID)));
-        question.setTopic(cursor.getInt(cursor.getColumnIndex(QuizapyContract.QuestionTable.COLUMN_TOPIC)));
+        try {
+            TopicDataSource topicDataSource = new TopicDataSource();
+            question.setTopic(topicDataSource.getTopicById(cursor.getInt(cursor.getColumnIndex(QuizapyContract.QuestionTable.COLUMN_TOPIC))));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         question.setName(cursor.getString(cursor.getColumnIndex(QuizapyContract.QuestionTable.COLUMN_NAME)));
         question.setDifficulty(cursor.getInt(cursor.getColumnIndex(QuizapyContract.QuestionTable.COLUMN_DIFFICULTY)));
         int intValueAnswered = cursor.getInt(cursor.getColumnIndex(QuizapyContract.QuestionTable.COLUMN_ANSWERED));
@@ -220,7 +239,12 @@ public class QuestionDataSource {
     private Answer createAnswer(Cursor cursor) {
         Answer answer = new Answer();
         answer.setId(cursor.getInt(cursor.getColumnIndex(QuizapyContract.AnswerTable._ID)));
-        answer.setQuestion(cursor.getInt(cursor.getColumnIndex(QuizapyContract.AnswerTable.COLUMN_QUESTION)));
+        try {
+            QuestionDataSource questionDataSource = new QuestionDataSource();
+            answer.setQuestion(questionDataSource.getQuestionById(cursor.getInt(cursor.getColumnIndex(QuizapyContract.AnswerTable.COLUMN_QUESTION))));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         answer.setName(cursor.getString(cursor.getColumnIndex(QuizapyContract.AnswerTable.COLUMN_NAME)));
         int intValueCorrectAnswer = cursor.getInt(cursor.getColumnIndex(QuizapyContract.AnswerTable.COLUMN_CORRECT_ANSWER));
         boolean isCorrectAnswer = (intValueCorrectAnswer == 1);

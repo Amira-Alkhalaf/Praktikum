@@ -1,5 +1,7 @@
 package swp_impl_acr.quizapy;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
 import swp_impl_acr.quizapy.Database.Entity.Answer;
@@ -12,10 +14,10 @@ public class GameConfig {
 
     private int difficulty;
     private Topic topic;
-    private LinkedHashMap<Question, Answer> questionAnswerMap;
+    private ArrayList<Answer> answers;
 
     private GameConfig() {
-        questionAnswerMap = new LinkedHashMap<>();
+        answers = new ArrayList<>();
     }
 
     public static GameConfig getInstance () {
@@ -41,17 +43,17 @@ public class GameConfig {
         this.topic = topic;
     }
 
-    public void addQuestionAnswer(Question question, Answer answer) {
-        questionAnswerMap.put(question, answer);
+    public void addAnswer(Answer answer) {
+        answers.add(answer);
     }
 
-    public LinkedHashMap getQuestionAnswerMap() {
-        return questionAnswerMap;
+    public ArrayList<Answer> getAnswers() {
+        return answers;
     }
 
     public void resetInstance(){
         this.difficulty=0;
         this.topic=null;
-        this.questionAnswerMap=new LinkedHashMap<>();
+        this.answers=new ArrayList<>();
     }
 }

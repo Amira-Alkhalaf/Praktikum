@@ -52,6 +52,19 @@ public class TopicDataSource {
                 new String[]{Integer.toString(id)});
     }
 
+    public Topic getTopicById(final int id) throws SQLException {
+        Cursor cursor = db.query(QuizapyContract.TopicTable.TABLE_NAME,
+                null,
+                QuizapyContract.TopicTable._ID + " = ?",
+                new String[]{Integer.toString(id)}, null, null, null);
+
+        cursor.moveToFirst();
+        Topic topic = createTopic(cursor);
+
+        cursor.close();
+        return topic;
+    }
+
     public List<Topic> getAllTopics() throws SQLException {
         List<Topic> topics = new ArrayList<>();
 
@@ -95,8 +108,11 @@ public class TopicDataSource {
                         "AND " + QuizapyContract.QuestionTable.COLUMN_ANSWERED + " = 0",
                 new String[]{Integer.toString(id), Integer.toString(difficulty)}, null, null, null);
 
-        cursor.moveToFirst();
-        Question question = createQuestion(cursor);
+        if (cursor.moveToFirst()) {
+            do {
+                questions.add(createQuestion(cursor));
+            } while (cursor.moveToNext());
+        }
 
         cursor.close();
         return questions;
@@ -131,7 +147,12 @@ public class TopicDataSource {
     private Question createQuestion(Cursor cursor) {
         Question question = new Question();
         question.setId(cursor.getInt(cursor.getColumnIndex(QuizapyContract.QuestionTable._ID)));
-        question.setTopic(cursor.getInt(cursor.getColumnIndex(QuizapyContract.QuestionTable.COLUMN_TOPIC)));
+        try {
+            TopicDataSource topicDataSource = new TopicDataSource();
+            question.setTopic(topicDataSource.getTopicById(cursor.getInt(cursor.getColumnIndex(QuizapyContract.QuestionTable.COLUMN_TOPIC))));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         question.setName(cursor.getString(cursor.getColumnIndex(QuizapyContract.QuestionTable.COLUMN_NAME)));
         question.setDifficulty(cursor.getInt(cursor.getColumnIndex(QuizapyContract.QuestionTable.COLUMN_DIFFICULTY)));
         int intValueAnswered = cursor.getInt(cursor.getColumnIndex(QuizapyContract.QuestionTable.COLUMN_ANSWERED));
@@ -149,5 +170,23 @@ public class TopicDataSource {
         topic.setId(cursor.getInt(cursor.getColumnIndex(QuizapyContract.TopicTable._ID)));
         topic.setName(cursor.getString(cursor.getColumnIndex(QuizapyContract.TopicTable.COLUMN_NAME)));
         return topic;
+    }
+
+    public List<Question> getAllQuestions(final int id) throws SQLException  {
+        List<Question> questions = new ArrayList<>();
+
+        Cursor cursor = db.query(QuizapyContract.QuestionTable.TABLE_NAME,
+                null,
+                QuizapyContract.QuestionTable.COLUMN_TOPIC + " = ? ",
+                new String[]{Integer.toString(id)}, null, null, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                questions.add(createQuestion(cursor));
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        return questions;
     }
 }

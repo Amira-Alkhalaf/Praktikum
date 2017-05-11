@@ -3,6 +3,8 @@ package swp_impl_acr.quizapy.Database.Entity;
 import java.util.ArrayList;
 import java.util.List;
 
+import swp_impl_acr.quizapy.Database.DataSource.TopicDataSource;
+
 public class Topic {
 
     private int id;
@@ -40,6 +42,14 @@ public class Topic {
     }
 
     public List<Question> getQuestions() {
+        if(questions.size()==0){
+            try {
+                TopicDataSource topicDataSource = new TopicDataSource();
+                this.questions = topicDataSource.getAllQuestions(id);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
         return questions;
     }
 }

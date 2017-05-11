@@ -85,7 +85,7 @@ public class StartActivity extends AppCompatActivity {
         try {
             questionDataSource = new QuestionDataSource();
             allQuestionsCount.setText(Integer.toString(questionDataSource.getAllQuestionsCount()));
-            allQuestionsCount.setText(Integer.toString(questionDataSource.getAllAnsweredQuestionsCount()));
+            answeredQuestionsCount.setText(Integer.toString(questionDataSource.getAllAnsweredQuestionsCount()));
         } catch (Exception e) {
             Log.d("SQL ERROR", Arrays.toString(e.getStackTrace()));
         }
@@ -118,8 +118,8 @@ public class StartActivity extends AppCompatActivity {
                     QuestionDataSource questionDataSource = new QuestionDataSource();
                     List<Question> list = questionDataSource.getAllUnansweredQuestions();
                     for(Question question:list){
-                        List<Answer> answers = questionDataSource.getAllAnswers(question.getId());
-                        gameConfig.addQuestionAnswer(question,answers.get(rand.nextInt(answers.size())));
+                        List<Answer> answers = question.getAnswers();
+                        gameConfig.addAnswer(answers.get(rand.nextInt(answers.size())));
                     }
                 } catch (Exception e) {
                     e.printStackTrace();

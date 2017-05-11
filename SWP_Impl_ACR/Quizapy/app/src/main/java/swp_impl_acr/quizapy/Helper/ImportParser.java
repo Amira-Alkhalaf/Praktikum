@@ -126,10 +126,10 @@ public class ImportParser {
             for (Topic topic:topics) {
                 topicDataSource.saveTopic(topic);
                 for (Question question:topic.getQuestions()) {
-                    question.setTopic(topic.getId());
+                    question.setTopic(topic);
                     questionDataSource.saveQuestion(question);
                     for (Answer answer:question.getAnswers()) {
-                        answer.setQuestion(question.getId());
+                        answer.setQuestion(question);
                         answerDataSource.saveAnswer(answer);
                     }
                 }
