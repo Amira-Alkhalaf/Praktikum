@@ -48,4 +48,10 @@ public class GameConfig {
     public LinkedHashMap getQuestionAnswerMap() {
         return questionAnswerMap;
     }
+
+    public void resetInstance(){
+        this.difficulty=0;
+        this.topic=null;
+        this.questionAnswerMap=new LinkedHashMap<>();
+    }
 }

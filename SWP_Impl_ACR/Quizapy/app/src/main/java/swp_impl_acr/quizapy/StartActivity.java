@@ -29,9 +29,15 @@ import swp_impl_acr.quizapy.Helper.RespiratoryTrainerDetector;
 
 public class StartActivity extends AppCompatActivity {
 
-    public QuizapyDataSource databaseConnection = null;
-    public GameConfig gameConfig = null;
-    private final String SQL_ERROR_TAG = "SQL ERROR";
+    private QuizapyDataSource databaseConnection = null;
+    private GameConfig gameConfig = null;
+    private AvailablePoints points = null;
+
+    private QuestionDataSource questionDataSource = null;
+
+    private TextView allQuestionsCount;
+    private TextView answeredQuestionsCount;
+    private TextView bonusPoints;
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -42,11 +48,8 @@ public class StartActivity extends AppCompatActivity {
                                 "raw", getPackageName()));
                 try {
                     ImportParser.parseQuestionJSON(in);
-                    TextView test = (TextView) findViewById(R.id.allQuestionsText);
-                    TextView test2 = (TextView) findViewById(R.id.answeredQuestionsText);
-                    QuestionDataSource questionDataSource = new QuestionDataSource();
-                    test.setText(Integer.toString(questionDataSource.getAllQuestionsCount()));
-                    test2.setText(Integer.toString(questionDataSource.getAllAnsweredQuestionsCount()));
+                    allQuestionsCount.setText(Integer.toString(questionDataSource.getAllQuestionsCount()));
+                    answeredQuestionsCount.setText(Integer.toString(questionDataSource.getAllAnsweredQuestionsCount()));
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -74,25 +77,25 @@ public class StartActivity extends AppCompatActivity {
         try {
             databaseConnection = QuizapyDataSource.getInstance(getApplicationContext());
         } catch (SQLException e) {
-            Log.d(SQL_ERROR_TAG, Arrays.toString(e.getStackTrace()));
+            Log.d("SQL ERROR", Arrays.toString(e.getStackTrace()));
         }
+        allQuestionsCount = (TextView) findViewById(R.id.allQuestionsText);
+        answeredQuestionsCount = (TextView) findViewById(R.id.answeredQuestionsText);
 
         try {
-            TextView test = (TextView) findViewById(R.id.allQuestionsText);
-            TextView test2 = (TextView) findViewById(R.id.answeredQuestionsText);
-            QuestionDataSource questionDataSource = new QuestionDataSource();
-            test.setText(Integer.toString(questionDataSource.getAllQuestionsCount()));
-            test2.setText(Integer.toString(questionDataSource.getAllAnsweredQuestionsCount()));
+            questionDataSource = new QuestionDataSource();
+            allQuestionsCount.setText(Integer.toString(questionDataSource.getAllQuestionsCount()));
+            allQuestionsCount.setText(Integer.toString(questionDataSource.getAllAnsweredQuestionsCount()));
         } catch (Exception e) {
-            Log.d(SQL_ERROR_TAG, Arrays.toString(e.getStackTrace()));
+            Log.d("SQL ERROR", Arrays.toString(e.getStackTrace()));
         }
 
         Log.d("Atem Trainer", RespiratoryTrainerDetector.isConnected() ? "is connected" : "is not connected");
 
-        AvailablePoints points = (AvailablePoints)getApplicationContext();
+        points = (AvailablePoints)getApplicationContext();
         points.setPoints(6);
 
-        TextView bonusPoints = (TextView) findViewById(R.id.currentBonusPointsText);
+        bonusPoints = (TextView) findViewById(R.id.currentBonusPointsText);
         bonusPoints.setText(Integer.toString(points.getPoints()));
 
         final TextView bonusPointsText = (TextView) findViewById(R.id.bonusPointsText);
@@ -109,6 +112,7 @@ public class StartActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 gameConfig = GameConfig.getInstance();
+                gameConfig.resetInstance();
                 Random rand = new Random();
                 try {
                     QuestionDataSource questionDataSource = new QuestionDataSource();
@@ -120,12 +124,26 @@ public class StartActivity extends AppCompatActivity {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+                gameConfig.setDifficulty(1);
                 Intent i = new Intent(getBaseContext(), QuestionListActivity.class);
                 startActivity(i);
-
                 //TODO implement logic
             }
         });
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+
+        bonusPoints.setText(Integer.toString(points.getPoints()));
+
+        try {
+            answeredQuestionsCount.setText(Integer.toString(questionDataSource.getAllAnsweredQuestionsCount()));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
     @Override
@@ -134,7 +152,7 @@ public class StartActivity extends AppCompatActivity {
         try {
             databaseConnection.closeConnection();
         } catch (SQLException e) {
-            Log.d(SQL_ERROR_TAG, Arrays.toString(e.getStackTrace()));
+            Log.d("SQL ERROR", Arrays.toString(e.getStackTrace()));
         }
     }
 }
