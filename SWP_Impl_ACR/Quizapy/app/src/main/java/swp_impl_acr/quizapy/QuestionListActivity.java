@@ -58,7 +58,6 @@ public class QuestionListActivity extends AppCompatActivity {
         ArrayList<Answer> answers = gameConfig.getAnswers();
         boolean allQuestionsCorrect=true;
         for(Answer answer:answers){
-            Log.d("test", answer.toString());
             Question question = answer.getQuestion();
             if(!answer.isCorrectAnswer()){
                 allQuestionsCorrect=false;

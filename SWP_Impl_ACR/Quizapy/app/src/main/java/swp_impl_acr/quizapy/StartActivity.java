@@ -12,7 +12,6 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.sql.SQLException;
 import java.util.Arrays;
@@ -25,7 +24,7 @@ import swp_impl_acr.quizapy.Database.Entity.Question;
 import swp_impl_acr.quizapy.Database.QuizapyDataSource;
 import swp_impl_acr.quizapy.EventListener.TooltipTouchListener;
 import swp_impl_acr.quizapy.Helper.ImportParser;
-import swp_impl_acr.quizapy.Helper.RespiratoryTrainerDetector;
+import swp_impl_acr.quizapy.Helper.RespiratoryTrainer;
 
 public class StartActivity extends AppCompatActivity {
 
@@ -90,10 +89,12 @@ public class StartActivity extends AppCompatActivity {
             Log.d("SQL ERROR", Arrays.toString(e.getStackTrace()));
         }
 
-        Log.d("Atem Trainer", RespiratoryTrainerDetector.isConnected() ? "is connected" : "is not connected");
+        Log.d("Atem Trainer", RespiratoryTrainer.isConnected() ? "is connected" : "is not connected");
 
-        points = (AvailablePoints)getApplicationContext();
-        points.setPoints(6);
+        points = (AvailablePoints) getApplicationContext();
+        if(savedInstanceState == null){
+            points.setPoints(6);
+        }
 
         bonusPoints = (TextView) findViewById(R.id.currentBonusPointsText);
         bonusPoints.setText(Integer.toString(points.getPoints()));
@@ -126,8 +127,8 @@ public class StartActivity extends AppCompatActivity {
                 }
                 gameConfig.setDifficulty(1);
                 Intent i = new Intent(getBaseContext(), QuestionListActivity.class);
-                startActivity(i);
-                //TODO implement logic
+                Intent test = new Intent(getBaseContext(), TestActivity.class);
+                startActivity(test);
             }
         });
     }

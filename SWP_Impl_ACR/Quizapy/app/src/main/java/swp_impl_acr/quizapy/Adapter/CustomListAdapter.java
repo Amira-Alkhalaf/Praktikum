@@ -5,15 +5,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
-import android.widget.ListAdapter;
 import android.widget.TextView;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
-import java.util.Set;
+
+
 
 import swp_impl_acr.quizapy.Database.DataSource.QuestionDataSource;
 import swp_impl_acr.quizapy.Database.Entity.Answer;
@@ -29,22 +25,6 @@ public class CustomListAdapter extends ArrayAdapter<Answer> {
         this.context = context;
         this.answers=answers;
     }
-
-
-//    @Override
-//    public int getCount() {
-//        return data.size();
-//    }
-//
-//    @Override
-//    public Question getItem(int position) {
-//        return positions[position];
-//    }
-//
-//    @Override
-//    public long getItemId(int position) {
-//        return position;
-//    }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
@@ -65,7 +45,7 @@ public class CustomListAdapter extends ArrayAdapter<Answer> {
 
         holder.userAnswer.setText(answer.getName());
         holder.questionName.setText(question.getName());
-        //holder.questionName.setText(getItem(position).getId()+". Frage");
+
         try{
             QuestionDataSource qDS = new QuestionDataSource();
             holder.correctAnswer.setText(qDS.getCorrectAnswer(question.getId()).getName());

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <Button
+        android:id="@+id/breathIn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Einatmen"
+        app:layout_constraintBaseline_toBaselineOf="@+id/breathOut"
+        tools:layout_constraintBaseline_creator="1"
+        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintLeft_toLeftOf="parent" />
+
+    <Button
+        android:id="@+id/breathOut"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ausatmen"
+        tools:layout_constraintTop_creator="1"
+        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toRightOf="@+id/breathIn" />
+
+    <Button
+        android:id="@+id/holdBreath"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Anhalten"
+        app:layout_constraintBaseline_toBaselineOf="@+id/breathOut"
+        tools:layout_constraintBaseline_creator="1"
+        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintLeft_toRightOf="@+id/breathOut" />
+
+</android.support.constraint.ConstraintLayout>

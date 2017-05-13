@@ -1,6 +1,6 @@
 package swp_impl_acr.quizapy.Helper;
 
-public class RespiratoryTrainerDetector {
+public class RespiratoryTrainer {
 
     public static boolean isConnected() {
         //TODO: implement logic
