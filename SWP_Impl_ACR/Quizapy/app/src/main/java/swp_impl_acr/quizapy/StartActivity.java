@@ -11,16 +11,16 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.InputStream;
 import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Random;
 
 import swp_impl_acr.quizapy.Database.DataSource.QuestionDataSource;
-import swp_impl_acr.quizapy.Database.Entity.Answer;
-import swp_impl_acr.quizapy.Database.Entity.Question;
+import swp_impl_acr.quizapy.Database.DataSource.TopicDataSource;
+import swp_impl_acr.quizapy.Database.Entity.Topic;
 import swp_impl_acr.quizapy.Database.QuizapyDataSource;
 import swp_impl_acr.quizapy.EventListener.TooltipTouchListener;
 import swp_impl_acr.quizapy.Helper.ImportParser;
@@ -89,7 +89,7 @@ public class StartActivity extends AppCompatActivity {
             Log.d("SQL ERROR", Arrays.toString(e.getStackTrace()));
         }
 
-        Log.d("Atem Trainer", RespiratoryTrainer.isConnected() ? "is connected" : "is not connected");
+        Log.i("Atem Trainer", RespiratoryTrainer.isConnected() ? "is connected" : "is not connected");
 
         points = (AvailablePoints) getApplicationContext();
         if(savedInstanceState == null){
@@ -114,21 +114,36 @@ public class StartActivity extends AppCompatActivity {
             public void onClick(View v) {
                 gameConfig = GameConfig.getInstance();
                 gameConfig.resetInstance();
-                Random rand = new Random();
+//                Random rand = new Random();
+//                try {
+//                    QuestionDataSource questionDataSource = new QuestionDataSource();
+//                    List<Question> list = questionDataSource.getAllUnansweredQuestions();
+//                    for(Question question:list){
+//                        List<Answer> answers = question.getAnswers();
+//                        gameConfig.addAnswer(answers.get(rand.nextInt(answers.size())));
+//                    }
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
+                gameConfig.setDifficulty(1);
                 try {
-                    QuestionDataSource questionDataSource = new QuestionDataSource();
-                    List<Question> list = questionDataSource.getAllUnansweredQuestions();
-                    for(Question question:list){
-                        List<Answer> answers = question.getAnswers();
-                        gameConfig.addAnswer(answers.get(rand.nextInt(answers.size())));
+                    TopicDataSource topicDataSource = new TopicDataSource();
+                    List<Topic> topics = topicDataSource.getChoosableTopics();
+                    if(topics.size()==0){
+                        Toast.makeText(StartActivity.this, "Nicht genügend Fragen zur Verfügung", Toast.LENGTH_SHORT).show();
+                    } else {
+                        gameConfig.setTopic(topics.get(0));
+                        Intent test = new Intent(getBaseContext(), QuestionActivity.class);
+                        startActivity(test);
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                gameConfig.setDifficulty(1);
-                Intent i = new Intent(getBaseContext(), QuestionListActivity.class);
-                Intent test = new Intent(getBaseContext(), TestActivity.class);
-                startActivity(test);
+
+
+//                Intent i = new Intent(getBaseContext(), QuestionListActivity.class);
+//                Intent test = new Intent(getBaseContext(), QuestionActivity.class);
+//                startActivity(test);
             }
         });
     }

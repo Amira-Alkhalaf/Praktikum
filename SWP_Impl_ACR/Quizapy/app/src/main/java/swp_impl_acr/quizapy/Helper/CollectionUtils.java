@@ -1,13 +1,16 @@
 package swp_impl_acr.quizapy.Helper;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+
 public class CollectionUtils {
 
     public static <I> List<I> generateRandomList(List<I> list, int size) {
-        if (list.size() <= size) {
+        if (list.size() < size) {
             return list;
         }
         List<I> newList = new ArrayList<>();
