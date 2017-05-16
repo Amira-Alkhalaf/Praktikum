@@ -22,12 +22,18 @@ public class QuestionListActivity extends AppCompatActivity {
     QuestionDataSource questionDataSource = null;
     GameConfig gameConfig = null;
     AvailablePoints points = null;
+    ListView list;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
         setContentView(R.layout.activity_question_list);
+        list = (ListView) findViewById(R.id.listView);
+        list.setFilterText("dadasd");
+
+
+
 
         gameConfig = GameConfig.getInstance();
 

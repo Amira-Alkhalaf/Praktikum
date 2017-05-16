@@ -58,12 +58,35 @@ public class QuestionActivity extends AppCompatActivity implements EventListener
      * value represents if the user started choosing the answer with breathing in or breathing out
      */
     private int selectMode = NOTHING;
+    private TextView text2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         layout = (ConstraintLayout) View.inflate(this, R.layout.activity_question, null);
         setContentView(layout);
+
+        text2 = (TextView) findViewById(R.id.text);
+        String newString;
+        if (savedInstanceState == null) {
+            Bundle extras = getIntent().getExtras();
+            if(extras == null) {
+                newString= null;
+            } else {
+                newString= extras.getString("GRAD");
+            }
+        } else {
+            newString= (String) savedInstanceState.getSerializable("GRAD");
+        }
+        text2.setText(newString);
+
+
+
+
+
+
+
+
 
         answerButtons = new ArrayList<>();
 
