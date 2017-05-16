@@ -16,10 +16,13 @@ import swp_impl_acr.quizapy.Database.Entity.Answer;
 import swp_impl_acr.quizapy.Database.Entity.Question;
 import swp_impl_acr.quizapy.R;
 
+/**
+ * custom adapter for displaying the answered questions list
+ */
 public class CustomListAdapter extends ArrayAdapter<Answer> {
     private ArrayList<Answer> answers;
     private Context context;
-
+    
     public CustomListAdapter(Context context, ArrayList<Answer> answers){
         super(context, R.layout.list_item_3, answers);
         this.context = context;

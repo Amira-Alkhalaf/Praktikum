@@ -26,6 +26,10 @@ import swp_impl_acr.quizapy.EventListener.TooltipTouchListener;
 import swp_impl_acr.quizapy.Helper.ImportParser;
 import swp_impl_acr.quizapy.Helper.RespiratoryTrainer;
 
+/**
+ * start screen activity
+ * option to import questions, shows current points and question amount
+ */
 public class StartActivity extends AppCompatActivity {
 
     private QuizapyDataSource databaseConnection = null;

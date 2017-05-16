@@ -17,8 +17,19 @@ import swp_impl_acr.quizapy.Database.Entity.Answer;
 import swp_impl_acr.quizapy.Database.Entity.Question;
 import swp_impl_acr.quizapy.Database.Entity.Topic;
 
+/**
+ * Class for parsing a JSON list of questions
+ */
 public class ImportParser {
 
+    /**
+     * parses a JSON containing questions and persists them to the database
+     * returns true for a reason i dont remember
+     *
+     * @param in
+     * @return
+     * @throws IOException
+     */
     public static boolean parseQuestionJSON(InputStream in) throws IOException {
         JsonReader reader = new JsonReader(new InputStreamReader(in, "UTF-8"));
         List<Topic> topics = new ArrayList<>();
@@ -46,6 +57,12 @@ public class ImportParser {
         return true;
     }
 
+    /**
+     * parses the topic part of the json
+     * @param reader
+     * @return
+     * @throws IOException
+     */
     @NonNull
     private static Topic parseTopic(JsonReader reader) throws IOException {
         reader.beginObject();
@@ -71,6 +88,12 @@ public class ImportParser {
         return topic;
     }
 
+    /**
+     * parses the question part of the json
+     * @param reader
+     * @return
+     * @throws IOException
+     */
     @NonNull
     private static Question parseQuestion(JsonReader reader) throws IOException {
         reader.beginObject();
@@ -98,6 +121,12 @@ public class ImportParser {
         return question;
     }
 
+    /**
+     * parses the answer part of the question
+     * @param reader
+     * @return
+     * @throws IOException
+     */
     @NonNull
     private static Answer parseAnswer(JsonReader reader) throws IOException {
         reader.beginObject();
@@ -118,6 +147,10 @@ public class ImportParser {
         return answer;
     }
 
+    /**
+     * saves everything to the database
+     * @param topics
+     */
     private static void persistToDatabase(List<Topic> topics) {
         try {
             AnswerDataSource answerDataSource = new AnswerDataSource();

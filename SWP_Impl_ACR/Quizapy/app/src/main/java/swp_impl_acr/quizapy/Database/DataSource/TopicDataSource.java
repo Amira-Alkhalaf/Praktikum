@@ -14,6 +14,9 @@ import swp_impl_acr.quizapy.Database.Entity.Question;
 import swp_impl_acr.quizapy.Database.QuizapyContract;
 import swp_impl_acr.quizapy.Database.QuizapyDataSource;
 
+/**
+ * class to handle topic related queries
+ */
 public class TopicDataSource {
 
     private SQLiteDatabase db;
@@ -24,11 +27,21 @@ public class TopicDataSource {
             QuizapyContract.TopicTable.COLUMN_NAME,
     };
 
+    /**
+     * constructor
+     * @throws Exception
+     */
     public TopicDataSource() throws Exception {
         this.instance = QuizapyDataSource.getInstance();
         this.db = instance.getConnection();
     }
 
+    /**
+     * adds topic to the database if it doesn't already exist
+     * otherwise updates it
+     * @param topic
+     * @throws SQLException
+     */
     public void saveTopic(Topic topic) throws SQLException {
         if (instance.checkIfDataExistsInDb(QuizapyContract.TopicTable.TABLE_NAME,
                 QuizapyContract.TopicTable._ID,
@@ -39,6 +52,11 @@ public class TopicDataSource {
         }
     }
 
+    /**
+     * adds topic to the database
+     * @param topic
+     * @throws SQLException
+     */
     private void addTopic(Topic topic) throws SQLException {
         ContentValues contentValues = new ContentValues();
         contentValues.put(QuizapyContract.TopicTable._ID, topic.getId());
@@ -46,12 +64,23 @@ public class TopicDataSource {
         db.insertOrThrow(QuizapyContract.TopicTable.TABLE_NAME, null, contentValues);
     }
 
+    /**
+     * deletes topic from the database
+     * @param id
+     * @throws SQLException
+     */
     public void deleteTopic(final int id) throws SQLException {
         db.delete(QuizapyContract.TopicTable.TABLE_NAME,
                 QuizapyContract.TopicTable._ID + " = ?",
                 new String[]{Integer.toString(id)});
     }
 
+    /**
+     * returns topic with id
+     * @param id
+     * @return
+     * @throws SQLException
+     */
     public Topic getTopicById(final int id) throws SQLException {
         Cursor cursor = db.query(QuizapyContract.TopicTable.TABLE_NAME,
                 null,
@@ -65,6 +94,11 @@ public class TopicDataSource {
         return topic;
     }
 
+    /**
+     * returns a list of all topics
+     * @return
+     * @throws SQLException
+     */
     public List<Topic> getAllTopics() throws SQLException {
         List<Topic> topics = new ArrayList<>();
 
@@ -80,10 +114,20 @@ public class TopicDataSource {
         return topics;
     }
 
+    /**
+     * returns the count of all topics
+     * @return
+     * @throws SQLException
+     */
     public int getAllTopicsCount() throws SQLException {
         return db.query(QuizapyContract.TopicTable.TABLE_NAME, columns, null, null, null, null, null).getCount();
     }
 
+    /**
+     * updates topic in the database
+     * @param topic
+     * @throws SQLException
+     */
     private void updateTopic(Topic topic) throws SQLException {
         ContentValues contentValues = new ContentValues();
 
@@ -98,6 +142,13 @@ public class TopicDataSource {
                 new String[]{Integer.toString(id)});
     }
 
+    /**
+     * returns a list of all unanswered questions for a specific topic and difficulty
+     * @param id
+     * @param difficulty
+     * @return
+     * @throws SQLException
+     */
     public List<Question> getAllUnansweredQuestionsByDifficulty(final int id, final int difficulty) throws SQLException {
         List<Question> questions = new ArrayList<>();
 
@@ -118,6 +169,13 @@ public class TopicDataSource {
         return questions;
     }
 
+    /**
+     * returns the number of all unanswered questions for a specific topic(id) and difficulty
+     * @param id
+     * @param difficulty
+     * @return
+     * @throws SQLException
+     */
     public int getAllUnansweredQuestionsByDifficultyCount(final int id, final int difficulty) throws SQLException {
         return db.query(QuizapyContract.QuestionTable.TABLE_NAME,
                 null, QuizapyContract.QuestionTable.COLUMN_TOPIC + " = ? " +
@@ -126,6 +184,11 @@ public class TopicDataSource {
                 new String[]{Integer.toString(id), Integer.toString(difficulty)}, null, null, null).getCount();
     }
 
+    /**
+     * returns all topics which have more than 10 unanswered questions in a difficulty
+     * @return
+     * @throws SQLException
+     */
     public List<Topic> getChoosableTopics() throws SQLException {
         List<Topic> topics = getAllTopics();
         List<Topic> topicsFiltered = new ArrayList<>();
@@ -143,6 +206,11 @@ public class TopicDataSource {
         return topicsFiltered;
     }
 
+    /**
+     * builds and returns a question object
+     * @param cursor
+     * @return
+     */
     @NonNull
     private Question createQuestion(Cursor cursor) {
         Question question = new Question();
@@ -164,6 +232,11 @@ public class TopicDataSource {
         return question;
     }
 
+    /**
+     * builds ans returns a topic object
+     * @param cursor
+     * @return
+     */
     @NonNull
     private Topic createTopic(Cursor cursor) {
         Topic topic = new Topic();
@@ -172,6 +245,12 @@ public class TopicDataSource {
         return topic;
     }
 
+    /**
+     * returns all questions from a specific topic
+     * @param id
+     * @return
+     * @throws SQLException
+     */
     public List<Question> getAllQuestions(final int id) throws SQLException  {
         List<Question> questions = new ArrayList<>();
 

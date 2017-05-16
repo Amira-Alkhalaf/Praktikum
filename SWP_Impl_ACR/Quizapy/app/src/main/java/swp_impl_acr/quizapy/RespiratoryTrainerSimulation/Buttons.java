@@ -8,13 +8,15 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import swp_impl_acr.quizapy.R;
 
+/**
+ * offers Buttons for Touch Control in case no Respiratory Trainer is connected
+ */
 public class Buttons extends ConstraintLayout implements View.OnTouchListener {
 
     private Button breathIn;
@@ -24,6 +26,12 @@ public class Buttons extends ConstraintLayout implements View.OnTouchListener {
 
     private List<EventListenerInterface> eventListeners;
 
+    /**
+     * constructor
+     *
+     * @param context
+     * @param attrs
+     */
     public Buttons(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         this.context = context;
@@ -85,10 +93,20 @@ public class Buttons extends ConstraintLayout implements View.OnTouchListener {
         return true;
     }
 
+    /**
+     * adds eventListener
+     *
+     * @param eventListener
+     */
     public void addEventListener(EventListenerInterface eventListener){
         eventListeners.add(eventListener);
     }
 
+    /**
+     * removes eventListener
+     *
+     * @param eventListener
+     */
     public void removeEventListener(EventListenerInterface eventListener) {
         eventListeners.remove(eventListener);
     }

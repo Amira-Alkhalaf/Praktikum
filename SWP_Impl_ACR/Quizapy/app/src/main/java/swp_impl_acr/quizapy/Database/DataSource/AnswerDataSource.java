@@ -14,6 +14,9 @@ import swp_impl_acr.quizapy.Database.Entity.Question;
 import swp_impl_acr.quizapy.Database.QuizapyContract;
 import swp_impl_acr.quizapy.Database.QuizapyDataSource;
 
+/**
+ * class to handle answer related queries
+ */
 public class AnswerDataSource {
 
     private SQLiteDatabase db;
@@ -26,11 +29,22 @@ public class AnswerDataSource {
             QuizapyContract.AnswerTable.COLUMN_CORRECT_ANSWER,
     };
 
+    /**
+     * constructor
+     * @throws Exception
+     */
     public AnswerDataSource() throws Exception {
         this.instance = QuizapyDataSource.getInstance();
         this.db = instance.getConnection();
     }
 
+    /**
+     * adds answer to the database if it doesn't already exist
+     * otherwise updates it
+     *
+     * @param answer
+     * @throws SQLException
+     */
     public void saveAnswer(Answer answer) throws SQLException {
         if (instance.checkIfDataExistsInDb(QuizapyContract.AnswerTable.TABLE_NAME,
                 QuizapyContract.AnswerTable._ID,
@@ -41,6 +55,11 @@ public class AnswerDataSource {
         }
     }
 
+    /**
+     * adds an answer to the database
+     * @param answer
+     * @throws SQLException
+     */
     private void addAnswer(Answer answer) throws SQLException {
         ContentValues contentValues = new ContentValues();
         contentValues.put(QuizapyContract.AnswerTable._ID, answer.getId());
@@ -51,12 +70,23 @@ public class AnswerDataSource {
         db.insertOrThrow(QuizapyContract.AnswerTable.TABLE_NAME, null, contentValues);
     }
 
+    /**
+     * deleted answer with id from the database
+     * @param id
+     * @throws SQLException
+     */
     public void deleteAnswer(final int id) throws SQLException {
         db.delete(QuizapyContract.AnswerTable.TABLE_NAME,
                 QuizapyContract.AnswerTable._ID + " = ?",
                 new String[]{Integer.toString(id)});
     }
 
+    /**
+     * returns answer with id
+     * @param id
+     * @return
+     * @throws SQLException
+     */
     public Answer getAnswerById(final int id) throws SQLException {
         Cursor cursor = db.query(QuizapyContract.AnswerTable.TABLE_NAME,
                 null,
@@ -70,6 +100,11 @@ public class AnswerDataSource {
         return answer;
     }
 
+    /**
+     * returns a list of all answers in the database
+     * @return
+     * @throws SQLException
+     */
     public List<Answer> getAllAnswers() throws SQLException {
         List<Answer> answers = new ArrayList<>();
 
@@ -86,10 +121,20 @@ public class AnswerDataSource {
         return answers;
     }
 
+    /**
+     * returns the count of all answers in the database
+     * @return
+     * @throws SQLException
+     */
     public int getAllAnswersCount() throws SQLException {
         return db.query(QuizapyContract.AnswerTable.TABLE_NAME, columns, null, null, null, null, null).getCount();
     }
 
+    /**
+     * updates an answer in the database
+     * @param answer
+     * @throws SQLException
+     */
     private void updateAnswer(Answer answer) throws SQLException {
         ContentValues contentValues = new ContentValues();
 
@@ -108,6 +153,11 @@ public class AnswerDataSource {
                 new String[]{Integer.toString(id)});
     }
 
+    /**
+     * builds an Answer object and returns it
+     * @param cursor
+     * @return
+     */
     @NonNull
     private Answer createAnswer(Cursor cursor) {
         Answer answer = new Answer();

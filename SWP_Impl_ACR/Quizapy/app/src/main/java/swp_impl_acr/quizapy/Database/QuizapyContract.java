@@ -2,6 +2,9 @@ package swp_impl_acr.quizapy.Database;
 
 import android.provider.BaseColumns;
 
+/**
+ * class containing the database schema
+ */
 public class QuizapyContract {
 
     public static final int DATABASE_VERSION = 1;
@@ -11,9 +14,15 @@ public class QuizapyContract {
     public static final String BOOLEAN_TYPE = " BOOLEAN ";
     public static final String COMMA_SEP = " , ";
 
+    /**
+     * private constructor
+     */
     private QuizapyContract() {
     }
 
+    /**
+     * topic table schema
+     */
     public static class TopicTable implements BaseColumns {
         public static final String TABLE_NAME = "topic";
         public static final String COLUMN_NAME = "name";
@@ -26,6 +35,9 @@ public class QuizapyContract {
         public static final String DELETE_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME;
     }
 
+    /**
+     * question table schema
+     */
     public static class QuestionTable implements BaseColumns {
         public static final String TABLE_NAME = "question";
         public static final String COLUMN_TOPIC = "topic";
@@ -47,6 +59,9 @@ public class QuizapyContract {
         public static final String DELETE_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME;
     }
 
+    /**
+     * answer table schema
+     */
     public static class AnswerTable implements BaseColumns {
         public static final String TABLE_NAME = "answer";
         public static final String COLUMN_QUESTION = "question";
@@ -64,6 +79,9 @@ public class QuizapyContract {
         public static final String DELETE_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME;
     }
 
+    /**
+     * a key / value table schema
+     */
     public static class StuffTable implements BaseColumns {
         public static final String TABLE_NAME = "stuff";
         public static final String COLUMN_NAME = "name";

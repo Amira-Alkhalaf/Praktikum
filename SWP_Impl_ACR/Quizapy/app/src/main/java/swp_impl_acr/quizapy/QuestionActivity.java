@@ -28,10 +28,11 @@ import swp_impl_acr.quizapy.Helper.RespiratoryTrainer;
 import swp_impl_acr.quizapy.RespiratoryTrainerSimulation.Buttons;
 import swp_impl_acr.quizapy.RespiratoryTrainerSimulation.EventListenerInterface;
 
-
+/**
+ * activity where the user answers the questions one at a time
+ */
 public class QuestionActivity extends AppCompatActivity implements EventListenerInterface{
     private ConstraintLayout layout;
-    private Buttons buttons;
     private List<Button> answerButtons;
     private Cursor cursor = null;
     private ObjectAnimator animator;
@@ -40,16 +41,28 @@ public class QuestionActivity extends AppCompatActivity implements EventListener
     private GameConfig gameConfig;
     private List<Answer> answers;
 
+    /**
+     * constant for selectMode: no user action happened yet
+     */
     private static final int NOTHING = 0;
+    /**
+     * constant for selectMode: user started to choose answer with breathing in and locks the answer in with breathing out
+     */
     private static final int IN_OUT = 1;
+    /**
+     * constant for selectMode: user started to choose answer with breathing out and locks the answer in with breathing in
+     */
     private static final int OUT_IN = 2;
 
+    /**
+     * value represents if the user started choosing the answer with breathing in or breathing out
+     */
     private int selectMode = NOTHING;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        layout = (ConstraintLayout) View.inflate(this, R.layout.activity_test, null);
+        layout = (ConstraintLayout) View.inflate(this, R.layout.activity_question, null);
         setContentView(layout);
 
         answerButtons = new ArrayList<>();
@@ -64,7 +77,7 @@ public class QuestionActivity extends AppCompatActivity implements EventListener
         gameConfig = GameConfig.getInstance();
         try {
             TopicDataSource topicDataSource = new TopicDataSource();
-            questions= topicDataSource.getAllUnansweredQuestionsByDifficulty(gameConfig.getTopic().getId(),gameConfig.getDifficulty());
+            questions= topicDataSource.getAllUnansweredQuestionsByDifficulty(gameConfig.getTopic().getId(), gameConfig.getDifficulty());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -72,7 +85,7 @@ public class QuestionActivity extends AppCompatActivity implements EventListener
 
 
         if (!RespiratoryTrainer.isConnected()) {
-            getButtons();
+            getSimulatorButtons();
         }
 
         cursor = new Cursor(this, 0,0);
@@ -81,6 +94,9 @@ public class QuestionActivity extends AppCompatActivity implements EventListener
 
         layout.getViewTreeObserver().addOnGlobalLayoutListener(
                 new ViewTreeObserver.OnGlobalLayoutListener() {
+                    /**
+                     * sets answerbuttons to the same width and places cursor above the topmost button
+                     */
                     @Override
                     public void onGlobalLayout() {
                         layout.getViewTreeObserver().removeOnGlobalLayoutListener(this);
@@ -111,6 +127,9 @@ public class QuestionActivity extends AppCompatActivity implements EventListener
 
     }
 
+    /**
+     * displays the current question and its answers
+     */
     private void displayQuestion() {
         text.setText(questions.get(0).getName());
         answers = questions.get(0).getAnswers();
@@ -124,9 +143,11 @@ public class QuestionActivity extends AppCompatActivity implements EventListener
         }
     }
 
-
-    private void getButtons() {
-        buttons = new Buttons(this, null);
+    /**
+     * adds Buttons to simulate the Respiratory Trainer to the bottom of the screen
+     */
+    private void getSimulatorButtons() {
+        Buttons buttons = new Buttons(this, null);
         layout.addView(buttons);
 
         ConstraintSet set = new ConstraintSet();
@@ -142,6 +163,9 @@ public class QuestionActivity extends AppCompatActivity implements EventListener
 
     }
 
+    /**
+     * either starts cursoranimation or saves the current selected answer and moves to the nextaction depending on the selected mode
+     */
     @Override
     public void onBreathInStart() {
         switch(selectMode){
@@ -151,7 +175,7 @@ public class QuestionActivity extends AppCompatActivity implements EventListener
                 startCursorAnimation();
                 break;
             case OUT_IN:
-                highlightActiveButton();
+                saveSelectedAnswer();
                 next();
                 break;
             default:
@@ -159,11 +183,17 @@ public class QuestionActivity extends AppCompatActivity implements EventListener
         }
     }
 
+    /**
+     * stops the animation
+     */
     @Override
     public void onBreathInStop() {
         animator.cancel();
     }
 
+    /**
+     * either starts the animation or saves and moves to next action depending on the mode
+     */
     @Override
     public void onBreathOutStart() {
         switch(selectMode){
@@ -173,7 +203,7 @@ public class QuestionActivity extends AppCompatActivity implements EventListener
                 startCursorAnimation();
                 break;
             case IN_OUT:
-                highlightActiveButton();
+                saveSelectedAnswer();
                 next();
                 break;
             default:
@@ -181,6 +211,9 @@ public class QuestionActivity extends AppCompatActivity implements EventListener
         }
     }
 
+    /**
+     * stops the animation
+     */
     @Override
     public void onBreathOutStop() {
         animator.cancel();
@@ -197,6 +230,9 @@ public class QuestionActivity extends AppCompatActivity implements EventListener
 
     }
 
+    /**
+     * sets Cursor animation and starts it
+     */
     private void startCursorAnimation() {
         animator = ObjectAnimator.ofFloat(cursor, "y", answerButtons.get(0).getTop()+25,answerButtons.get(3).getBottom()-25);
         animator.setDuration(5000);
@@ -209,12 +245,10 @@ public class QuestionActivity extends AppCompatActivity implements EventListener
                 float currentY = (Float) animation.getAnimatedValue();
 
                 for(Button button:answerButtons){
-                    button.setBackgroundColor(Color.LTGRAY);
-                }
-
-                for(Button button:answerButtons){
                     if(currentY >= button.getTop() && currentY <= button.getBottom()) {
                         button.setBackgroundColor(Color.CYAN);
+                    } else {
+                        button.setBackgroundColor(Color.LTGRAY);
                     }
                 }
             }
@@ -222,6 +256,10 @@ public class QuestionActivity extends AppCompatActivity implements EventListener
         animator.start();
     }
 
+    /**
+     * if the questionList is empty: starts the next activity (QuestionListActivity)
+     * otherwise displays the next question and resets the cursor;
+     */
     private void next() {
         questions.remove(0);
         if(questions.size()==0){
@@ -235,7 +273,10 @@ public class QuestionActivity extends AppCompatActivity implements EventListener
         }
     }
 
-    private void highlightActiveButton() {
+    /**
+     * adds the selected answer to the AnswerList in the GameConfig instance
+     */
+    private void saveSelectedAnswer() {
         int color = Color.LTGRAY;
         int i = 0;
         for(Button button:answerButtons) {

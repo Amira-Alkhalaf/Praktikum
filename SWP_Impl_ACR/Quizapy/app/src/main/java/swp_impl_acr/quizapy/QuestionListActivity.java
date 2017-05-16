@@ -3,19 +3,20 @@ package swp_impl_acr.quizapy;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.widget.ListView;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.Map;
 
 import swp_impl_acr.quizapy.Adapter.CustomListAdapter;
 import swp_impl_acr.quizapy.Database.DataSource.QuestionDataSource;
 import swp_impl_acr.quizapy.Database.Entity.Answer;
 import swp_impl_acr.quizapy.Database.Entity.Question;
 
+
+/**
+ * activity displays the answered questions with the user chosen answer and the correct answer
+ */
 public class QuestionListActivity extends AppCompatActivity {
 
     QuestionDataSource questionDataSource = null;
@@ -46,6 +47,10 @@ public class QuestionListActivity extends AppCompatActivity {
         listView.setAdapter(adapter);
     }
 
+    /**
+     * checks if all questions were answered correctly and if so adds the chosen points to currently available points
+     * otherwise substracts them
+     */
     private void updateAvailablePoints() {
         if(updateQuestions()){
             points.addPoints(gameConfig.getDifficulty());
@@ -54,6 +59,11 @@ public class QuestionListActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * sets the questions to answered and if they were answered correctly
+     *
+     * @return true = all questions were correctly answered
+     */
     private boolean updateQuestions() {
         ArrayList<Answer> answers = gameConfig.getAnswers();
         boolean allQuestionsCorrect=true;
@@ -71,6 +81,10 @@ public class QuestionListActivity extends AppCompatActivity {
         return allQuestionsCorrect;
     }
 
+    /**
+     * persists the updated question to the database
+     * @param question
+     */
     private void saveQuestion(Question question) {
         try {
             questionDataSource.saveQuestion(question);

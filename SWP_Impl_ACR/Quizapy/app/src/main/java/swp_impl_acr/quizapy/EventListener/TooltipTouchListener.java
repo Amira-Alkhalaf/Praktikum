@@ -4,9 +4,16 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.TextView;
 
+/**
+ * Listener to display tooltips on touch
+ */
 public class TooltipTouchListener implements View.OnTouchListener {
     private TextView helpText = null;
 
+    /**
+     * constructor
+     * @param helpText the text which should be displayed
+     */
     public TooltipTouchListener(TextView helpText) {
         this.helpText = helpText;
     }

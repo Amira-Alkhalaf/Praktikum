@@ -15,6 +15,9 @@ import swp_impl_acr.quizapy.Database.Entity.Topic;
 import swp_impl_acr.quizapy.Database.QuizapyContract;
 import swp_impl_acr.quizapy.Database.QuizapyDataSource;
 
+/**
+ * class to handle question related queries
+ */
 public class QuestionDataSource {
 
     private SQLiteDatabase db;
@@ -29,11 +32,22 @@ public class QuestionDataSource {
             QuizapyContract.QuestionTable.COLUMN_CORRECTLY,
     };
 
+    /**
+     * constructor
+     * @throws Exception
+     */
     public QuestionDataSource() throws Exception {
         this.instance = QuizapyDataSource.getInstance();
         this.db = instance.getConnection();
     }
 
+    /**
+     * adds question to the database if it doesn't already exist
+     * otherwise updates it
+     *
+     * @param question
+     * @throws SQLException
+     */
     public void saveQuestion(Question question) throws SQLException {
         if (instance.checkIfDataExistsInDb(QuizapyContract.QuestionTable.TABLE_NAME,
                 QuizapyContract.QuestionTable._ID,
@@ -44,6 +58,12 @@ public class QuestionDataSource {
         }
     }
 
+    /**
+     * returns question with id
+     * @param id
+     * @return
+     * @throws SQLException
+     */
     public Question getQuestionById(final int id) throws SQLException {
         Cursor cursor = db.query(QuizapyContract.QuestionTable.TABLE_NAME,
                 null,
@@ -57,6 +77,11 @@ public class QuestionDataSource {
         return question;
     }
 
+    /**
+     * adds question to database
+     * @param question
+     * @throws SQLException
+     */
     private void addQuestion(Question question) throws SQLException {
         ContentValues contentValues = new ContentValues();
         contentValues.put(QuizapyContract.QuestionTable._ID, question.getId());
@@ -68,12 +93,22 @@ public class QuestionDataSource {
         db.insertOrThrow(QuizapyContract.QuestionTable.TABLE_NAME, null, contentValues);
     }
 
+    /**
+     * deletes question with id
+     * @param id
+     * @throws SQLException
+     */
     public void deleteQuestion(final int id) throws SQLException {
         db.delete(QuizapyContract.QuestionTable.TABLE_NAME,
                 QuizapyContract.QuestionTable._ID + " = ?",
                 new String[]{Integer.toString(id)});
     }
 
+    /**
+     * returns a list with all questions in the database
+     * @return
+     * @throws SQLException
+     */
     public List<Question> getAllQuestions() throws SQLException {
         List<Question> questions = new ArrayList<>();
 
@@ -89,10 +124,20 @@ public class QuestionDataSource {
         return questions;
     }
 
+    /**
+     * returns the number of all questions in the database
+     * @return
+     * @throws SQLException
+     */
     public int getAllQuestionsCount() throws SQLException {
         return db.query(QuizapyContract.QuestionTable.TABLE_NAME, columns, null, null, null, null, null).getCount();
     }
 
+    /**
+     * updates question
+     * @param question
+     * @throws SQLException
+     */
     private void updateQuestion(Question question) throws SQLException {
         ContentValues contentValues = new ContentValues();
 
@@ -115,6 +160,12 @@ public class QuestionDataSource {
                 new String[]{Integer.toString(id)});
     }
 
+    /**
+     * returns the correctAnswer for specific question(id)
+     * @param id
+     * @return
+     * @throws SQLException
+     */
     public Answer getCorrectAnswer(final int id) throws SQLException {
         Cursor cursor = db.query(QuizapyContract.AnswerTable.TABLE_NAME,
                 null,
@@ -128,6 +179,12 @@ public class QuestionDataSource {
         return answer;
     }
 
+    /**
+     * returns all wrong answer for specific question(id)
+     * @param id
+     * @return
+     * @throws SQLException
+     */
     public List<Answer> getWrongAnswers(final int id) throws SQLException {
         List<Answer> answers = new ArrayList<>();
 
@@ -146,6 +203,12 @@ public class QuestionDataSource {
         return answers;
     }
 
+    /**
+     * returns all answers for specific question(id)
+     * @param id
+     * @return
+     * @throws SQLException
+     */
     public List<Answer> getAllAnswers(final int id) throws SQLException {
         List<Answer> answers = new ArrayList<>();
 
@@ -164,6 +227,11 @@ public class QuestionDataSource {
         return answers;
     }
 
+    /**
+     * returns all unanswered questions
+     * @return
+     * @throws SQLException
+     */
     public List<Question> getAllUnansweredQuestions() throws SQLException {
         List<Question> questions = new ArrayList<>();
 
@@ -182,6 +250,11 @@ public class QuestionDataSource {
         return questions;
     }
 
+    /**
+     * returns all answered questions
+     * @return
+     * @throws SQLException
+     */
     public List<Question> getAllAnsweredQuestions() throws SQLException {
         List<Question> questions = new ArrayList<>();
 
@@ -200,6 +273,11 @@ public class QuestionDataSource {
         return questions;
     }
 
+    /**
+     * returns the count of all unanswered questions
+     * @return
+     * @throws SQLException
+     */
     public int getAllUnansweredQuestionsCount() throws SQLException {
         return db.query(QuizapyContract.QuestionTable.TABLE_NAME,
                 columns,
@@ -207,6 +285,11 @@ public class QuestionDataSource {
                 null, null, null, null).getCount();
     }
 
+    /**
+     * returns the count of all answered questions
+     * @return
+     * @throws SQLException
+     */
     public int getAllAnsweredQuestionsCount() throws SQLException {
         return db.query(QuizapyContract.QuestionTable.TABLE_NAME,
                 columns,
@@ -214,6 +297,11 @@ public class QuestionDataSource {
                 null, null, null, null).getCount();
     }
 
+    /**
+     * builds and returns a question object
+     * @param cursor
+     * @return
+     */
     @NonNull
     private Question createQuestion(Cursor cursor) {
         Question question = new Question();
@@ -235,6 +323,11 @@ public class QuestionDataSource {
         return question;
     }
 
+    /**
+     * build and returns an answer object
+     * @param cursor
+     * @return
+     */
     @NonNull
     private Answer createAnswer(Cursor cursor) {
         Answer answer = new Answer();
