@@ -16,6 +16,8 @@ import android.view.animation.LinearInterpolator;
 import android.widget.Button;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -80,12 +82,15 @@ public class QuestionActivity extends AppCompatActivity implements EventListener
         gameConfig = GameConfig.getInstance();
         try {
             TopicDataSource topicDataSource = new TopicDataSource();
-            questions= topicDataSource.getAllUnansweredQuestionsByDifficulty(gameConfig.getTopic().getId(), gameConfig.getDifficulty());
+            questions = topicDataSource.getAllUnansweredQuestionsByDifficulty(gameConfig.getTopic().getId(), gameConfig.getDifficulty());
+            questions = CollectionUtils.generateRandomList(questions, 10);
         } catch (Exception e) {
             e.printStackTrace();
         }
 
         difficulty.setText(gradToString(gameConfig.getDifficulty()));
+        TextView chosenTopic = (TextView) findViewById(R.id.chosen_topic);
+        chosenTopic.setText(gameConfig.getTopic().getName());
         displayQuestion();
 
 

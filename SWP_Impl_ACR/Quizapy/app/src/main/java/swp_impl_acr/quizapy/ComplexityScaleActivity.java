@@ -64,6 +64,9 @@ public class ComplexityScaleActivity extends AppCompatActivity implements EventL
             e.printStackTrace();
         }
         gameConfig = GameConfig.getInstance();
+
+        TextView chosenTopic = (TextView) findViewById(R.id.chosenTopic);
+        chosenTopic.setText(gameConfig.getTopic().getName());
     }
 
     /**

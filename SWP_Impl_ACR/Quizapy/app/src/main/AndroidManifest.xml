@@ -24,8 +24,12 @@
         <activity
             android:name=".QuestionActivity"
             android:label="@string/title_activity_test"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity android:name=".ComplexityScaleActivity" />
+        <activity
+            android:name=".TopicSelectionActivity"
+            android:label="@string/title_activity_topic_selection"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
-        <activity android:name="ComplexityScaleActivity"></activity>
         <activity android:name="TypesOfQuestions"></activity>
 
     </application>

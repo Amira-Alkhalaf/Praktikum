@@ -53,6 +53,8 @@ public class StartActivity extends AppCompatActivity {
                     ImportParser.parseQuestionJSON(in);
                     allQuestionsCount.setText(Integer.toString(questionDataSource.getAllQuestionsCount()));
                     answeredQuestionsCount.setText(Integer.toString(questionDataSource.getAllAnsweredQuestionsCount()));
+                    Toast.makeText(this, "Fragen (erfolgreich) importiert", Toast.LENGTH_SHORT).show();
+                    //todo: implement progress bar 
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -118,35 +120,20 @@ public class StartActivity extends AppCompatActivity {
             public void onClick(View v) {
                 gameConfig = GameConfig.getInstance();
                 gameConfig.resetInstance();
-//                Random rand = new Random();
-//                try {
-//                    QuestionDataSource questionDataSource = new QuestionDataSource();
-//                    List<Question> list = questionDataSource.getAllUnansweredQuestions();
-//                    for(Question question:list){
-//                        List<Answer> answers = question.getAnswers();
-//                        gameConfig.addAnswer(answers.get(rand.nextInt(answers.size())));
-//                    }
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                }
                 try {
                     TopicDataSource topicDataSource = new TopicDataSource();
                     List<Topic> topics = topicDataSource.getChoosableTopics();
                     if(topics.size()==0){
                         Toast.makeText(StartActivity.this, "Nicht genügend Fragen zur Verfügung", Toast.LENGTH_SHORT).show();
                     } else {
-                        gameConfig.setTopic(topics.get(0));
-                        Intent test = new Intent(getBaseContext(), TypesOfQuestions.class);
-                        startActivity(test);
+//                        Intent test = new Intent(getBaseContext(), TypesOfQuestions.class);
+//                        startActivity(test);
+                        Intent in = new Intent(getBaseContext(), TopicSelectionActivity.class);
+                        startActivity(in);
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-
-
-//                Intent i = new Intent(getBaseContext(), QuestionListActivity.class);
-//                Intent test = new Intent(getBaseContext(), QuestionActivity.class);
-//                startActivity(test);
             }
         });
     }
