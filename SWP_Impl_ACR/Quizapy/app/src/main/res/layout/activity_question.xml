@@ -49,9 +49,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/guideline3"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.5"
-        tools:layout_editor_absoluteY="284dp"
-        tools:layout_editor_absoluteX="0dp" />
+        app:layout_constraintGuide_percent="0.5" />
 
     <TextView
         android:id="@+id/questionText"
@@ -65,11 +63,11 @@
 
     <TextView
         android:id="@+id/text"
-        android:layout_width="368dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="TextView"
-        tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="0dp"
-        tools:textSize="30sp" />
+        tools:textSize="30sp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent" />
 
 </android.support.constraint.ConstraintLayout>
