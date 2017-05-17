@@ -125,6 +125,8 @@ public class StartActivity extends AppCompatActivity {
                     List<Topic> topics = topicDataSource.getChoosableTopics();
                     if(topics.size()==0){
                         Toast.makeText(StartActivity.this, "Nicht genügend Fragen zur Verfügung", Toast.LENGTH_SHORT).show();
+                    } else if(points.getPoints()==0) {
+                        Toast.makeText(StartActivity.this, "Nicht genügend Punkte zur Verfügung", Toast.LENGTH_SHORT).show();
                     } else {
 //                        Intent test = new Intent(getBaseContext(), TypesOfQuestions.class);
 //                        startActivity(test);

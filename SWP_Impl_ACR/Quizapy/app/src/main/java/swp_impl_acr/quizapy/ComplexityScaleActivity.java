@@ -41,6 +41,7 @@ public class ComplexityScaleActivity extends AppCompatActivity implements EventL
     private GameConfig gameConfig;
 
     private Toast gradNotAvailableToast;
+    private AvailablePoints points = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +50,8 @@ public class ComplexityScaleActivity extends AppCompatActivity implements EventL
         setContentView(layout);
 
         gradNotAvailableToast = Toast.makeText(ComplexityScaleActivity.this, "Die gewählte Schwierigkeit ist nicht verfügbar. Bitte eine andere wählen.", Toast.LENGTH_LONG);
+
+        points = (AvailablePoints) getApplicationContext();
 
         scaleImage = (ImageView) findViewById(R.id.image);
         currentGrad = (TextView) findViewById(R.id.console);
@@ -150,7 +153,7 @@ public class ComplexityScaleActivity extends AppCompatActivity implements EventL
     public void onBreathOutStart() {
         gameConfig.setDifficulty(grad);
 
-        if(isGradChoosable()){
+        if(isGradChoosable() && points.getPoints() >= grad){
             gradNotAvailableToast.cancel();
             Intent b2 = new Intent(ComplexityScaleActivity.this,QuestionActivity.class);
             startActivity(b2);
