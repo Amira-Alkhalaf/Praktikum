@@ -36,7 +36,7 @@ public class QuestionActivity extends AppCompatActivity implements EventListener
     private List<Button> answerButtons;
     private Cursor cursor = null;
     private ObjectAnimator animator;
-    private TextView text;
+    private TextView questionText;
     private List<Question> questions;
     private GameConfig gameConfig;
     private List<Answer> answers;
@@ -58,7 +58,7 @@ public class QuestionActivity extends AppCompatActivity implements EventListener
      * value represents if the user started choosing the answer with breathing in or breathing out
      */
     private int selectMode = NOTHING;
-    private TextView text2;
+    private TextView difficulty;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,27 +66,7 @@ public class QuestionActivity extends AppCompatActivity implements EventListener
         layout = (ConstraintLayout) View.inflate(this, R.layout.activity_question, null);
         setContentView(layout);
 
-        text2 = (TextView) findViewById(R.id.text);
-        String newString;
-        if (savedInstanceState == null) {
-            Bundle extras = getIntent().getExtras();
-            if(extras == null) {
-                newString= null;
-            } else {
-                newString= extras.getString("GRAD");
-            }
-        } else {
-            newString= (String) savedInstanceState.getSerializable("GRAD");
-        }
-        text2.setText(newString);
-
-
-
-
-
-
-
-
+        difficulty = (TextView) findViewById(R.id.text);
 
         answerButtons = new ArrayList<>();
 
@@ -95,7 +75,7 @@ public class QuestionActivity extends AppCompatActivity implements EventListener
         answerButtons.add((Button)(findViewById(R.id.button3)));
         answerButtons.add((Button)(findViewById(R.id.button4)));
 
-        text = (TextView)(findViewById(R.id.questionText));
+        questionText = (TextView)(findViewById(R.id.questionText));
 
         gameConfig = GameConfig.getInstance();
         try {
@@ -104,6 +84,8 @@ public class QuestionActivity extends AppCompatActivity implements EventListener
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        difficulty.setText(gradToString(gameConfig.getDifficulty()));
         displayQuestion();
 
 
@@ -154,7 +136,7 @@ public class QuestionActivity extends AppCompatActivity implements EventListener
      * displays the current question and its answers
      */
     private void displayQuestion() {
-        text.setText(questions.get(0).getName());
+        questionText.setText(questions.get(0).getName());
         answers = questions.get(0).getAnswers();
         answers = CollectionUtils.generateRandomList(answers, answers.size());
 
@@ -311,6 +293,24 @@ public class QuestionActivity extends AppCompatActivity implements EventListener
                 gameConfig.addAnswer(answers.get(i));
             }
             i++;
+        }
+    }
+
+    /**
+     * returns string corresponding to set difficulty
+     * @param grad
+     * @return
+     */
+    private String gradToString(int grad){
+        switch(grad){
+            case 1:
+                return "low";
+            case 2:
+                return "med";
+            case 3:
+                return "high";
+            default:
+                return "error";
         }
     }
 }

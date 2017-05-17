@@ -6,74 +6,170 @@ package swp_impl_acr.quizapy;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.sql.SQLException;
+
+import swp_impl_acr.quizapy.Database.DataSource.TopicDataSource;
+import swp_impl_acr.quizapy.Helper.RespiratoryTrainer;
+import swp_impl_acr.quizapy.RespiratoryTrainerSimulation.Buttons;
+import swp_impl_acr.quizapy.RespiratoryTrainerSimulation.EventListenerInterface;
 
 /**
  * Created by Amira on 5/16/2017.
  */
 
-public class ComplexityScaleActivity extends AppCompatActivity {
+public class ComplexityScaleActivity extends AppCompatActivity implements EventListenerInterface{
 
-    private ImageView imageView;
-    private TextView console;
-    private Button button1,button2;
+    private ImageView scaleImage;
+    private TextView currentGrad;
+    private ConstraintLayout layout;
     private float rotation = 0;
-    private String grad = "low";
+
+    private static final int LOW = 1;
+    private static final int MED = 2;
+    private static final int HIGH = 3;
+
+    private int grad = LOW;
+
+    private TopicDataSource topicDataSource;
+    private GameConfig gameConfig;
+
+    private Toast gradNotAvailableToast;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_complexityscale);
+        layout =(ConstraintLayout) View.inflate(this, R.layout.activity_complexityscale, null);
+        setContentView(layout);
 
-        imageView = (ImageView) findViewById(R.id.image);
-        button1 = (Button) findViewById(R.id.button);
-        button2=(Button)findViewById(R.id.button2);
-        console = (TextView) findViewById(R.id.console);
-        console.append(grad);
-        button1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        gradNotAvailableToast = Toast.makeText(ComplexityScaleActivity.this, "Die gewählte Schwierigkeit ist nicht verfügbar. Bitte eine andere wählen.", Toast.LENGTH_LONG);
 
-                rotation = rotation + 120;
-                imageView.setRotation(rotation);
-                switch(grad){
-                    case "low":  grad="high";
-                        break;
-                    case "med":  grad="low";
-                        break;
-                    case "high":  grad="med";
-                        break;
-                }
-                console.setText(grad);
-            }
-        });
+        scaleImage = (ImageView) findViewById(R.id.image);
+        currentGrad = (TextView) findViewById(R.id.console);
+        currentGrad.setText(gradToString());
 
+        if (!RespiratoryTrainer.isConnected()) {
+            getSimulatorButtons();
+        }
 
-        button2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent b2 = new Intent(ComplexityScaleActivity.this,QuestionActivity.class);
-                b2.putExtra("GRAD", grad);
-                startActivity(b2);
-            }
-        });
+        try {
+            topicDataSource = new TopicDataSource();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        gameConfig = GameConfig.getInstance();
+    }
 
+    /**
+     * adds Buttons to simulate the Respiratory Trainer to the top of the screen
+     */
+    private void getSimulatorButtons() {
+        Buttons buttons = new Buttons(this, null);
 
+        layout.addView(buttons);
 
+        buttons.addEventListener(this);
+    }
 
+    /**
+     * returns true if the desired difficulty is available
+     * @return
+     */
+    private boolean isGradChoosable(){
+        int count = 0;
+        try {
+            count = topicDataSource.getAllUnansweredQuestionsByDifficultyCount(gameConfig.getTopic().getId(),gameConfig.getDifficulty());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        if(count >= 10){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * returns string of grad
+     * @return
+     */
+    private String gradToString(){
+        switch(grad){
+            case LOW:
+                return "low";
+            case MED:
+                return "med";
+            case HIGH:
+                return "high";
+            default:
+                return "error";
+        }
+    }
+
+    /**
+     * onclick changes grad
+     */
+    @Override
+    public void onBreathInStart() {
+        rotation = rotation + 120;
+        scaleImage.setRotation(rotation);
+        switch(grad){
+            case LOW:
+                grad=HIGH;
+                break;
+            case MED:
+                grad=LOW;
+                break;
+            case HIGH:
+                grad=MED;
+                break;
+        }
+        currentGrad.setText(gradToString());
+        scaleImage.invalidate();
+    }
+
+    @Override
+    public void onBreathInStop() {
 
     }
 
+    /**
+     * onclick sets grad and starts question activity
+     * if difficulty is available for chosen topic
+     */
+    @Override
+    public void onBreathOutStart() {
+        gameConfig.setDifficulty(grad);
 
-
-
+        if(isGradChoosable()){
+            gradNotAvailableToast.cancel();
+            Intent b2 = new Intent(ComplexityScaleActivity.this,QuestionActivity.class);
+            startActivity(b2);
+            finish();
+        } else {
+            gradNotAvailableToast.show();
+            // todo: Shake screen or disable a diffiulty if its not available or something
+        }
+    }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
+    public void onBreathOutStop() {
+
+    }
+
+    @Override
+    public void onHoldBreathStart() {
+
+    }
+
+    @Override
+    public void onHoldBreathStop() {
 
     }
 }

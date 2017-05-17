@@ -129,7 +129,6 @@ public class StartActivity extends AppCompatActivity {
 //                } catch (Exception e) {
 //                    e.printStackTrace();
 //                }
-                gameConfig.setDifficulty(1);
                 try {
                     TopicDataSource topicDataSource = new TopicDataSource();
                     List<Topic> topics = topicDataSource.getChoosableTopics();
