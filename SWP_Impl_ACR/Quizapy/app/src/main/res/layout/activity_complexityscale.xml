@@ -8,7 +8,7 @@
     <ImageView
         android:id="@+id/image"
         android:layout_width="0dp"
-        android:layout_height="300dp"
+        android:layout_height="299dp"
         android:src="@drawable/scale"
         app:layout_constraintBottom_toTopOf="@+id/console"
         android:layout_marginStart="30dp"
