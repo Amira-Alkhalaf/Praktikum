@@ -110,7 +110,7 @@ public class TopicSelectionActivity extends AppCompatActivity implements EventLi
                         }
 
                         cursor.moveCursor(topicButtons.get(0).getLeft(),topicButtons.get(0).getTop());
-                        cursor.setVisibility(View.VISIBLE);
+                        //cursor.setVisibility(View.VISIBLE);
                         startCursorAnimation();
 
                     }
