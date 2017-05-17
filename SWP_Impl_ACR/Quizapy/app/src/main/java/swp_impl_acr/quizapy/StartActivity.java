@@ -136,7 +136,7 @@ public class StartActivity extends AppCompatActivity {
                         Toast.makeText(StartActivity.this, "Nicht genügend Fragen zur Verfügung", Toast.LENGTH_SHORT).show();
                     } else {
                         gameConfig.setTopic(topics.get(0));
-                        Intent test = new Intent(getBaseContext(), ComplexityScaleActivity.class);
+                        Intent test = new Intent(getBaseContext(), TypesOfQuestions.class);
                         startActivity(test);
                     }
                 } catch (Exception e) {

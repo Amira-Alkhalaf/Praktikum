@@ -26,6 +26,8 @@
             android:label="@string/title_activity_test"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
         <activity android:name="ComplexityScaleActivity"></activity>
+        <activity android:name="TypesOfQuestions"></activity>
+
     </application>
 
 </manifest>

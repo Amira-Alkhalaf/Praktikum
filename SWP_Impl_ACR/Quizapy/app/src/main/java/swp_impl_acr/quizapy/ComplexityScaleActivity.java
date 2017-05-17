@@ -117,17 +117,17 @@ public class ComplexityScaleActivity extends AppCompatActivity implements EventL
      */
     @Override
     public void onBreathInStart() {
-        rotation = rotation + 120;
+        rotation = rotation - 120;
         scaleImage.setRotation(rotation);
         switch(grad){
             case LOW:
-                grad=HIGH;
+                grad=MED;
                 break;
             case MED:
-                grad=LOW;
+                grad=HIGH;
                 break;
             case HIGH:
-                grad=MED;
+                grad=LOW;
                 break;
         }
         currentGrad.setText(gradToString());
