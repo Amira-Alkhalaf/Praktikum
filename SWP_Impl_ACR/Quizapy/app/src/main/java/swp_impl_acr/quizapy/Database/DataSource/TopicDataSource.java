@@ -205,6 +205,31 @@ public class TopicDataSource {
         }
         return topicsFiltered;
     }
+    /**
+     * returns all topics which have more than 10 unanswered questions in a difficulty not higher than available points
+     * @return
+     * @throws SQLException
+     */
+    public List<Topic> getChoosableTopics(int maxPoints) throws SQLException {
+        int j=3;
+        if(maxPoints<=j){
+            j=maxPoints;
+        }
+        List<Topic> topics = getAllTopics();
+        List<Topic> topicsFiltered = new ArrayList<>();
+        for (Topic topic : topics) {
+            boolean hasEnoughQuestions = false;
+            for (int i = 1; i <= maxPoints; i++) {
+                if (getAllUnansweredQuestionsByDifficultyCount(topic.getId(), i) >= 10) {
+                    hasEnoughQuestions = true;
+                }
+            }
+            if (hasEnoughQuestions) {
+                topicsFiltered.add(topic);
+            }
+        }
+        return topicsFiltered;
+    }
 
     /**
      * builds and returns a question object

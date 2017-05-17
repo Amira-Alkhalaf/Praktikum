@@ -122,11 +122,9 @@ public class StartActivity extends AppCompatActivity {
                 gameConfig.resetInstance();
                 try {
                     TopicDataSource topicDataSource = new TopicDataSource();
-                    List<Topic> topics = topicDataSource.getChoosableTopics();
-                    if(topics.size()==0){
-                        Toast.makeText(StartActivity.this, "Nicht genügend Fragen zur Verfügung", Toast.LENGTH_SHORT).show();
-                    } else if(points.getPoints()==0) {
-                        Toast.makeText(StartActivity.this, "Nicht genügend Punkte zur Verfügung", Toast.LENGTH_SHORT).show();
+                    List<Topic> topics = topicDataSource.getChoosableTopics(points.getPoints());
+                    if(topics.size()==0 || points.getPoints()==0){
+                        Toast.makeText(StartActivity.this, "Nicht genügend Fragen oder Punkte zur Verfügung", Toast.LENGTH_SHORT).show();
                     } else {
 //                        Intent test = new Intent(getBaseContext(), TypesOfQuestions.class);
 //                        startActivity(test);

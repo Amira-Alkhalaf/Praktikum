@@ -39,6 +39,7 @@ public class TopicSelectionActivity extends AppCompatActivity implements EventLi
     private Cursor cursor;
     private ObjectAnimator animator;
     private TopicDataSource topicDataSource;
+    private AvailablePoints points = null;
 
 
     private static final int LEFT = 0;
@@ -59,6 +60,8 @@ public class TopicSelectionActivity extends AppCompatActivity implements EventLi
         if (!RespiratoryTrainer.isConnected()) {
             getSimulatorButtons();
         }
+        points = (AvailablePoints) getApplicationContext();
+
         topicButtons = new ArrayList<>();
 
         topicButtons.add((Button)(findViewById(R.id.topic_button_1)));
@@ -74,7 +77,7 @@ public class TopicSelectionActivity extends AppCompatActivity implements EventLi
         gameConfig = GameConfig.getInstance();
         try {
             topicDataSource = new TopicDataSource();
-            topics = topicDataSource.getChoosableTopics();
+            topics = topicDataSource.getChoosableTopics(points.getPoints());
             topics = CollectionUtils.generateRandomList(topics, 9);
         } catch (Exception e) {
             e.printStackTrace();
@@ -264,8 +267,12 @@ public class TopicSelectionActivity extends AppCompatActivity implements EventLi
      * starts next activity
      */
     public void next(){
+        int j=3;
+        if(points.getPoints()<=3){
+            j=points.getPoints();
+        }
         int gradCount = 0;
-        for(int i = 1; i<=3; i++){
+        for(int i = 1; i<=j; i++){
             try {
                 int count = topicDataSource.getAllUnansweredQuestionsByDifficultyCount(gameConfig.getTopic().getId(),i);
                 if(count>=10){
