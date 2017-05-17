@@ -219,7 +219,7 @@ public class TopicDataSource {
         List<Topic> topicsFiltered = new ArrayList<>();
         for (Topic topic : topics) {
             boolean hasEnoughQuestions = false;
-            for (int i = 1; i <= maxPoints; i++) {
+            for (int i = 1; i <= j; i++) {
                 if (getAllUnansweredQuestionsByDifficultyCount(topic.getId(), i) >= 10) {
                     hasEnoughQuestions = true;
                 }
