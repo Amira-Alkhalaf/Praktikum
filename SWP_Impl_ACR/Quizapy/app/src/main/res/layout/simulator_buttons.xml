@@ -14,7 +14,8 @@
         app:layout_constraintBaseline_toBaselineOf="@+id/breathOut"
         tools:layout_constraintBaseline_creator="1"
         tools:layout_constraintLeft_creator="1"
-        app:layout_constraintLeft_toLeftOf="parent" />
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginLeft="0dp" />
 
     <Button
         android:id="@+id/breathOut"
@@ -31,9 +32,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Anhalten"
-        app:layout_constraintBaseline_toBaselineOf="@+id/breathOut"
         tools:layout_constraintBaseline_creator="1"
         tools:layout_constraintLeft_creator="1"
-        app:layout_constraintLeft_toRightOf="@+id/breathOut" />
+        app:layout_constraintLeft_toRightOf="@+id/breathOut"
+        android:layout_marginLeft="0dp"
+        tools:layout_editor_absoluteY="0dp" />
 
 </android.support.constraint.ConstraintLayout>

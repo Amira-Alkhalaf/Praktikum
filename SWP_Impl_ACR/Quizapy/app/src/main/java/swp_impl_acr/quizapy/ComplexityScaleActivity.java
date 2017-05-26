@@ -52,30 +52,31 @@ public class ComplexityScaleActivity extends AppCompatActivity implements EventL
         gradNotAvailableToast = Toast.makeText(ComplexityScaleActivity.this, "Die gewählte Schwierigkeit ist nicht verfügbar. Bitte eine andere wählen.", Toast.LENGTH_LONG);
 
         points = (AvailablePoints) getApplicationContext();
-
         scaleImage = (ImageView) findViewById(R.id.image);
         currentGrad = (TextView) findViewById(R.id.console);
         currentGrad.setText(gradToString());
 
+
+
         if (!RespiratoryTrainer.isConnected()) {
             getSimulatorButtons();
         }
-
         try {
             topicDataSource = new TopicDataSource();
         } catch (Exception e) {
             e.printStackTrace();
         }
         gameConfig = GameConfig.getInstance();
-
         TextView chosenTopic = (TextView) findViewById(R.id.chosenTopic);
         chosenTopic.setText(gameConfig.getTopic().getName());
     }
 
+
+
     /**
      * adds Buttons to simulate the Respiratory Trainer to the top of the screen
      */
-    private void getSimulatorButtons() {
+    private void getSimulatorButtons() {       // mode1
         Buttons buttons = new Buttons(this, null);
 
         layout.addView(buttons);
@@ -155,7 +156,7 @@ public class ComplexityScaleActivity extends AppCompatActivity implements EventL
 
         if(isGradChoosable() && points.getPoints() >= grad){
             gradNotAvailableToast.cancel();
-            Intent b2 = new Intent(ComplexityScaleActivity.this,QuestionActivity.class);
+            Intent b2 = new Intent(ComplexityScaleActivity.this,Mode1.class);
             startActivity(b2);
             finish();
         } else {

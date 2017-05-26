@@ -291,4 +291,8 @@ public class TopicSelectionActivity extends AppCompatActivity implements EventLi
         startActivity(in);
         finish();
     }
+
+
+
+    public void test(){}
 }

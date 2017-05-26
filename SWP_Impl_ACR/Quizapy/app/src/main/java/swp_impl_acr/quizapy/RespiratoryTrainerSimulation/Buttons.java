@@ -53,6 +53,7 @@ public class Buttons extends ConstraintLayout implements View.OnTouchListener {
     @Override
     public boolean onTouch(View v, MotionEvent event) {
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
+            
             switch(v.getId()){
                 case R.id.breathIn:
                     for(EventListenerInterface ev:eventListeners){

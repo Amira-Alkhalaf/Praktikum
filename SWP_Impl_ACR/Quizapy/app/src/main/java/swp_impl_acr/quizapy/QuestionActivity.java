@@ -15,9 +15,6 @@ import android.view.ViewTreeObserver;
 import android.view.animation.LinearInterpolator;
 import android.widget.Button;
 import android.widget.TextView;
-
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -70,8 +67,8 @@ public class QuestionActivity extends AppCompatActivity implements EventListener
 
         difficulty = (TextView) findViewById(R.id.text);
 
-        answerButtons = new ArrayList<>();
 
+        answerButtons = new ArrayList<>();
         answerButtons.add((Button)(findViewById(R.id.button)));
         answerButtons.add((Button)(findViewById(R.id.button2)));
         answerButtons.add((Button)(findViewById(R.id.button3)));
@@ -239,6 +236,7 @@ public class QuestionActivity extends AppCompatActivity implements EventListener
     public void onHoldBreathStop() {
 
     }
+    public void test(){}
 
     /**
      * sets Cursor animation and starts it
