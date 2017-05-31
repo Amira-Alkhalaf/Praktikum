@@ -33,8 +33,7 @@ import swp_impl_acr.quizapy.Helper.RespiratoryTrainer;
 public class StartActivity extends AppCompatActivity {
 
     private QuizapyDataSource databaseConnection = null;
-    private GameConfig gameConfig = null;
-    private AvailablePoints points = null;
+    private SessionStorage sessionStorage = null;
 
     private QuestionDataSource questionDataSource = null;
 
@@ -81,6 +80,7 @@ public class StartActivity extends AppCompatActivity {
 
         try {
             databaseConnection = QuizapyDataSource.getInstance(getApplicationContext());
+            databaseConnection.openConnection();
         } catch (SQLException e) {
             Log.d("SQL ERROR", Arrays.toString(e.getStackTrace()));
         }
@@ -97,13 +97,14 @@ public class StartActivity extends AppCompatActivity {
 
         Log.i("Atem Trainer", RespiratoryTrainer.isConnected() ? "is connected" : "is not connected");
 
-        points = (AvailablePoints) getApplicationContext();
+        sessionStorage = SessionStorage.getInstance();
+
         if(savedInstanceState == null){
-            points.setPoints(6);
+            sessionStorage.setPoints(6);
         }
 
         bonusPoints = (TextView) findViewById(R.id.currentBonusPointsText);
-        bonusPoints.setText(Integer.toString(points.getPoints()));
+        bonusPoints.setText(Integer.toString(sessionStorage.getPoints()));
 
         final TextView bonusPointsText = (TextView) findViewById(R.id.bonusPointsText);
         final ImageButton bonusPointsButton = (ImageButton) findViewById(R.id.bonusPointsButton);
@@ -118,12 +119,11 @@ public class StartActivity extends AppCompatActivity {
         playButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                gameConfig = GameConfig.getInstance();
-                gameConfig.resetInstance();
+                sessionStorage.resetInstance();
                 try {
                     TopicDataSource topicDataSource = new TopicDataSource();
-                    List<Topic> topics = topicDataSource.getChoosableTopics(points.getPoints());
-                    if(topics.size()==0 || points.getPoints()==0){
+                    List<Topic> topics = topicDataSource.getChoosableTopics(sessionStorage.getPoints());
+                    if(topics.size()==0 || sessionStorage.getPoints()==0){
                         Toast.makeText(StartActivity.this, "Nicht genügend Fragen oder Punkte zur Verfügung", Toast.LENGTH_SHORT).show();
                     } else {
 //                        Intent test = new Intent(getBaseContext(), TypesOfQuestions.class);
@@ -142,7 +142,7 @@ public class StartActivity extends AppCompatActivity {
     protected void onRestart() {
         super.onRestart();
 
-        bonusPoints.setText(Integer.toString(points.getPoints()));
+        bonusPoints.setText(Integer.toString(sessionStorage.getPoints()));
 
         try {
             answeredQuestionsCount.setText(Integer.toString(questionDataSource.getAllAnsweredQuestionsCount()));

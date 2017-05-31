@@ -38,10 +38,9 @@ public class ComplexityScaleActivity extends AppCompatActivity implements EventL
     private int grad = LOW;
 
     private TopicDataSource topicDataSource;
-    private GameConfig gameConfig;
+    private SessionStorage sessionStorage;
 
     private Toast gradNotAvailableToast;
-    private AvailablePoints points = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +50,6 @@ public class ComplexityScaleActivity extends AppCompatActivity implements EventL
 
         gradNotAvailableToast = Toast.makeText(ComplexityScaleActivity.this, "Die gewählte Schwierigkeit ist nicht verfügbar. Bitte eine andere wählen.", Toast.LENGTH_LONG);
 
-        points = (AvailablePoints) getApplicationContext();
         scaleImage = (ImageView) findViewById(R.id.image);
         currentGrad = (TextView) findViewById(R.id.console);
         currentGrad.setText(gradToString());
@@ -66,9 +64,9 @@ public class ComplexityScaleActivity extends AppCompatActivity implements EventL
         } catch (Exception e) {
             e.printStackTrace();
         }
-        gameConfig = GameConfig.getInstance();
+        sessionStorage = SessionStorage.getInstance();
         TextView chosenTopic = (TextView) findViewById(R.id.chosenTopic);
-        chosenTopic.setText(gameConfig.getTopic().getName());
+        chosenTopic.setText(sessionStorage.getTopic().getName());
     }
 
 
@@ -91,7 +89,7 @@ public class ComplexityScaleActivity extends AppCompatActivity implements EventL
     private boolean isGradChoosable(){
         int count = 0;
         try {
-            count = topicDataSource.getAllUnansweredQuestionsByDifficultyCount(gameConfig.getTopic().getId(),gameConfig.getDifficulty());
+            count = topicDataSource.getAllUnansweredQuestionsByDifficultyCount(sessionStorage.getTopic().getId(), sessionStorage.getDifficulty());
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -152,9 +150,9 @@ public class ComplexityScaleActivity extends AppCompatActivity implements EventL
      */
     @Override
     public void onBreathOutStart() {
-        gameConfig.setDifficulty(grad);
+        sessionStorage.setDifficulty(grad);
 
-        if(isGradChoosable() && points.getPoints() >= grad){
+        if(isGradChoosable() && sessionStorage.getPoints() >= grad){
             gradNotAvailableToast.cancel();
             Intent b2 = new Intent(ComplexityScaleActivity.this,Mode1.class);
             startActivity(b2);

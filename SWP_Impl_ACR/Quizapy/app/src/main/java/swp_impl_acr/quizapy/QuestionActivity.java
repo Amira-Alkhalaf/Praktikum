@@ -37,7 +37,7 @@ public class QuestionActivity extends AppCompatActivity implements EventListener
     private ObjectAnimator animator;
     private TextView questionText;
     private List<Question> questions;
-    private GameConfig gameConfig;
+    private SessionStorage sessionStorage;
     private List<Answer> answers;
 
     /**
@@ -76,18 +76,18 @@ public class QuestionActivity extends AppCompatActivity implements EventListener
 
         questionText = (TextView)(findViewById(R.id.questionText));
 
-        gameConfig = GameConfig.getInstance();
+        sessionStorage = SessionStorage.getInstance();
         try {
             TopicDataSource topicDataSource = new TopicDataSource();
-            questions = topicDataSource.getAllUnansweredQuestionsByDifficulty(gameConfig.getTopic().getId(), gameConfig.getDifficulty());
+            questions = topicDataSource.getAllUnansweredQuestionsByDifficulty(sessionStorage.getTopic().getId(), sessionStorage.getDifficulty());
             questions = CollectionUtils.generateRandomList(questions, 10);
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        difficulty.setText(gradToString(gameConfig.getDifficulty()));
+        difficulty.setText(gradToString(sessionStorage.getDifficulty()));
         TextView chosenTopic = (TextView) findViewById(R.id.chosen_topic);
-        chosenTopic.setText(gameConfig.getTopic().getName());
+        chosenTopic.setText(sessionStorage.getTopic().getName());
         displayQuestion();
 
 
@@ -282,7 +282,7 @@ public class QuestionActivity extends AppCompatActivity implements EventListener
     }
 
     /**
-     * adds the selected answer to the AnswerList in the GameConfig instance
+     * adds the selected answer to the AnswerList in the SessionStorage instance
      */
     private void saveSelectedAnswer() {
         int color = Color.LTGRAY;
@@ -293,7 +293,7 @@ public class QuestionActivity extends AppCompatActivity implements EventListener
                 color = ((ColorDrawable) background).getColor();
             }
             if(color == Color.CYAN){
-                gameConfig.addAnswer(answers.get(i));
+                sessionStorage.addAnswer(answers.get(i));
             }
             i++;
         }

@@ -6,12 +6,13 @@ import swp_impl_acr.quizapy.Database.Entity.Answer;
 import swp_impl_acr.quizapy.Database.Entity.Topic;
 
 /**
- * holds information crucial to the current game run
+ * holds information crucial to the current game session
  */
-public class GameConfig {
+public class SessionStorage {
 
-    private static GameConfig instance;
+    private static SessionStorage instance;
 
+    private int points;
     private int difficulty;
     private Topic topic;
     private ArrayList<Answer> answers;
@@ -19,18 +20,18 @@ public class GameConfig {
     /**
      * private constructor
      */
-    private GameConfig() {
+    private SessionStorage() {
         answers = new ArrayList<>();
     }
 
     /**
      * @return instance
      */
-    public static GameConfig getInstance () {
-        if (GameConfig.instance == null) {
-            GameConfig.instance = new GameConfig();
+    public static SessionStorage getInstance () {
+        if (SessionStorage.instance == null) {
+            SessionStorage.instance = new SessionStorage();
         }
-        return GameConfig.instance;
+        return SessionStorage.instance;
     }
 
     /**
@@ -88,5 +89,37 @@ public class GameConfig {
         this.difficulty=0;
         this.topic=null;
         this.answers=new ArrayList<>();
+    }
+
+    /**
+     * returns the available points
+     * @return
+     */
+    public int getPoints(){
+        return points;
+    }
+
+    /**
+     * sets the available points
+     * @param points
+     */
+    public void setPoints(int points){
+        this.points=points;
+    }
+
+    /**
+     * add points to the available points
+     * @param points
+     */
+    public void addPoints(int points) {
+        this.points += points;
+    }
+
+    /**
+     * subtracts points from the available points
+     * @param points
+     */
+    public void subPoints(int points) {
+        this.points -= points;
     }
 }

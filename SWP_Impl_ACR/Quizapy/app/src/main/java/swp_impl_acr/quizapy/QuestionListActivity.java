@@ -20,8 +20,7 @@ import swp_impl_acr.quizapy.Database.Entity.Question;
 public class QuestionListActivity extends AppCompatActivity {
 
     QuestionDataSource questionDataSource = null;
-    GameConfig gameConfig = null;
-    AvailablePoints points = null;
+    SessionStorage sessionStorage = null;
     ListView list;
 
     @Override
@@ -35,9 +34,7 @@ public class QuestionListActivity extends AppCompatActivity {
 
 
 
-        gameConfig = GameConfig.getInstance();
-
-        points = (AvailablePoints)getApplicationContext();
+        sessionStorage = SessionStorage.getInstance();
 
         try {
             questionDataSource = new QuestionDataSource();
@@ -49,7 +46,7 @@ public class QuestionListActivity extends AppCompatActivity {
 
         ListView listView = (ListView)findViewById(R.id.listView);
 
-        CustomListAdapter adapter = new CustomListAdapter(this, gameConfig.getAnswers());
+        CustomListAdapter adapter = new CustomListAdapter(this, sessionStorage.getAnswers());
         listView.setAdapter(adapter);
     }
 
@@ -59,9 +56,9 @@ public class QuestionListActivity extends AppCompatActivity {
      */
     private void updateAvailablePoints() {
         if(updateQuestions()){
-            points.addPoints(gameConfig.getDifficulty());
+            sessionStorage.addPoints(sessionStorage.getDifficulty());
         } else {
-            points.subPoints(gameConfig.getDifficulty());
+            sessionStorage.subPoints(sessionStorage.getDifficulty());
         }
     }
 
@@ -71,7 +68,7 @@ public class QuestionListActivity extends AppCompatActivity {
      * @return true = all questions were correctly answered
      */
     private boolean updateQuestions() {
-        ArrayList<Answer> answers = gameConfig.getAnswers();
+        ArrayList<Answer> answers = sessionStorage.getAnswers();
         boolean allQuestionsCorrect=true;
         for(Answer answer:answers){
             Question question = answer.getQuestion();

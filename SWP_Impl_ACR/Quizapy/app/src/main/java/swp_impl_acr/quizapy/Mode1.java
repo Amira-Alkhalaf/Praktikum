@@ -40,7 +40,7 @@ public class Mode1 extends AppCompatActivity implements EventListenerInterface {
     private ObjectAnimator animator;
     private TextView questionText;
     private List<Question> questions;
-    private GameConfig gameConfig;
+    private SessionStorage sessionStorage;
     private List<Answer> answers;
     TextView TimerText;
     SeekBar seekbar;
@@ -114,18 +114,18 @@ public class Mode1 extends AppCompatActivity implements EventListenerInterface {
 
 
 
-        gameConfig = GameConfig.getInstance();
+        sessionStorage = SessionStorage.getInstance();
         try {
             TopicDataSource topicDataSource = new TopicDataSource();
-            questions = topicDataSource.getAllUnansweredQuestionsByDifficulty(gameConfig.getTopic().getId(), gameConfig.getDifficulty());
+            questions = topicDataSource.getAllUnansweredQuestionsByDifficulty(sessionStorage.getTopic().getId(), sessionStorage.getDifficulty());
             questions = CollectionUtils.generateRandomList(questions, 1);
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        difficulty.setText(gradToString(gameConfig.getDifficulty()));
+        difficulty.setText(gradToString(sessionStorage.getDifficulty()));
         TextView chosenTopic = (TextView) findViewById(R.id.chosen_topicMode);
-        chosenTopic.setText(gameConfig.getTopic().getName());
+        chosenTopic.setText(sessionStorage.getTopic().getName());
         displayQuestion();
 
 

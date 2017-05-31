@@ -35,11 +35,10 @@ public class TopicSelectionActivity extends AppCompatActivity implements EventLi
     private ConstraintLayout layout;
     private List<Button> topicButtons;
     private List<Topic> topics;
-    private GameConfig gameConfig;
+    private SessionStorage sessionStorage;
     private Cursor cursor;
     private ObjectAnimator animator;
     private TopicDataSource topicDataSource;
-    private AvailablePoints points = null;
 
 
     private static final int LEFT = 0;
@@ -60,7 +59,6 @@ public class TopicSelectionActivity extends AppCompatActivity implements EventLi
         if (!RespiratoryTrainer.isConnected()) {
             getSimulatorButtons();
         }
-        points = (AvailablePoints) getApplicationContext();
 
         topicButtons = new ArrayList<>();
 
@@ -74,10 +72,10 @@ public class TopicSelectionActivity extends AppCompatActivity implements EventLi
         topicButtons.add((Button)(findViewById(R.id.topic_button_8)));
         topicButtons.add((Button)(findViewById(R.id.topic_button_9)));
 
-        gameConfig = GameConfig.getInstance();
+        sessionStorage = SessionStorage.getInstance();
         try {
             topicDataSource = new TopicDataSource();
-            topics = topicDataSource.getChoosableTopics(points.getPoints());
+            topics = topicDataSource.getChoosableTopics(sessionStorage.getPoints());
             topics = CollectionUtils.generateRandomList(topics, 9);
         } catch (Exception e) {
             e.printStackTrace();
@@ -214,7 +212,7 @@ public class TopicSelectionActivity extends AppCompatActivity implements EventLi
     }
 
     /**
-     * save topic in gameConfig
+     * save topic in sessionStorage
      */
     private void chooseTopic(){
         int color = Color.LTGRAY;
@@ -225,7 +223,7 @@ public class TopicSelectionActivity extends AppCompatActivity implements EventLi
                 color = ((ColorDrawable) background).getColor();
             }
             if(color == Color.CYAN){
-                gameConfig.setTopic(topics.get(i));
+                sessionStorage.setTopic(topics.get(i));
             }
             i++;
         }
@@ -268,13 +266,13 @@ public class TopicSelectionActivity extends AppCompatActivity implements EventLi
      */
     public void next(){
         int j=3;
-        if(points.getPoints()<=3){
-            j=points.getPoints();
+        if(sessionStorage.getPoints()<=3){
+            j=sessionStorage.getPoints();
         }
         int gradCount = 0;
         for(int i = 1; i<=j; i++){
             try {
-                int count = topicDataSource.getAllUnansweredQuestionsByDifficultyCount(gameConfig.getTopic().getId(),i);
+                int count = topicDataSource.getAllUnansweredQuestionsByDifficultyCount(sessionStorage.getTopic().getId(),i);
                 if(count>=10){
                     gradCount++;
                 }
