@@ -143,7 +143,7 @@ public class Mode1 extends AppCompatActivity implements EventListenerInterface {
      * adds Buttons to simulate the Respiratory Trainer to the top of the screen
      */
     private void getSimulatorButtons() {
-        Buttons buttons = new Buttons(this, null);
+        Buttons buttons = new Buttons(this, null, Buttons.BUTTON_BREATH_IN | Buttons.BUTTON_BREATH_OUT | Buttons.SEEKBAR_BREATHING_RATE);
 
         layout.addView(buttons);
 
@@ -192,6 +192,11 @@ public class Mode1 extends AppCompatActivity implements EventListenerInterface {
 
     @Override
     public void onHoldBreathStop() {
+
+    }
+
+    @Override
+    public void onBreathingRateChange() {
 
     }
 

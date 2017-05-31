@@ -7,6 +7,7 @@ package swp_impl_acr.quizapy;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
+import android.support.constraint.ConstraintSet;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
@@ -24,7 +25,7 @@ import swp_impl_acr.quizapy.RespiratoryTrainerSimulation.EventListenerInterface;
  * Created by Amira on 5/16/2017.
  */
 
-public class ComplexityScaleActivity extends AppCompatActivity implements EventListenerInterface{
+public class ComplexityScaleActivity extends AppCompatActivity implements EventListenerInterface {
 
     private ImageView scaleImage;
     private TextView currentGrad;
@@ -75,7 +76,7 @@ public class ComplexityScaleActivity extends AppCompatActivity implements EventL
      * adds Buttons to simulate the Respiratory Trainer to the top of the screen
      */
     private void getSimulatorButtons() {       // mode1
-        Buttons buttons = new Buttons(this, null);
+        Buttons buttons = new Buttons(this, null, Buttons.BUTTON_BREATH_IN | Buttons.BUTTON_BREATH_OUT);
 
         layout.addView(buttons);
 
@@ -175,6 +176,11 @@ public class ComplexityScaleActivity extends AppCompatActivity implements EventL
 
     @Override
     public void onHoldBreathStop() {
+
+    }
+
+    @Override
+    public void onBreathingRateChange() {
 
     }
 }

@@ -3,6 +3,7 @@ package swp_impl_acr.quizapy;
 import android.animation.Animator;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -11,6 +12,7 @@ import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.constraint.ConstraintSet;
 import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.animation.LinearInterpolator;
@@ -31,7 +33,7 @@ import swp_impl_acr.quizapy.RespiratoryTrainerSimulation.EventListenerInterface;
 /**
  * choosing a topic (out of up to 9 randomly selected from available topics)
  */
-public class TopicSelectionActivity extends AppCompatActivity implements EventListenerInterface{
+public class TopicSelectionActivity extends AppCompatActivity implements EventListenerInterface {
     private ConstraintLayout layout;
     private List<Button> topicButtons;
     private List<Topic> topics;
@@ -126,7 +128,7 @@ public class TopicSelectionActivity extends AppCompatActivity implements EventLi
      * adds Buttons to simulate the Respiratory Trainer to the bottom of the screen
      */
     private void getSimulatorButtons() {
-        Buttons buttons = new Buttons(this, null);
+        Buttons buttons = new Buttons(this, null, Buttons.BUTTON_HOLD_BREATH);
         layout.addView(buttons);
 
         ConstraintSet set = new ConstraintSet();
@@ -258,6 +260,11 @@ public class TopicSelectionActivity extends AppCompatActivity implements EventLi
 
     @Override
     public void onHoldBreathStop() {
+
+    }
+
+    @Override
+    public void onBreathingRateChange() {
 
     }
 

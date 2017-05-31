@@ -30,7 +30,7 @@ import swp_impl_acr.quizapy.RespiratoryTrainerSimulation.EventListenerInterface;
 /**
  * activity where the user answers the questions one at a time
  */
-public class QuestionActivity extends AppCompatActivity implements EventListenerInterface{
+public class QuestionActivity extends AppCompatActivity implements EventListenerInterface {
     private ConstraintLayout layout;
     private List<Button> answerButtons;
     private Cursor cursor = null;
@@ -154,7 +154,7 @@ public class QuestionActivity extends AppCompatActivity implements EventListener
      * adds Buttons to simulate the Respiratory Trainer to the bottom of the screen
      */
     private void getSimulatorButtons() {
-        Buttons buttons = new Buttons(this, null);
+        Buttons buttons = new Buttons(this, null, Buttons.BUTTON_BREATH_IN | Buttons.BUTTON_BREATH_OUT);
         layout.addView(buttons);
 
         ConstraintSet set = new ConstraintSet();
@@ -236,6 +236,12 @@ public class QuestionActivity extends AppCompatActivity implements EventListener
     public void onHoldBreathStop() {
 
     }
+
+    @Override
+    public void onBreathingRateChange() {
+
+    }
+
     public void test(){}
 
     /**

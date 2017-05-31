@@ -1,7 +1,7 @@
 package swp_impl_acr.quizapy.RespiratoryTrainerSimulation;
 
 /**
- * interface for Breathing Actions
+ * abstract class for Breathing Actions
  */
 public interface EventListenerInterface {
     void onBreathInStart();
@@ -12,4 +12,6 @@ public interface EventListenerInterface {
 
     void onHoldBreathStart();
     void onHoldBreathStop();
+
+    void onBreathingRateChange();
 }
