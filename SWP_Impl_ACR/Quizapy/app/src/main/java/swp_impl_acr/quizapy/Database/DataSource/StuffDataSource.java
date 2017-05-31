@@ -34,7 +34,8 @@ public class StuffDataSource {
                 null, QuizapyContract.StuffTable.COLUMN_NAME + " = ?",
                 new String[]{key}, null, null, null);
         cursor.moveToFirst();
-        return cursor.getString(cursor.getColumnIndex(QuizapyContract.StuffTable.COLUMN_VALUE));
+        String rtn = cursor.getString(cursor.getColumnIndex(QuizapyContract.StuffTable.COLUMN_VALUE));
+        return rtn;
     }
 
     /**

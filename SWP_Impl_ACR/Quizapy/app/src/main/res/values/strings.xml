@@ -3,4 +3,5 @@
     <string name="title_activity_question_list">QuestionList</string>
     <string name="title_activity_test">testActivity</string>
     <string name="title_activity_topic_selection">TopicSelectionActivity</string>
+    <string name="title_activity_options">OptionsActivity</string>
 </resources>

@@ -59,6 +59,9 @@ public class StartActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
                 return true;
+            case R.id.action_options:
+                Intent i = new Intent(getBaseContext(), OptionsActivity.class);
+                startActivity(i);
             default:
                 return super.onOptionsItemSelected(item);
         }

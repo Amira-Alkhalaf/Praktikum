@@ -28,11 +28,14 @@
         <activity
             android:name=".TopicSelectionActivity"
             android:label="@string/title_activity_topic_selection"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity android:name=".TypesOfQuestions" />
+        <activity android:name=".Mode1" />
+        <activity android:name=".Mode2" />
+        <activity
+            android:name=".OptionsActivity"
+            android:label="@string/title_activity_options"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
-        <activity android:name="TypesOfQuestions"></activity>
-        <activity android:name=".Mode1"></activity>
-        <activity android:name=".Mode2"></activity>
-
     </application>
 
 </manifest>

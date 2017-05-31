@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import java.sql.SQLException;
 
+import swp_impl_acr.quizapy.Database.DataSource.StuffDataSource;
 import swp_impl_acr.quizapy.Database.DataSource.TopicDataSource;
 import swp_impl_acr.quizapy.Helper.RespiratoryTrainer;
 import swp_impl_acr.quizapy.RespiratoryTrainerSimulation.Buttons;
@@ -40,6 +41,7 @@ public class ComplexityScaleActivity extends AppCompatActivity implements EventL
 
     private TopicDataSource topicDataSource;
     private SessionStorage sessionStorage;
+    private StuffDataSource stuffDataSource;
 
     private Toast gradNotAvailableToast;
 
@@ -62,6 +64,7 @@ public class ComplexityScaleActivity extends AppCompatActivity implements EventL
         }
         try {
             topicDataSource = new TopicDataSource();
+            stuffDataSource = new StuffDataSource();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -94,7 +97,7 @@ public class ComplexityScaleActivity extends AppCompatActivity implements EventL
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        if(count >= 10){
+        if(count >= Integer.parseInt(stuffDataSource.getValue("questions_in_sequence"))){
             return true;
         } else {
             return false;

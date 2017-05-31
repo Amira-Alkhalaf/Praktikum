@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import swp_impl_acr.quizapy.Cursor.Cursor;
+import swp_impl_acr.quizapy.Database.DataSource.StuffDataSource;
 import swp_impl_acr.quizapy.Database.DataSource.TopicDataSource;
 import swp_impl_acr.quizapy.Database.Entity.Answer;
 import swp_impl_acr.quizapy.Database.Entity.Question;
@@ -39,6 +40,7 @@ public class QuestionActivity extends AppCompatActivity implements EventListener
     private List<Question> questions;
     private SessionStorage sessionStorage;
     private List<Answer> answers;
+    private StuffDataSource stuffDataSource;
 
     /**
      * constant for selectMode: no user action happened yet
@@ -78,9 +80,10 @@ public class QuestionActivity extends AppCompatActivity implements EventListener
 
         sessionStorage = SessionStorage.getInstance();
         try {
+            stuffDataSource = new StuffDataSource();
             TopicDataSource topicDataSource = new TopicDataSource();
             questions = topicDataSource.getAllUnansweredQuestionsByDifficulty(sessionStorage.getTopic().getId(), sessionStorage.getDifficulty());
-            questions = CollectionUtils.generateRandomList(questions, 10);
+            questions = CollectionUtils.generateRandomList(questions, Integer.parseInt(stuffDataSource.getValue("questions_in_sequence")));
         } catch (Exception e) {
             e.printStackTrace();
         }
