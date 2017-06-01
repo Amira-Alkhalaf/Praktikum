@@ -185,17 +185,17 @@ public class TopicDataSource {
     }
 
     /**
-     * returns all topics which have more than 10 unanswered questions in a difficulty
+     * returns all topics which have more than amount unanswered questions in a difficulty
      * @return
      * @throws SQLException
      */
-    public List<Topic> getChoosableTopics() throws SQLException {
+    public List<Topic> getChoosableTopics(int amount) throws SQLException {
         List<Topic> topics = getAllTopics();
         List<Topic> topicsFiltered = new ArrayList<>();
         for (Topic topic : topics) {
             boolean hasEnoughQuestions = false;
             for (int i = 1; i <= 3; i++) {
-                if (getAllUnansweredQuestionsByDifficultyCount(topic.getId(), i) >= 10) {
+                if (getAllUnansweredQuestionsByDifficultyCount(topic.getId(), i) >= amount) {
                     hasEnoughQuestions = true;
                 }
             }
@@ -206,11 +206,11 @@ public class TopicDataSource {
         return topicsFiltered;
     }
     /**
-     * returns all topics which have more than 10 unanswered questions in a difficulty not higher than available points
+     * returns all topics which have more than amount unanswered questions in a difficulty not higher than available points
      * @return
      * @throws SQLException
      */
-    public List<Topic> getChoosableTopics(int maxPoints) throws SQLException {
+    public List<Topic> getChoosableTopics(int maxPoints, int amount) throws SQLException {
         int j=3;
         if(maxPoints<=j){
             j=maxPoints;
@@ -220,7 +220,7 @@ public class TopicDataSource {
         for (Topic topic : topics) {
             boolean hasEnoughQuestions = false;
             for (int i = 1; i <= j; i++) {
-                if (getAllUnansweredQuestionsByDifficultyCount(topic.getId(), i) >= 10) {
+                if (getAllUnansweredQuestionsByDifficultyCount(topic.getId(), i) >= amount) {
                     hasEnoughQuestions = true;
                 }
             }
