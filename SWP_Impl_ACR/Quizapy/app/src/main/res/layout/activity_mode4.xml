@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="swp_impl_acr.quizapy.Mode2">
+    tools:context="swp_impl_acr.quizapy.Mode4">
 
 
 </android.support.constraint.ConstraintLayout>

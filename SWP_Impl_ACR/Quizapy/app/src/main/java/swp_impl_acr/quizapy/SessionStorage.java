@@ -1,8 +1,10 @@
 package swp_impl_acr.quizapy;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import swp_impl_acr.quizapy.Database.Entity.Answer;
+import swp_impl_acr.quizapy.Database.Entity.Question;
 import swp_impl_acr.quizapy.Database.Entity.Topic;
 
 /**
@@ -16,6 +18,16 @@ public class SessionStorage {
     private int difficulty;
     private Topic topic;
     private ArrayList<Answer> answers;
+
+    private int mode;
+
+    public static final int MODE_1 = 1;
+    public static final int MODE_2 = 2;
+    public static final int MODE_3 = 3;
+    public static final int MODE_4 = 4;
+    public static final int MODE_5 = 5;
+
+    private List<Question> questions;
 
     /**
      * private constructor
@@ -121,5 +133,21 @@ public class SessionStorage {
      */
     public void subPoints(int points) {
         this.points -= points;
+    }
+
+    public void setQuestions(List<Question> questions){
+        this.questions = questions;
+    }
+
+    public List<Question> getQuestions() {
+        return this.questions;
+    }
+
+    public void setMode(int mode){
+        this.mode = mode;
+    }
+
+    public int getMode(){
+        return this.mode;
     }
 }

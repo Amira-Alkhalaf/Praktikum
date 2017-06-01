@@ -35,6 +35,14 @@
         <activity
             android:name=".OptionsActivity"
             android:label="@string/title_activity_options"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity
+            android:name=".Mode3"
+            android:label="@string/title_activity_mode3"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity
+            android:name=".Mode4"
+            android:label="@string/title_activity_mode4"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
     </application>
 

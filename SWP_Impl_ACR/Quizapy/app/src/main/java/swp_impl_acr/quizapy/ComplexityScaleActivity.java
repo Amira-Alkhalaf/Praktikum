@@ -15,9 +15,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 import swp_impl_acr.quizapy.Database.DataSource.StuffDataSource;
 import swp_impl_acr.quizapy.Database.DataSource.TopicDataSource;
+import swp_impl_acr.quizapy.Database.Entity.Question;
+import swp_impl_acr.quizapy.Helper.CollectionUtils;
 import swp_impl_acr.quizapy.Helper.RespiratoryTrainer;
 import swp_impl_acr.quizapy.RespiratoryTrainerSimulation.Buttons;
 import swp_impl_acr.quizapy.RespiratoryTrainerSimulation.EventListenerInterface;
@@ -158,13 +163,61 @@ public class ComplexityScaleActivity extends AppCompatActivity implements EventL
 
         if(isGradChoosable() && sessionStorage.getPoints() >= grad){
             gradNotAvailableToast.cancel();
-            Intent b2 = new Intent(ComplexityScaleActivity.this,Mode1.class);
-            startActivity(b2);
-            finish();
+            try {
+                List<Question> questions;
+                questions = topicDataSource.getAllUnansweredQuestionsByDifficulty(sessionStorage.getTopic().getId(), sessionStorage.getDifficulty());
+                questions = CollectionUtils.generateRandomList(questions, Integer.parseInt(stuffDataSource.getValue("questions_in_sequence")));
+                sessionStorage.setQuestions(questions);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            setMode();
         } else {
             gradNotAvailableToast.show();
             // todo: Shake screen or disable a diffiulty if its not available or something
         }
+    }
+
+    private void setMode() {
+        Random rand = new Random();
+        int r1 = rand.nextInt(101-1) + 1;
+        int val = 0;
+        Intent b2 = null;
+        if(r1 <= (val += Integer.parseInt(stuffDataSource.getValue("frequency_mode_1").toString()))){
+            sessionStorage.setMode(SessionStorage.MODE_1);
+            Toast.makeText(this, "MODUS 1", Toast.LENGTH_SHORT).show();
+            b2 = new Intent(ComplexityScaleActivity.this, Mode1.class);
+        } else if(r1 <= (val += Integer.parseInt(stuffDataSource.getValue("frequency_mode_2").toString()))){
+            sessionStorage.setMode(SessionStorage.MODE_2);
+            Toast.makeText(this, "MODUS 2", Toast.LENGTH_SHORT).show();
+            b2 = new Intent(ComplexityScaleActivity.this, Mode2.class);
+        } else if(r1 <= (val += Integer.parseInt(stuffDataSource.getValue("frequency_mode_3").toString()))) {
+            sessionStorage.setMode(SessionStorage.MODE_3);
+            Toast.makeText(this, "MODUS 3", Toast.LENGTH_SHORT).show();
+            b2 = new Intent(ComplexityScaleActivity.this, Mode3.class);
+        } else if(r1 <= (val += Integer.parseInt(stuffDataSource.getValue("frequency_mode_4").toString()))){
+            sessionStorage.setMode(SessionStorage.MODE_4);
+            Toast.makeText(this, "MODUS 4", Toast.LENGTH_SHORT).show();
+            b2 = new Intent(ComplexityScaleActivity.this, Mode4.class);
+        } else {
+            sessionStorage.setMode(SessionStorage.MODE_5);
+            Toast.makeText(this, "MODUS 5", Toast.LENGTH_SHORT).show();
+            int r2 = rand.nextInt(5-1) +1;
+            switch(r2){
+                case 1: b2 = new Intent(ComplexityScaleActivity.this, Mode1.class);
+                    break;
+                case 2: b2 = new Intent(ComplexityScaleActivity.this, Mode2.class);
+                    break;
+                case 3: b2 = new Intent(ComplexityScaleActivity.this, Mode3.class);
+                    break;
+                case 4: b2 = new Intent(ComplexityScaleActivity.this, Mode4.class);
+                    break;
+                default: break;
+            }
+        }
+        startActivity(b2);
+        finish();
+
     }
 
     @Override
