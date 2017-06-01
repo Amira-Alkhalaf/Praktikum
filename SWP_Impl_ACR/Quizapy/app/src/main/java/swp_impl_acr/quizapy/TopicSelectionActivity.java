@@ -3,7 +3,6 @@ package swp_impl_acr.quizapy;
 import android.animation.Animator;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -12,7 +11,6 @@ import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.constraint.ConstraintSet;
 import android.support.v7.app.AppCompatActivity;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.animation.LinearInterpolator;
@@ -80,7 +78,7 @@ public class TopicSelectionActivity extends AppCompatActivity implements EventLi
         try {
             stuffDataSource = new StuffDataSource();
             topicDataSource = new TopicDataSource();
-            topics = topicDataSource.getChoosableTopics(sessionStorage.getPoints());
+            topics = topicDataSource.getChoosableTopics(sessionStorage.getPoints(), Integer.parseInt(stuffDataSource.getValue("questions_in_sequence").toString()));
             topics = CollectionUtils.generateRandomList(topics, 9);
         } catch (Exception e) {
             e.printStackTrace();
