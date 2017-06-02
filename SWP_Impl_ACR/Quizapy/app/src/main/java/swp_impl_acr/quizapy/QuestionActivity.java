@@ -35,8 +35,10 @@ public abstract class QuestionActivity extends AppCompatActivity implements Even
     protected List<Answer> answers;
     protected StuffDataSource stuffDataSource;
     protected int simButtons;
-
-
+    protected Button button;
+    protected Button button2;
+    protected Button button3;
+    protected Button button4;
     protected TextView difficulty;
     protected TextView mode;
 
@@ -49,12 +51,16 @@ public abstract class QuestionActivity extends AppCompatActivity implements Even
         difficulty = (TextView) findViewById(R.id.text);
         mode = (TextView) findViewById(R.id.chosenMode);
 
+        button=(Button)findViewById(R.id.button);
+        button2=(Button)findViewById(R.id.button2);
+        button3=(Button)findViewById(R.id.button3);
+        button4=(Button)findViewById(R.id.button4);
 
         answerButtons = new ArrayList<>();
-        answerButtons.add((Button)(findViewById(R.id.button)));
-        answerButtons.add((Button)(findViewById(R.id.button2)));
-        answerButtons.add((Button)(findViewById(R.id.button3)));
-        answerButtons.add((Button)(findViewById(R.id.button4)));
+        answerButtons.add(button);
+        answerButtons.add(button2);
+        answerButtons.add(button3);
+        answerButtons.add(button4);
 
         questionText = (TextView)(findViewById(R.id.questionText));
 
@@ -179,13 +185,21 @@ public abstract class QuestionActivity extends AppCompatActivity implements Even
                 default:
                     break;
             }
-        } else {
+        } else if(sessionStorage.getMode()==SessionStorage.MODE_3){
             in = new Intent(getBaseContext(), Mode3.class);
+        }else if(sessionStorage.getMode()==SessionStorage.MODE_2){
+            in = new Intent(getBaseContext(), Mode2.class);
+        }else if(sessionStorage.getMode()==SessionStorage.MODE_4){
+            in = new Intent(getBaseContext(), Mode4.class);
+        }else {
+            in = new Intent(getBaseContext(), Mode1.class);
         }
-        in.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+
+
+       // in.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         startActivity(in);
-        finish();
-        overridePendingTransition(0, 0);
+       // finish();
+       // overridePendingTransition(0, 0);
     }
 
     /**

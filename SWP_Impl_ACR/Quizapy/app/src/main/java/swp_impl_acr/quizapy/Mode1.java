@@ -27,6 +27,8 @@ import swp_impl_acr.quizapy.Helper.RespiratoryTrainer;
 import swp_impl_acr.quizapy.RespiratoryTrainerSimulation.Buttons;
 import swp_impl_acr.quizapy.RespiratoryTrainerSimulation.EventListenerInterface;
 
+import static swp_impl_acr.quizapy.R.id.buttonMode3;
+
 
 /**
  * activity where the user answers the questions one at a time
@@ -57,11 +59,6 @@ public class Mode1 extends AppCompatActivity implements EventListenerInterface {
     private TextView difficulty;
 
 
-
-
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,7 +74,7 @@ public class Mode1 extends AppCompatActivity implements EventListenerInterface {
         questionText = (TextView)(findViewById(R.id.questionTextMode));
         //Button button1 = (Button)findViewById(R.id.buttonMode1);
         button2 = (Button)findViewById(R.id.buttonMode2);
-        button3 = (Button)findViewById(R.id.buttonMode3);
+        button3 = (Button)findViewById(buttonMode3);
         button4 = (Button)findViewById(R.id.buttonMode4);
 
         seekbar.setMax(50);
@@ -250,66 +247,116 @@ public class Mode1 extends AppCompatActivity implements EventListenerInterface {
 
 
 
-    public void onClick(View view){
+    public void onClick(final View view) {
+        // if(view.getTag().toString()equals(Integer.toString("richtig")))
 
-        if(!clicked) {
-             (view).setBackgroundColor(Color.CYAN );
-             seekbar.setEnabled(false);                     //set SeekBar to be unmoveable
-             clicked=true;
-             builder.setMessage("Bitte, erzeugen Sie wiederholtes Ausatmen");
-             AlertDialog dialog = builder.create();
-             dialog.show();
+
+        if(!clicked)
+        {  clicked=true;
+            (view).setBackgroundColor(Color.CYAN );
+            seekbar.setEnabled(false);
+
+            //set SeekBar to be unmoveable
+            builder.setMessage("Bitte, erzeugen Sie wiederholtes Ausatmen");
+            AlertDialog dialog = builder.create();
+            dialog.show();
 
             final int secondToCountDown = seekbar.getProgress();
             new CountDownTimer(secondToCountDown*1000, 1000) {
-///jj
-                    @Override
-                    public void onTick(long millisUntilFinished) {
-                        int second = Math.round(millisUntilFinished / 1000);
-                        if(secondToCountDown-1==second) {
-                            lastFrequency = clickCounter;
-                        }else if (lastFrequency == clickCounter) {
-                                Log.d("message", "great");
-                                FrequencyRate=0;
-                            }
-                            else if (lastFrequency < clickCounter) {
-                            Log.d("message", "go lower");
-                            builder.setMessage("go lower");
-                            AlertDialog dialog = builder.create();
-                            dialog.show();
 
-                            lastFrequency=clickCounter;
-                            //Toast.makeText(getApplicationContext(), "ُmake it faster", Toast.LENGTH_SHORT).show();
-                        }else if (lastFrequency > clickCounter) {
-                            Log.d("message", "go faster");
-                            builder.setMessage("go faster");
-                            AlertDialog dialog = builder.create();
-                            dialog.show();
-                            lastFrequency=clickCounter;
-                            //Toast.makeText(getApplicationContext(), "ُmake it slowler", Toast.LENGTH_SHORT).show();
-                        }
-
-                        secondLeft=second;
-                        TimerText.setText(second + "s");
-                        TimerText.setTextColor(Color.parseColor("#FFFFFF"));
-                        clickCounter=0;
-
+                @Override
+                public void onTick(long millisUntilFinished) {
+                    int second = Math.round(millisUntilFinished / 1000);
+                    if(secondToCountDown-1==second) {
+                        lastFrequency=clickCounter; }
+                    else if (lastFrequency == clickCounter) {
+                        Log.d("message", "great");
+                        FrequencyRate=0;
                     }
+                    else if (lastFrequency < clickCounter) {
+                        Log.d("message", "go lower");
+                        builder.setMessage("go lower");
+                        AlertDialog dialog = builder.create();
+                        dialog.show();
+                        FrequencyRate=1;
+                        lastFrequency=clickCounter;
+                    }
+                    else if (lastFrequency > clickCounter) {
+                        Log.d("message", "go faster");
+                        builder.setMessage("go faster");
+                        AlertDialog dialog = builder.create();
+                        dialog.show();
+                        FrequencyRate=2;
+                        lastFrequency=clickCounter;       }
+                    secondLeft=second;
+                    TimerText.setText(second + "s");
+                    TimerText.setTextColor(Color.parseColor("#FFFFFF"));
+                    clickCounter=0;
 
-                    @Override
-                    public void onFinish() {
+                }
+
+                @Override
+                public void onFinish() {
+                    if(FrequencyRate==0) {
+                        Toast.makeText(getApplicationContext(),"ُDie Antwort wurde ausgewählt",Toast.LENGTH_LONG).show();
+                        TimerText.setText("0 s");
+                        //saveSelectedAnswer();
+                        TimerText.setTextColor(Color.parseColor("#FFA61113"));
+                        Intent b2 = new Intent(Mode1.this, Mode2.class);
+                        startActivity(b2); }
+
+                    else if(FrequencyRate==1) {
+                        view.setBackgroundColor(Color.LTGRAY );
+                        switch(view.getId()) {
+                            case R.id.buttonMode2: {
+                                Toast.makeText(getApplicationContext(), "ُDie vorausgehende Antwort wurde ausgewählt", Toast.LENGTH_LONG).show();
+                               // saveSelectedAnswer();
+                            }break;
+                            case buttonMode3: {
+                                Toast.makeText(getApplicationContext(), "ُDie vorausgehende Antwort wurde ausgewählt", Toast.LENGTH_LONG).show();
+                                button3.setBackgroundColor(Color.LTGRAY );
+                                button2.setBackgroundColor(Color.CYAN );
+                               // saveSelectedAnswer();
+                            }break;
+                            case R.id.buttonMode4: {
+                                Toast.makeText(getApplicationContext(), "ُDie vorausgehende Antwort wurde ausgewählt", Toast.LENGTH_LONG).show();
+                                button4.setBackgroundColor(Color.LTGRAY );
+                                button3.setBackgroundColor(Color.CYAN );
+                               // saveSelectedAnswer();
+                            }break;  }
                         TimerText.setText("0 s");
                         TimerText.setTextColor(Color.parseColor("#FFA61113"));
-                        Intent b2 = new Intent(Mode1.this,Mode2.class);
-                        startActivity(b2);
-                    }
-        }.start();
+                        Intent b2 = new Intent(Mode1.this, Mode2.class);
+                        startActivity(b2); }
+
+                    else if(FrequencyRate==2){
+                        view.setBackgroundColor(Color.LTGRAY );
+                        switch(view.getId()) {
+                            case R.id.buttonMode2: {
+                                Toast.makeText(getApplicationContext(), "ُDie nachfolgende Antwort wurde ausgewählt", Toast.LENGTH_LONG).show();
+                                button2.setBackgroundColor(Color.LTGRAY );
+                                button3.setBackgroundColor(Color.CYAN );
+                               // saveSelectedAnswer();
+                            }break;
+                            case buttonMode3: {
+                                Toast.makeText(getApplicationContext(), "ُDie nachfolgende Antwort wurde ausgewählt", Toast.LENGTH_LONG).show();
+                                button3.setBackgroundColor(Color.LTGRAY );
+                                button4.setBackgroundColor(Color.CYAN );
+                               // saveSelectedAnswer();
+                            }break;
+                            case R.id.buttonMode4: {
+                                Toast.makeText(getApplicationContext(), "ُDie nachfolgende Antwort wurde ausgewählt", Toast.LENGTH_LONG).show();
+                               // saveSelectedAnswer();
+                            } break;   }
+                        TimerText.setText("0 s");
+                        TimerText.setTextColor(Color.parseColor("#FFA61113"));
+                        Intent b2 = new Intent(Mode1.this, Mode2.class);
+                        startActivity(b2);}
+                }
+            }.start(); }
 
 
-
-
-
-    } else{ Toast.makeText(getApplicationContext(),"ُEine Antwort ist ausgewählt",Toast.LENGTH_LONG).show();}
+        else{ Toast.makeText(getApplicationContext(),"ُEine Antwort ist ausgewählt",Toast.LENGTH_LONG).show();}
 
 
     }
