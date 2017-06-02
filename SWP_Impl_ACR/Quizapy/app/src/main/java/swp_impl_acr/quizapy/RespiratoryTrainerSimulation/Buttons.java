@@ -27,6 +27,9 @@ public class Buttons extends LinearLayout {
     public static final int BUTTON_HOLD_BREATH = 4;
     public static final int SEEKBAR_BREATHING_RATE = 8;
     public static final int BUTTON_graduallyBreathIN=16;
+    public static final int BUTTON_graduallyBreathOUT=32;
+
+
 
     private Button breathIn;
     private Button breathOut;
@@ -34,6 +37,7 @@ public class Buttons extends LinearLayout {
     private SeekBar breathingRate;
     private Context context;
     private Button graduallyBreathIN;
+    private Button graduallyBreathOUT ;
 
     private List<EventListenerInterface> eventListeners;
 
@@ -116,7 +120,7 @@ public class Buttons extends LinearLayout {
         if( (buttons & BUTTON_graduallyBreathIN) != 0) {
             graduallyBreathIN = new Button(context);
             graduallyBreathIN.setId(BUTTON_graduallyBreathIN);
-            graduallyBreathIN.setText("Einatmen");
+            graduallyBreathIN.setText("Stufenweises Einatmen");
             graduallyBreathIN.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
             this.addView(graduallyBreathIN);
             graduallyBreathIN.setOnTouchListener(new OnTouchListener() {
@@ -124,11 +128,11 @@ public class Buttons extends LinearLayout {
                 public boolean onTouch(View v, MotionEvent event) {
                     if (event.getAction() == MotionEvent.ACTION_DOWN) {
                         for(EventListenerInterface ev:eventListeners){
-                            ev.onBreathInStart();
+                            ev.graduallyBreathInStart();
                         }
                     } else if(event.getAction() == MotionEvent.ACTION_UP) {
                         for(EventListenerInterface ev:eventListeners){
-                            ev.onBreathInStop();
+                            ev.graduallyBreathInStop();
                         }
                     }
                     return true;
@@ -136,6 +140,28 @@ public class Buttons extends LinearLayout {
             });
         }
 
+        if( (buttons & BUTTON_graduallyBreathOUT) != 0) {
+            graduallyBreathOUT = new Button(context);
+            graduallyBreathOUT.setId(BUTTON_graduallyBreathOUT);
+            graduallyBreathOUT.setText("Stufenweises Ausatmen");
+            graduallyBreathOUT.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
+            this.addView(graduallyBreathOUT);
+            graduallyBreathOUT.setOnTouchListener(new OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                        for(EventListenerInterface ev:eventListeners){
+                            ev.graduallyBreathOutStart();
+                        }
+                    } else if(event.getAction() == MotionEvent.ACTION_UP) {
+                        for(EventListenerInterface ev:eventListeners){
+                            ev.graduallyBreathOutStop();
+                        }
+                    }
+                    return true;
+                }
+            });
+        }
 
 
 

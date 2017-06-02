@@ -197,7 +197,14 @@ public class Mode1 extends AppCompatActivity implements EventListenerInterface {
     public void onBreathingRateChange() {
 
     }
+    @Override
+    public void graduallyBreathInStart(){
 
+    }
+    @Override
+    public void graduallyBreathInStop(){
+
+    }
     @Override
     public void graduallyBreathOutStart(){
 

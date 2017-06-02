@@ -273,11 +273,10 @@ public abstract class QuestionActivity extends AppCompatActivity implements Even
     }
 
     @Override
-    public void graduallyBreathOutStart(){
 
-    }
-    @Override
-    public void graduallyBreathOutStop(){
+    public void graduallyBreathInStart(){}
+    public void graduallyBreathInStop(){}
 
-    }
+    public void graduallyBreathOutStart(){}
+    public void graduallyBreathOutStop(){}
 }

@@ -271,6 +271,14 @@ public class TopicSelectionActivity extends AppCompatActivity implements EventLi
 
 
     @Override
+    public void graduallyBreathInStart(){
+
+    }
+    @Override
+    public void graduallyBreathInStop(){
+
+    }
+    @Override
     public void graduallyBreathOutStart(){
 
     }

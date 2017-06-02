@@ -2,6 +2,7 @@ package swp_impl_acr.quizapy;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
 
 import swp_impl_acr.quizapy.Helper.CollectionUtils;
@@ -12,6 +13,9 @@ import static swp_impl_acr.quizapy.RespiratoryTrainerSimulation.Buttons.BUTTON_H
 
 public class Mode4 extends QuestionActivity {
 
+boolean clicked= false;
+AlertDialog.Builder builder;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         simButtons = Buttons.BUTTON_BREATH_IN | Buttons.BUTTON_BREATH_OUT | BUTTON_HOLD_BREATH;
@@ -19,7 +23,8 @@ public class Mode4 extends QuestionActivity {
         mode.setText("Modus 4");
         button.setVisibility(View.INVISIBLE);
         button2.setVisibility(View.INVISIBLE);
-
+        button3.setVisibility(View.INVISIBLE);
+        button4.setVisibility(View.INVISIBLE);
     }
 
 
@@ -35,9 +40,13 @@ public class Mode4 extends QuestionActivity {
      */
     @Override
     public void onBreathInStart() {
-        button.setBackgroundColor(Color.CYAN );
-        saveSelectedAnswer();
-        next();
+        if(clicked=true) {
+            button2.setBackgroundColor(Color.CYAN );
+            saveSelectedAnswer();
+            next();}
+        else{ builder.setMessage("halten Sie kurz die Luft an");
+            AlertDialog dialog = builder.create();
+            dialog.show();}
 
     }
 
@@ -48,10 +57,14 @@ public class Mode4 extends QuestionActivity {
      */
     @Override
     public void onBreathOutStart() {
-
+        if(clicked=true) {
             button2.setBackgroundColor(Color.CYAN );
             saveSelectedAnswer();
-            next();
+            next();}
+
+        else{ builder.setMessage("halten Sie kurz die Luft an");
+            AlertDialog dialog = builder.create();
+            dialog.show();}
 
     }
 
@@ -61,12 +74,15 @@ public class Mode4 extends QuestionActivity {
 
     public void onHoldBreathStart(){
 
+        clicked=true;
         button2.postDelayed(new Runnable() {
             public void run() {
                 button.setVisibility(View.VISIBLE);
                 button2.setVisibility(View.VISIBLE);
             }
         }, 2000);
+
+
     }
 
 
