@@ -115,6 +115,16 @@ public class Mode3 extends QuestionActivity {
 
     }
 
+    @Override
+    public void graduallyBreathOutStart(){
+
+    }
+    @Override
+    public void graduallyBreathOutStop(){
+
+    }
+
+
     /**
      * sets Cursor animation and starts it
      */

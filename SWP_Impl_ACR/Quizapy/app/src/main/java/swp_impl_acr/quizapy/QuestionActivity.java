@@ -1,7 +1,5 @@
 package swp_impl_acr.quizapy;
 
-import android.animation.ObjectAnimator;
-import android.animation.ValueAnimator;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -12,21 +10,16 @@ import android.support.constraint.ConstraintSet;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewTreeObserver;
-import android.view.animation.LinearInterpolator;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import swp_impl_acr.quizapy.Cursor.Cursor;
 import swp_impl_acr.quizapy.Database.DataSource.StuffDataSource;
 import swp_impl_acr.quizapy.Database.DataSource.TopicDataSource;
 import swp_impl_acr.quizapy.Database.Entity.Answer;
-import swp_impl_acr.quizapy.Database.Entity.Question;
-import swp_impl_acr.quizapy.Helper.CollectionUtils;
 import swp_impl_acr.quizapy.Helper.RespiratoryTrainer;
 import swp_impl_acr.quizapy.RespiratoryTrainerSimulation.Buttons;
 import swp_impl_acr.quizapy.RespiratoryTrainerSimulation.EventListenerInterface;
@@ -262,6 +255,15 @@ public abstract class QuestionActivity extends AppCompatActivity implements Even
 
     @Override
     public void onBreathingRateChange() {
+
+    }
+
+    @Override
+    public void graduallyBreathOutStart(){
+
+    }
+    @Override
+    public void graduallyBreathOutStop(){
 
     }
 }

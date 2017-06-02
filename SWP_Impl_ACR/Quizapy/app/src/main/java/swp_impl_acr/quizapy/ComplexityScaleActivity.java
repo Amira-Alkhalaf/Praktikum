@@ -7,7 +7,6 @@ package swp_impl_acr.quizapy;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
-import android.support.constraint.ConstraintSet;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
@@ -15,7 +14,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -239,4 +237,13 @@ public class ComplexityScaleActivity extends AppCompatActivity implements EventL
     public void onBreathingRateChange() {
 
     }
+    @Override
+    public void graduallyBreathOutStart(){
+
+    }
+    @Override
+    public void graduallyBreathOutStop(){
+
+    }
+
 }

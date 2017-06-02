@@ -36,7 +36,6 @@ public class Mode1 extends AppCompatActivity implements EventListenerInterface {
     private ConstraintLayout layout;
     private List<Button> answerButtons;
 
-
     private ObjectAnimator animator;
     private TextView questionText;
     private List<Question> questions;
@@ -46,12 +45,12 @@ public class Mode1 extends AppCompatActivity implements EventListenerInterface {
     SeekBar seekbar;
     boolean clicked= false;
     boolean clicked2=false;
-
+    private Button button2,button3,button4;
     private Integer secondLeft=60;
     private Integer clickCounter=0;
     private Integer lastFrequency;
     AlertDialog.Builder builder;
-
+    private Integer FrequencyRate=0;
     private static final int NOTHING = 0;
 
 
@@ -77,9 +76,9 @@ public class Mode1 extends AppCompatActivity implements EventListenerInterface {
         TimerText =(TextView)findViewById(R.id.timerText);
         questionText = (TextView)(findViewById(R.id.questionTextMode));
         //Button button1 = (Button)findViewById(R.id.buttonMode1);
-        Button button2 = (Button)findViewById(R.id.buttonMode2);
-        Button button3 = (Button)findViewById(R.id.buttonMode3);
-        Button button4 = (Button)findViewById(R.id.buttonMode4);
+        button2 = (Button)findViewById(R.id.buttonMode2);
+        button3 = (Button)findViewById(R.id.buttonMode3);
+        button4 = (Button)findViewById(R.id.buttonMode4);
 
         seekbar.setMax(50);
         seekbar.setProgress(15);
@@ -143,7 +142,9 @@ public class Mode1 extends AppCompatActivity implements EventListenerInterface {
      * adds Buttons to simulate the Respiratory Trainer to the top of the screen
      */
     private void getSimulatorButtons() {
-        Buttons buttons = new Buttons(this, null, Buttons.BUTTON_BREATH_IN | Buttons.BUTTON_BREATH_OUT | Buttons.SEEKBAR_BREATHING_RATE);
+        Buttons buttons = new Buttons(this, null, Buttons.BUTTON_BREATH_IN | Buttons.BUTTON_BREATH_OUT );
+
+        // Buttons buttons = new Buttons(this, null, Buttons.BUTTON_BREATH_IN | Buttons.BUTTON_BREATH_OUT | Buttons.SEEKBAR_BREATHING_RATE);
 
         layout.addView(buttons);
 
@@ -200,6 +201,15 @@ public class Mode1 extends AppCompatActivity implements EventListenerInterface {
 
     }
 
+    @Override
+    public void graduallyBreathOutStart(){
+
+    }
+    @Override
+    public void graduallyBreathOutStop(){
+
+    }
+
     /**
      * returns string corresponding to set difficulty
      * @param grad
@@ -252,18 +262,17 @@ public class Mode1 extends AppCompatActivity implements EventListenerInterface {
 
             final int secondToCountDown = seekbar.getProgress();
             new CountDownTimer(secondToCountDown*1000, 1000) {
-
+///jj
                     @Override
                     public void onTick(long millisUntilFinished) {
                         int second = Math.round(millisUntilFinished / 1000);
-                        if(secondToCountDown-1==second){
-                            lastFrequency=clickCounter;
+                        if(secondToCountDown-1==second) {
+                            lastFrequency = clickCounter;
                         }else if (lastFrequency == clickCounter) {
-
-
-                            Log.d("message", "great");
-                            // Toast.makeText(getApplicationContext(), "ُyou are doing right", Toast.LENGTH_SHORT).show();
-                        } else if (lastFrequency < clickCounter) {
+                                Log.d("message", "great");
+                                FrequencyRate=0;
+                            }
+                            else if (lastFrequency < clickCounter) {
                             Log.d("message", "go lower");
                             builder.setMessage("go lower");
                             AlertDialog dialog = builder.create();

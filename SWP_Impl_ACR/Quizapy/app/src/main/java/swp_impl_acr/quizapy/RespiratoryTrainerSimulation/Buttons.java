@@ -26,12 +26,14 @@ public class Buttons extends LinearLayout {
     public static final int BUTTON_BREATH_OUT = 2;
     public static final int BUTTON_HOLD_BREATH = 4;
     public static final int SEEKBAR_BREATHING_RATE = 8;
+    public static final int BUTTON_graduallyBreathIN=16;
 
     private Button breathIn;
     private Button breathOut;
     private Button holdBreath;
     private SeekBar breathingRate;
     private Context context;
+    private Button graduallyBreathIN;
 
     private List<EventListenerInterface> eventListeners;
 
@@ -111,6 +113,32 @@ public class Buttons extends LinearLayout {
                 }
             });
         }
+        if( (buttons & BUTTON_graduallyBreathIN) != 0) {
+            graduallyBreathIN = new Button(context);
+            graduallyBreathIN.setId(BUTTON_graduallyBreathIN);
+            graduallyBreathIN.setText("Einatmen");
+            graduallyBreathIN.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
+            this.addView(graduallyBreathIN);
+            graduallyBreathIN.setOnTouchListener(new OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                        for(EventListenerInterface ev:eventListeners){
+                            ev.onBreathInStart();
+                        }
+                    } else if(event.getAction() == MotionEvent.ACTION_UP) {
+                        for(EventListenerInterface ev:eventListeners){
+                            ev.onBreathInStop();
+                        }
+                    }
+                    return true;
+                }
+            });
+        }
+
+
+
+
         if( (buttons & SEEKBAR_BREATHING_RATE) != 0) {
             breathingRate = new SeekBar(context);
             breathingRate.setMax(100);

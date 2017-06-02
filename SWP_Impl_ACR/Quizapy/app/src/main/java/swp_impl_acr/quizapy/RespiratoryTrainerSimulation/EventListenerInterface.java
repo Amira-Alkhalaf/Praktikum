@@ -13,5 +13,11 @@ public interface EventListenerInterface {
     void onHoldBreathStart();
     void onHoldBreathStop();
 
+    void graduallyBreathOutStart();
+    void graduallyBreathOutStop();
+
     void onBreathingRateChange();
+
+
+
 }
