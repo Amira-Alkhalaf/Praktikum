@@ -287,6 +287,15 @@ public class TopicSelectionActivity extends AppCompatActivity implements EventLi
 
     }
 
+    @Override
+    public void onRepeatedlyBreathINandOUTstart(){
+
+    }
+    @Override
+    public void onRepeatedlyBreathINandOUTstop(){
+
+    }
+
     /**
      * starts next activity
      */

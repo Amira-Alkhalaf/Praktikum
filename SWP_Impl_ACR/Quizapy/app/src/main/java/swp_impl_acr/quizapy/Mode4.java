@@ -4,11 +4,10 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
+import android.widget.Toast;
 
 import swp_impl_acr.quizapy.Helper.CollectionUtils;
 import swp_impl_acr.quizapy.RespiratoryTrainerSimulation.Buttons;
-
-import static swp_impl_acr.quizapy.RespiratoryTrainerSimulation.Buttons.BUTTON_HOLD_BREATH;
 
 
 public class Mode4 extends QuestionActivity {
@@ -16,15 +15,23 @@ public class Mode4 extends QuestionActivity {
 boolean clicked= false;
 AlertDialog.Builder builder;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        simButtons = Buttons.BUTTON_BREATH_IN | Buttons.BUTTON_BREATH_OUT | BUTTON_HOLD_BREATH;
+        simButtons = Buttons.BUTTON_BREATH_IN | Buttons.BUTTON_BREATH_OUT| Buttons.BUTTON_HOLD_BREATH;
         super.onCreate(savedInstanceState);
         mode.setText("Modus 4");
         button.setVisibility(View.INVISIBLE);
         button2.setVisibility(View.INVISIBLE);
         button3.setVisibility(View.INVISIBLE);
         button4.setVisibility(View.INVISIBLE);
+
+
+
+
+        Toast.makeText(getApplicationContext(),"halten Sie kurz die Luft an",Toast.LENGTH_SHORT).show();
+
     }
 
 
@@ -40,13 +47,11 @@ AlertDialog.Builder builder;
      */
     @Override
     public void onBreathInStart() {
-        if(clicked=true) {
-            button2.setBackgroundColor(Color.CYAN );
+
+            button.setBackgroundColor(Color.CYAN );
             saveSelectedAnswer();
-            next();}
-        else{ builder.setMessage("halten Sie kurz die Luft an");
-            AlertDialog dialog = builder.create();
-            dialog.show();}
+            next();
+
 
     }
 
@@ -57,14 +62,10 @@ AlertDialog.Builder builder;
      */
     @Override
     public void onBreathOutStart() {
-        if(clicked=true) {
             button2.setBackgroundColor(Color.CYAN );
             saveSelectedAnswer();
-            next();}
+            next();
 
-        else{ builder.setMessage("halten Sie kurz die Luft an");
-            AlertDialog dialog = builder.create();
-            dialog.show();}
 
     }
 
@@ -73,6 +74,7 @@ AlertDialog.Builder builder;
 
 
     public void onHoldBreathStart(){
+
 
         clicked=true;
         button2.postDelayed(new Runnable() {

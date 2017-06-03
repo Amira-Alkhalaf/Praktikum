@@ -11,6 +11,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.SeekBar;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -35,12 +37,25 @@ public abstract class QuestionActivity extends AppCompatActivity implements Even
     protected List<Answer> answers;
     protected StuffDataSource stuffDataSource;
     protected int simButtons;
-    protected Button button;
-    protected Button button2;
-    protected Button button3;
-    protected Button button4;
+     Button button;
+   Button button2;
+     Button button3;
+     Button button4;
     protected TextView difficulty;
     protected TextView mode;
+
+
+    TextView TimerText;
+    SeekBar seekbar;
+    boolean clicked= false;
+    boolean clicked2=false;
+    private Integer secondLeft=60;
+    private Integer clickCounter=0;
+    private Integer lastFrequency;
+    private Integer FrequencyRate=0;
+    private static final int NOTHING = 0;
+     ImageView imageView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +65,14 @@ public abstract class QuestionActivity extends AppCompatActivity implements Even
 
         difficulty = (TextView) findViewById(R.id.text);
         mode = (TextView) findViewById(R.id.chosenMode);
+
+        seekbar =(SeekBar) findViewById(R.id.seekBar);
+        TimerText =(TextView)findViewById(R.id.timerText);
+        imageView=(ImageView)findViewById(R.id.imageView);
+
+        imageView.setVisibility(View.INVISIBLE);
+        TimerText.setVisibility(View.INVISIBLE);
+        seekbar.setVisibility(View.INVISIBLE);
 
         button=(Button)findViewById(R.id.button);
         button2=(Button)findViewById(R.id.button2);
@@ -274,9 +297,28 @@ public abstract class QuestionActivity extends AppCompatActivity implements Even
 
     @Override
 
-    public void graduallyBreathInStart(){}
-    public void graduallyBreathInStop(){}
+    public void graduallyBreathInStart(){
 
-    public void graduallyBreathOutStart(){}
-    public void graduallyBreathOutStop(){}
+    }
+    @Override
+    public void graduallyBreathInStop(){
+
+    }
+    @Override
+    public void graduallyBreathOutStart(){
+
+    }
+    @Override
+    public void graduallyBreathOutStop(){
+
+    }
+    @Override
+    public void onRepeatedlyBreathINandOUTstart(){
+
+    }
+    @Override
+    public void onRepeatedlyBreathINandOUTstop(){
+
+    }
+
 }

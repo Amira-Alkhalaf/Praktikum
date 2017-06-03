@@ -2,20 +2,19 @@ package swp_impl_acr.quizapy.RespiratoryTrainerSimulation;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.Nullable;
-import android.support.constraint.ConstraintLayout;
 import android.util.AttributeSet;
-import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static android.R.id.button1;
 
 /**
  * offers Buttons for Touch Control in case no Respiratory Trainer is connected
@@ -28,16 +27,18 @@ public class Buttons extends LinearLayout {
     public static final int SEEKBAR_BREATHING_RATE = 8;
     public static final int BUTTON_graduallyBreathIN=16;
     public static final int BUTTON_graduallyBreathOUT=32;
+    public static final int BUTTON_RepeatedlyBreathINandOUT=64;
 
 
 
-    private Button breathIn;
+    public Button breathIn;
     private Button breathOut;
     private Button holdBreath;
     private SeekBar breathingRate;
     private Context context;
     private Button graduallyBreathIN;
     private Button graduallyBreathOUT ;
+    private Button repeatedlyBreathINandOUT;
 
     private List<EventListenerInterface> eventListeners;
 
@@ -146,6 +147,7 @@ public class Buttons extends LinearLayout {
             graduallyBreathOUT.setText("Stufenweises Ausatmen");
             graduallyBreathOUT.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
             this.addView(graduallyBreathOUT);
+
             graduallyBreathOUT.setOnTouchListener(new OnTouchListener() {
                 @Override
                 public boolean onTouch(View v, MotionEvent event) {
@@ -156,6 +158,31 @@ public class Buttons extends LinearLayout {
                     } else if(event.getAction() == MotionEvent.ACTION_UP) {
                         for(EventListenerInterface ev:eventListeners){
                             ev.graduallyBreathOutStop();
+                        }
+                    }
+                    return true;
+                }
+            });
+        }
+
+
+        if( (buttons & BUTTON_RepeatedlyBreathINandOUT) != 0) {
+            repeatedlyBreathINandOUT = new Button(context);
+            repeatedlyBreathINandOUT.setId(BUTTON_RepeatedlyBreathINandOUT);
+            repeatedlyBreathINandOUT.setText("Wiederholtes Ausatmen und Einatmen");
+            repeatedlyBreathINandOUT.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
+            this.addView(repeatedlyBreathINandOUT);
+
+            repeatedlyBreathINandOUT.setOnTouchListener(new OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                        for(EventListenerInterface ev:eventListeners){
+                            ev.onRepeatedlyBreathINandOUTstart();
+                        }
+                    } else if(event.getAction() == MotionEvent.ACTION_UP) {
+                        for(EventListenerInterface ev:eventListeners){
+                            ev.onRepeatedlyBreathINandOUTstop();
                         }
                     }
                     return true;
@@ -213,4 +240,8 @@ public class Buttons extends LinearLayout {
     public void removeEventListener(EventListenerInterface eventListener) {
         eventListeners.remove(eventListener);
     }
+
+
+
+
 }

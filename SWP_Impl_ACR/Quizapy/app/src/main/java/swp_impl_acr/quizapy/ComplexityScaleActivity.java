@@ -253,5 +253,13 @@ public class ComplexityScaleActivity extends AppCompatActivity implements EventL
     public void graduallyBreathOutStop(){
 
     }
+    @Override
+    public void onRepeatedlyBreathINandOUTstart(){
+
+    }
+    @Override
+    public void onRepeatedlyBreathINandOUTstop(){
+
+    }
 
 }

@@ -1,50 +1,21 @@
 package swp_impl_acr.quizapy;
 
 
-import android.animation.ObjectAnimator;
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.SeekBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import swp_impl_acr.quizapy.Database.DataSource.TopicDataSource;
-import swp_impl_acr.quizapy.Database.Entity.Answer;
-import swp_impl_acr.quizapy.Database.Entity.Question;
 import swp_impl_acr.quizapy.Helper.CollectionUtils;
-import swp_impl_acr.quizapy.Helper.RespiratoryTrainer;
 import swp_impl_acr.quizapy.RespiratoryTrainerSimulation.Buttons;
-import swp_impl_acr.quizapy.RespiratoryTrainerSimulation.EventListenerInterface;
 
-import static swp_impl_acr.quizapy.R.id.buttonMode3;
+public class Mode1 extends QuestionActivity implements View.OnClickListener {
 
-
-/**
- * activity where the user answers the questions one at a time
- */
-
-public class Mode1 extends AppCompatActivity implements EventListenerInterface {
-    private ConstraintLayout layout;
-    private List<Button> answerButtons;
-
-    private ObjectAnimator animator;
-    private TextView questionText;
-    private List<Question> questions;
-    private SessionStorage sessionStorage;
-    private List<Answer> answers;
-    TextView TimerText;
-    SeekBar seekbar;
     boolean clicked= false;
     boolean clicked2=false;
     private Button button2,button3,button4;
@@ -56,29 +27,20 @@ public class Mode1 extends AppCompatActivity implements EventListenerInterface {
     private static final int NOTHING = 0;
 
 
-    private TextView difficulty;
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        simButtons = Buttons.BUTTON_RepeatedlyBreathINandOUT;
         super.onCreate(savedInstanceState);
-        layout = (ConstraintLayout) View.inflate(this, R.layout.activity_mode1, null);
-        setContentView(layout);
+        mode.setText("Modus 1");
+        imageView.setVisibility(View.VISIBLE);
+        TimerText.setVisibility(View.VISIBLE);
+        seekbar.setVisibility(View.VISIBLE);
 
 
-        builder = new AlertDialog.Builder(this);
 
-        difficulty = (TextView) findViewById(R.id.textMode);
-        seekbar =(SeekBar) findViewById(R.id.seekBar);
-        TimerText =(TextView)findViewById(R.id.timerText);
-        questionText = (TextView)(findViewById(R.id.questionTextMode));
-        //Button button1 = (Button)findViewById(R.id.buttonMode1);
-        button2 = (Button)findViewById(R.id.buttonMode2);
-        button3 = (Button)findViewById(buttonMode3);
-        button4 = (Button)findViewById(R.id.buttonMode4);
-
-        seekbar.setMax(50);
+        seekbar.setMax(60);
         seekbar.setProgress(15);
+
 
         seekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
@@ -90,7 +52,6 @@ public class Mode1 extends AppCompatActivity implements EventListenerInterface {
 
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
-
             }
 
             @Override
@@ -99,174 +60,82 @@ public class Mode1 extends AppCompatActivity implements EventListenerInterface {
             }
         });
 
-        answerButtons = new ArrayList<Button>();
-        //answerButtons.add(button1);
-        answerButtons.add(button2);
-        answerButtons.add(button3);
-        answerButtons.add(button4);
+
+       // button3.setOnClickListener(this);
 
 
 
 
 
 
-        sessionStorage = SessionStorage.getInstance();
-        try {
-            TopicDataSource topicDataSource = new TopicDataSource();
-            questions = topicDataSource.getAllUnansweredQuestionsByDifficulty(sessionStorage.getTopic().getId(), sessionStorage.getDifficulty());
-            questions = CollectionUtils.generateRandomList(questions, 1);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        difficulty.setText(gradToString(sessionStorage.getDifficulty()));
-        TextView chosenTopic = (TextView) findViewById(R.id.chosen_topicMode);
-        chosenTopic.setText(sessionStorage.getTopic().getName());
-        displayQuestion();
-
-
-
-        if (!RespiratoryTrainer.isConnected()) {
-            getSimulatorButtons();
-
-        }
-
-
-    }
-
-
-    /**
-     * adds Buttons to simulate the Respiratory Trainer to the top of the screen
-     */
-    private void getSimulatorButtons() {
-        Buttons buttons = new Buttons(this, null, Buttons.BUTTON_BREATH_IN | Buttons.BUTTON_BREATH_OUT );
-
-        // Buttons buttons = new Buttons(this, null, Buttons.BUTTON_BREATH_IN | Buttons.BUTTON_BREATH_OUT | Buttons.SEEKBAR_BREATHING_RATE);
-
-        layout.addView(buttons);
-
-        buttons.addEventListener(this);
 
     }
 
 
 
     @Override
-    public void onBreathInStart() {
-        clickCounter+=2;
-
-
-       // Toast.makeText(getApplicationContext()," Wiederholtes Ausatmen",Toast.LENGTH_LONG).show();
-
-
-
-        //scaleImage.invalidate();
-
-        }
-
-
-
-
-    @Override
-    public void onBreathInStop() {
-
-    }
-
-    @Override
-    public void onBreathOutStart() {
-
-    }
-
-
-    @Override
-    public void onBreathOutStop() {
-
-    }
-
-    @Override
-    public void onHoldBreathStart() {
-
-    }
-
-    @Override
-    public void onHoldBreathStop() {
-
-    }
-
-    @Override
-    public void onBreathingRateChange() {
-
-    }
-    @Override
-    public void graduallyBreathInStart(){
-
-    }
-    @Override
-    public void graduallyBreathInStop(){
-
-    }
-    @Override
-    public void graduallyBreathOutStart(){
-
-    }
-    @Override
-    public void graduallyBreathOutStop(){
-
-    }
-
-    /**
-     * returns string corresponding to set difficulty
-     * @param grad
-     * @return
-     */
-    private String gradToString(int grad){
-        switch(grad){
-            case 1:
-                return "low";
-            case 2:
-                return "med";
-            case 3:
-                return "high";
-            default:
-                return "error";
-        }
-    }
-
-
-
-
-
-    /**
-     * displays the current question and its answers
-     */
-    private void displayQuestion() {
-        questionText.setText(questions.get(0).getName());
-        answers = questions.get(0).getAnswers();
+    void getAnswers() {
+        answers = sessionStorage.getQuestions().get(0).getAnswers();
         answers = CollectionUtils.generateRandomList(answers, answers.size());
-
-        int i = 1;
-        for(Button button:answerButtons){
-            button.setBackgroundColor(Color.LTGRAY );
-            button.setText(answers.get(i-1).getName());
-            i++;
-        }
     }
 
+    /**
+     * either starts cursoranimation or saves the current selected answer and moves to the nextaction depending on the selected mode
+     */
 
-
-    public void onClick(final View view) {
+    @Override
+    public void onRepeatedlyBreathINandOUTstart() {
         // if(view.getTag().toString()equals(Integer.toString("richtig")))
 
+        clicked=true;
+        clickCounter+=2;
 
-        if(!clicked)
-        {  clicked=true;
-            (view).setBackgroundColor(Color.CYAN );
+    }
+
+    /**
+     * stops the animation
+     */
+    @Override
+    public void onRepeatedlyBreathINandOUTstop () {
+
+    }
+
+    public void Timer(){
+        seekbar.setEnabled(false);
+
+        //set SeekBar to be unmoveable
+        //    builder.setMessage("Bitte, erzeugen Sie wiederholtes Ausatmen");
+        // AlertDialog dialog = builder.create();
+        // dialog.show();
+
+        final int secondToCountDown = seekbar.getProgress();
+        new CountDownTimer(secondToCountDown*1000, 1000) {
+
+            @Override
+            public void onTick(long millisUntilFinished) {
+                int second = Math.round(millisUntilFinished / 1000);
+
+                TimerText.setText( millisUntilFinished / 1000 +"s");
+                TimerText.setTextColor(Color.parseColor("#FFFFFF"));
+                clickCounter=0;
+            }
+
+            @Override
+            public void onFinish() {
+                TimerText.setText("0 s");
+                TimerText.setTextColor(Color.parseColor("#FFA61113"));
+
+            } }.start(); }
+
+
+
+
+    @Override
+    public void onClick(final View v) {
+        if(!clicked2)
+        {  clicked2=true;
+            (v).setBackgroundColor(Color.CYAN );
             seekbar.setEnabled(false);
-
-            //set SeekBar to be unmoveable
-            builder.setMessage("Bitte, erzeugen Sie wiederholtes Ausatmen");
-            AlertDialog dialog = builder.create();
-            dialog.show();
 
             final int secondToCountDown = seekbar.getProgress();
             new CountDownTimer(secondToCountDown*1000, 1000) {
@@ -282,17 +151,13 @@ public class Mode1 extends AppCompatActivity implements EventListenerInterface {
                     }
                     else if (lastFrequency < clickCounter) {
                         Log.d("message", "go lower");
-                        builder.setMessage("go lower");
-                        AlertDialog dialog = builder.create();
-                        dialog.show();
+
                         FrequencyRate=1;
                         lastFrequency=clickCounter;
                     }
                     else if (lastFrequency > clickCounter) {
                         Log.d("message", "go faster");
-                        builder.setMessage("go faster");
-                        AlertDialog dialog = builder.create();
-                        dialog.show();
+
                         FrequencyRate=2;
                         lastFrequency=clickCounter;       }
                     secondLeft=second;
@@ -304,62 +169,13 @@ public class Mode1 extends AppCompatActivity implements EventListenerInterface {
 
                 @Override
                 public void onFinish() {
-                    if(FrequencyRate==0) {
-                        Toast.makeText(getApplicationContext(),"ُDie Antwort wurde ausgewählt",Toast.LENGTH_LONG).show();
-                        TimerText.setText("0 s");
-                        //saveSelectedAnswer();
-                        TimerText.setTextColor(Color.parseColor("#FFA61113"));
-                        Intent b2 = new Intent(Mode1.this, Mode2.class);
-                        startActivity(b2); }
 
-                    else if(FrequencyRate==1) {
-                        view.setBackgroundColor(Color.LTGRAY );
-                        switch(view.getId()) {
-                            case R.id.buttonMode2: {
-                                Toast.makeText(getApplicationContext(), "ُDie vorausgehende Antwort wurde ausgewählt", Toast.LENGTH_LONG).show();
-                               // saveSelectedAnswer();
-                            }break;
-                            case buttonMode3: {
-                                Toast.makeText(getApplicationContext(), "ُDie vorausgehende Antwort wurde ausgewählt", Toast.LENGTH_LONG).show();
-                                button3.setBackgroundColor(Color.LTGRAY );
-                                button2.setBackgroundColor(Color.CYAN );
-                               // saveSelectedAnswer();
-                            }break;
-                            case R.id.buttonMode4: {
-                                Toast.makeText(getApplicationContext(), "ُDie vorausgehende Antwort wurde ausgewählt", Toast.LENGTH_LONG).show();
-                                button4.setBackgroundColor(Color.LTGRAY );
-                                button3.setBackgroundColor(Color.CYAN );
-                               // saveSelectedAnswer();
-                            }break;  }
-                        TimerText.setText("0 s");
-                        TimerText.setTextColor(Color.parseColor("#FFA61113"));
-                        Intent b2 = new Intent(Mode1.this, Mode2.class);
-                        startActivity(b2); }
+                    TimerText.setText("0 s");
+                    TimerText.setTextColor(Color.parseColor("#FFA61113"));
+                    saveSelectedAnswer();
+                    saveSelectedAnswer();
+                        next();}
 
-                    else if(FrequencyRate==2){
-                        view.setBackgroundColor(Color.LTGRAY );
-                        switch(view.getId()) {
-                            case R.id.buttonMode2: {
-                                Toast.makeText(getApplicationContext(), "ُDie nachfolgende Antwort wurde ausgewählt", Toast.LENGTH_LONG).show();
-                                button2.setBackgroundColor(Color.LTGRAY );
-                                button3.setBackgroundColor(Color.CYAN );
-                               // saveSelectedAnswer();
-                            }break;
-                            case buttonMode3: {
-                                Toast.makeText(getApplicationContext(), "ُDie nachfolgende Antwort wurde ausgewählt", Toast.LENGTH_LONG).show();
-                                button3.setBackgroundColor(Color.LTGRAY );
-                                button4.setBackgroundColor(Color.CYAN );
-                               // saveSelectedAnswer();
-                            }break;
-                            case R.id.buttonMode4: {
-                                Toast.makeText(getApplicationContext(), "ُDie nachfolgende Antwort wurde ausgewählt", Toast.LENGTH_LONG).show();
-                               // saveSelectedAnswer();
-                            } break;   }
-                        TimerText.setText("0 s");
-                        TimerText.setTextColor(Color.parseColor("#FFA61113"));
-                        Intent b2 = new Intent(Mode1.this, Mode2.class);
-                        startActivity(b2);}
-                }
             }.start(); }
 
 
@@ -367,16 +183,5 @@ public class Mode1 extends AppCompatActivity implements EventListenerInterface {
 
 
     }
-
-
-public  void resetTimer (){
-    TimerText.setText("15s");
-    seekbar.setProgress(15);
-    seekbar.setEnabled(false);
-
 }
 
-
-
-
-}
