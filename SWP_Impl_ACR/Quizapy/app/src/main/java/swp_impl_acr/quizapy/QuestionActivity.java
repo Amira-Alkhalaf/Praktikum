@@ -37,10 +37,10 @@ public abstract class QuestionActivity extends AppCompatActivity implements Even
     protected List<Answer> answers;
     protected StuffDataSource stuffDataSource;
     protected int simButtons;
-     Button button;
-   Button button2;
-     Button button3;
-     Button button4;
+    protected Button button;
+    protected Button button2;
+    protected Button button3;
+    protected Button button4;
     protected TextView difficulty;
     protected TextView mode;
 
@@ -219,10 +219,10 @@ public abstract class QuestionActivity extends AppCompatActivity implements Even
         }
 
 
-       // in.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        in.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         startActivity(in);
-       // finish();
-       // overridePendingTransition(0, 0);
+        finish();
+        overridePendingTransition(0, 0);
     }
 
     /**
