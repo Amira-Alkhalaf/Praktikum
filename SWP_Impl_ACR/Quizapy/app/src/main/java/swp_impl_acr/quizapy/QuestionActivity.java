@@ -107,10 +107,10 @@ public abstract class QuestionActivity extends AppCompatActivity implements Even
                         int maxRight = answerButtons.get(0).getRight();
 
                         for(Button button:answerButtons){
-                            if(button.getLeft()<minLeft && button.getVisibility()==View.VISIBLE){
+                            if(button.getLeft()<minLeft && button.isEnabled()){
                                 minLeft=button.getLeft();
                             }
-                            if(button.getRight()>maxRight && button.getVisibility()==View.VISIBLE){
+                            if(button.getRight()>maxRight && button.isEnabled()){
                                 maxRight=button.getRight();
                             }
                         }
@@ -141,7 +141,9 @@ public abstract class QuestionActivity extends AppCompatActivity implements Even
             if(i<= answers.size()) {
                 button.setBackgroundColor(Color.LTGRAY);
                 button.setText(answers.get(i - 1).getName());
+                button.setEnabled(true);
             } else {
+                button.setEnabled(false);
                 button.setVisibility(View.INVISIBLE);
             }
             i++;
@@ -228,6 +230,7 @@ public abstract class QuestionActivity extends AppCompatActivity implements Even
             }
             if(color == Color.CYAN){
                 sessionStorage.addAnswer(answers.get(i));
+                break;
             }
             i++;
         }

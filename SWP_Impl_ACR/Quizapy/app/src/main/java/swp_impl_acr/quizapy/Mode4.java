@@ -4,6 +4,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import swp_impl_acr.quizapy.Helper.CollectionUtils;
@@ -12,20 +13,26 @@ import swp_impl_acr.quizapy.RespiratoryTrainerSimulation.Buttons;
 
 public class Mode4 extends QuestionActivity {
 
-boolean clicked= false;
 AlertDialog.Builder builder;
+    private boolean hasQuestionSeen;
+    Toast helpText1;
+    Toast helpText2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         simButtons = Buttons.BUTTON_BREATH_IN | Buttons.BUTTON_BREATH_OUT| Buttons.BUTTON_HOLD_BREATH;
         super.onCreate(savedInstanceState);
         mode.setText("Modus 4");
-        button.setVisibility(View.INVISIBLE);
-        button2.setVisibility(View.INVISIBLE);
-        button3.setVisibility(View.INVISIBLE);
-        button4.setVisibility(View.INVISIBLE);
+        questionText.setVisibility(View.INVISIBLE);
+        for(Button button:answerButtons){
+            button.setVisibility(View.INVISIBLE);
+        }
+        hasQuestionSeen = false;
 
-        Toast.makeText(getApplicationContext(),"halten Sie kurz die Luft an",Toast.LENGTH_SHORT).show();
+        helpText1 = Toast.makeText(getApplicationContext(),"halten Sie die Luft an um die Frage einzublenden",Toast.LENGTH_SHORT);
+        helpText2 = Toast.makeText(getApplicationContext(),"Einatmen um die obere ANtwort auszuwählen, Ausatmen um die untere ANtwort auszuwählen",Toast.LENGTH_LONG);
+
+        helpText1.show();
 
     }
 
@@ -40,12 +47,13 @@ AlertDialog.Builder builder;
      */
     @Override
     public void onBreathInStart() {
-
-            button.setBackgroundColor(Color.CYAN );
+        if(hasQuestionSeen){
+            helpText2.cancel();
+            helpText1.cancel();
+            answerButtons.get(0).setBackgroundColor(Color.CYAN);
             saveSelectedAnswer();
             next();
-
-
+        }
     }
 
     /**
@@ -53,25 +61,36 @@ AlertDialog.Builder builder;
      */
     @Override
     public void onBreathOutStart() {
-            button2.setBackgroundColor(Color.CYAN );
+        if(hasQuestionSeen){
+            helpText1.cancel();
+            helpText2.cancel();
+            answerButtons.get(1).setBackgroundColor(Color.CYAN);
             saveSelectedAnswer();
             next();
-
-
+        }
     }
 
     public void onHoldBreathStart(){
-
-
-        clicked=true;
-        button2.postDelayed(new Runnable() {
-            public void run() {
+    helpText1.cancel();
+        for(Button button:answerButtons){
+            if(button.isEnabled()){
                 button.setVisibility(View.VISIBLE);
-                button2.setVisibility(View.VISIBLE);
             }
-        }, 2000);
+        }
+        questionText.setVisibility(View.VISIBLE);
+        hasQuestionSeen=true;
+        helpText2.show();
+    }
 
-
+    public void onHoldBreathStop(){
+        helpText2.cancel();
+        for(Button button:answerButtons){
+            if(button.isEnabled()){
+                button.setVisibility(View.INVISIBLE);
+            }
+        }
+        questionText.setVisibility(View.INVISIBLE);
+        helpText1.show();
     }
 
 }
