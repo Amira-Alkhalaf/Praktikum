@@ -4,10 +4,17 @@ package swp_impl_acr.quizapy;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.support.constraint.ConstraintLayout;
+import android.support.constraint.ConstraintSet;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.SeekBar;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import org.w3c.dom.Text;
 
 import swp_impl_acr.quizapy.Helper.CollectionUtils;
 import swp_impl_acr.quizapy.RespiratoryTrainerSimulation.Buttons;
@@ -28,6 +35,10 @@ public class Mode1 extends QuestionActivity implements View.OnClickListener {
 
     private Integer Frequency = 1;
 
+    private SeekBar seekbar;
+    private TextView timerText;
+    private ImageView imageView;
+
     /* Variable to determine whether the frequency entered equals the previously
     * initialized frequency, is less than that, or is bigger than that.
     */
@@ -41,10 +52,16 @@ public class Mode1 extends QuestionActivity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         mode.setText("Modus 1");
 
+        View child = (ConstraintLayout) View.inflate(this, R.layout.activity_mode1,null);
+        layout.addView(child);
+        ConstraintSet set2 = new ConstraintSet();
+        set2.clone(layout);
+        set2.connect(child.getId(), ConstraintSet.TOP, questionText.getId(), ConstraintSet.BOTTOM, 0);
+        set2.applyTo(layout);
 
-        imageView.setVisibility(View.VISIBLE);
-        TimerText.setVisibility(View.VISIBLE);
-        seekbar.setVisibility(View.VISIBLE);
+        seekbar = (SeekBar)findViewById(R.id.seekBar);
+        timerText = (TextView)findViewById(R.id.timerText);
+        imageView = (ImageView)findViewById(R.id.imageView);
 
 
         /*
@@ -59,7 +76,7 @@ public class Mode1 extends QuestionActivity implements View.OnClickListener {
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 int minutes = (int) progress / 60;
                 int seconds = progress - minutes * 60;
-                TimerText.setText(Integer.toString(seconds) + "s");
+                timerText.setText(Integer.toString(seconds) + "s");
             }
 
             @Override
@@ -78,7 +95,7 @@ public class Mode1 extends QuestionActivity implements View.OnClickListener {
 
     @Override
     void getAnswers() {
-        answers = sessionStorage.getQuestions().get(0).getAnswers(3);
+        answers = sessionStorage.getQuestions().get(0).getAnswers(4);
         answers = CollectionUtils.generateRandomList(answers, answers.size());
     }
 
@@ -118,12 +135,12 @@ public class Mode1 extends QuestionActivity implements View.OnClickListener {
                           CompareFrequency();
                           clickCounter = 0;
                           secondLeft = second;
-                          TimerText.setText(second + "s");
-                          TimerText.setTextColor(Color.parseColor("#FFFFFF"));
+                          timerText.setText(second + "s");
+                          timerText.setTextColor(Color.parseColor("#FFFFFF"));
                     } else {
                           secondLeft = second;
-                          TimerText.setText(second + "s");
-                          TimerText.setTextColor(Color.parseColor("#FFFFFF"));
+                          timerText.setText(second + "s");
+                          timerText.setTextColor(Color.parseColor("#FFFFFF"));
                     }
 
 
@@ -191,8 +208,8 @@ public class Mode1 extends QuestionActivity implements View.OnClickListener {
                     }
 
 
-                    TimerText.setText("0 s");
-                    TimerText.setTextColor(Color.parseColor("#FFA61113"));
+                    timerText.setText("0 s");
+                    timerText.setTextColor(Color.parseColor("#FFA61113"));
                     saveSelectedAnswer();
                     next();
                 }

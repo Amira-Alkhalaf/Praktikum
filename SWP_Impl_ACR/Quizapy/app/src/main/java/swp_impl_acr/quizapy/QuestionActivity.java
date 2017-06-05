@@ -45,8 +45,6 @@ public abstract class QuestionActivity extends AppCompatActivity implements Even
     protected TextView mode;
 
 
-    TextView TimerText;
-    SeekBar seekbar;
     boolean clicked= false;
     boolean clicked2=false;
     private Integer secondLeft=60;
@@ -54,7 +52,6 @@ public abstract class QuestionActivity extends AppCompatActivity implements Even
     private Integer lastFrequency;
     private Integer FrequencyRate=0;
     private static final int NOTHING = 0;
-     ImageView imageView;
 
 
     @Override
@@ -65,14 +62,6 @@ public abstract class QuestionActivity extends AppCompatActivity implements Even
 
         difficulty = (TextView) findViewById(R.id.text);
         mode = (TextView) findViewById(R.id.chosenMode);
-
-        seekbar =(SeekBar) findViewById(R.id.seekBar);
-        TimerText =(TextView)findViewById(R.id.timerText);
-        imageView=(ImageView)findViewById(R.id.imageView);
-
-        imageView.setVisibility(View.INVISIBLE);
-        TimerText.setVisibility(View.INVISIBLE);
-        seekbar.setVisibility(View.INVISIBLE);
 
         button=(Button)findViewById(R.id.button);
         button2=(Button)findViewById(R.id.button2);
@@ -166,6 +155,7 @@ public abstract class QuestionActivity extends AppCompatActivity implements Even
      */
     void getSimulatorButtons(){
         Buttons buttons = new Buttons(this, null, simButtons);
+        buttons.setId(1111);
         layout.addView(buttons);
 
         ConstraintSet set = new ConstraintSet();
