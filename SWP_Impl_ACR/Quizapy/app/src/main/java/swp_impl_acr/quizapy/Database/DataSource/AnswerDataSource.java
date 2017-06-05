@@ -45,13 +45,13 @@ public class AnswerDataSource {
      * @param answer
      * @throws SQLException
      */
-    public void saveAnswer(Answer answer) throws SQLException {
-        if (instance.checkIfDataExistsInDb(QuizapyContract.AnswerTable.TABLE_NAME,
+    public Answer saveAnswer(Answer answer) throws SQLException {
+        if (answer.getId() != null && instance.checkIfDataExistsInDb(QuizapyContract.AnswerTable.TABLE_NAME,
                 QuizapyContract.AnswerTable._ID,
                 Integer.toString(answer.getId()))) {
-            updateAnswer(answer);
+            return null;
         } else {
-            addAnswer(answer);
+            return addAnswer(answer);
         }
     }
 
@@ -60,14 +60,18 @@ public class AnswerDataSource {
      * @param answer
      * @throws SQLException
      */
-    private void addAnswer(Answer answer) throws SQLException {
+    private Answer addAnswer(Answer answer) throws SQLException {
         ContentValues contentValues = new ContentValues();
-        contentValues.put(QuizapyContract.AnswerTable._ID, answer.getId());
+        if(answer.getId() != null){
+            contentValues.put(QuizapyContract.AnswerTable._ID, answer.getId());
+        }
         contentValues.put(QuizapyContract.AnswerTable.COLUMN_QUESTION, answer.getQuestion().getId());
         contentValues.put(QuizapyContract.AnswerTable.COLUMN_NAME, answer.getName());
         int intValueCorrectAnswer = (answer.isCorrectAnswer()) ? 1 : 0;
         contentValues.put(QuizapyContract.AnswerTable.COLUMN_CORRECT_ANSWER, intValueCorrectAnswer);
-        db.insertOrThrow(QuizapyContract.AnswerTable.TABLE_NAME, null, contentValues);
+        answer.setId((int)db.insertOrThrow(QuizapyContract.AnswerTable.TABLE_NAME, null, contentValues));
+        return answer;
+
     }
 
     /**

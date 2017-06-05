@@ -10,7 +10,7 @@ import swp_impl_acr.quizapy.Database.DataSource.TopicDataSource;
  */
 public class Topic {
 
-    private int id;
+    private Integer id;
     private String name;
     private List<Question> questions;
 
@@ -36,7 +36,7 @@ public class Topic {
      * returns the topic id
      * @return
      */
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 

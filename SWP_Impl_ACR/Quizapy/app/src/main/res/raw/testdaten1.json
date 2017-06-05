@@ -1,0 +1,342 @@
+{
+    "Categories": [
+        {
+            "CategoryName": "Allgemeinwissen", 
+            "Level1": {
+                "Questions": [
+                    {
+                        "Question": {
+                            "QuestionText": "Wie heisst der griechische Gott des Schlafes?", 
+                            "RightAnswerText": "Hypnos", 
+                            "WrongAnswersText": [
+                                "Thalos", 
+                                "Orpheus", 
+                                "Hermes"
+                            ]
+                        }
+                    }, 
+                    {
+                        "Question": {
+                            "QuestionText": "Hasst Knoblauch, Sonnenlicht und hat kein Spiegelbild", 
+                            "RightAnswerText": "Vampir", 
+                            "WrongAnswersText": [
+                                "Ente", 
+                                "Werwolf", 
+                                "Katze"
+                            ]
+                        }
+                    }, 
+                    {
+                        "Question": {
+                            "QuestionText": "Was ist bei einer Hepatitis (Gelbsucht) entz\u00fcndet?", 
+                            "RightAnswerText": "Leber", 
+                            "WrongAnswersText": [
+                                "Nieren", 
+                                "Lunge"
+                            ]
+                        }
+                    }, 
+                    {
+                        "Question": {
+                            "QuestionText": "Mit welcher Filmrolle ist Pierre Brice ber\u00fchmt geworden?", 
+                            "RightAnswerText": "Winnetou", 
+                            "WrongAnswersText": [
+                                "Mannetou", 
+                                "Fu\u00df im Schuh"
+                            ]
+                        }
+                    }, 
+                    {
+                        "Question": {
+                            "QuestionText": "Was ist die Pole-Position?", 
+                            "RightAnswerText": "Bester Startplatz beim Automobilrennen", 
+                            "WrongAnswersText": [
+                                "Position des Nord bzw. S\u00fcdpols"
+                            ]
+                        }
+                    }, 
+                    {
+                        "Question": {
+                            "QuestionText": "Hollywood ist en Stadtteil von?", 
+                            "RightAnswerText": "Los Angeles", 
+                            "WrongAnswersText": [
+                                "Santa Monica", 
+                                "Malibu", 
+                                "Hollywood"
+                            ]
+                        }
+                    }, 
+                    {
+                        "Question": {
+                            "QuestionText": "Welche Farbe hat die Warnflagge bei Autorennen?", 
+                            "RightAnswerText": "Gelb", 
+                            "WrongAnswersText": [
+                                "Rot", 
+                                "Blau", 
+                                "Schwarz"
+                            ]
+                        }
+                    }, 
+                    {
+                        "Question": {
+                            "QuestionText": "Wer sprach die ber\u00fchmten Worte \u201eVeni, vidi, vidi\u201c?", 
+                            "RightAnswerText": "Niemand", 
+                            "WrongAnswersText": [
+                                "C\u00e4sar", 
+                                "Napoleon", 
+                                "Brutus"
+                            ]
+                        }
+                    }, 
+                    {
+                        "Question": {
+                            "QuestionText": "Wo war der  Grieche Achilles verletzbar?", 
+                            "RightAnswerText": "Ferse", 
+                            "WrongAnswersText": [
+                                "Wade", 
+                                "Fu\u00dfballen", 
+                                "Zehe"
+                            ]
+                        }
+                    }, 
+                    {
+                        "Question": {
+                            "QuestionText": "Was braucht man um Arbeit zu verrichten?", 
+                            "RightAnswerText": "Energie", 
+                            "WrongAnswersText": [
+                                "Werkzeug"
+                            ]
+                        }
+                    }
+                ]
+            }, 
+            "Level2": {
+                "Questions": [
+                    {
+                        "Question": {
+                            "QuestionText": "Wer schrieb die unendliche Geschichte?", 
+                            "RightAnswerText": "Michael Ende", 
+                            "WrongAnswersText": [
+                                "Michel Ende", 
+                                "Michel Ente", 
+                                "Michael Ente"
+                            ]
+                        }
+                    }, 
+                    {
+                        "Question": {
+                            "QuestionText": "Wo wurde Richard Wagner geboren?", 
+                            "RightAnswerText": "Leipzig", 
+                            "WrongAnswersText": [
+                                "Dresden", 
+                                "Magdeburg", 
+                                "K\u00f6nigsberg"
+                            ]
+                        }
+                    }, 
+                    {
+                        "Question": {
+                            "QuestionText": "Welches Landtier kann am schnellsten laufen?", 
+                            "RightAnswerText": "Gepard", 
+                            "WrongAnswersText": [
+                                "Leopard", 
+                                "Tiger", 
+                                "L\u00f6we"
+                            ]
+                        }
+                    }, 
+                    {
+                        "Question": {
+                            "QuestionText": "Wer schrieb die unendliche Geschichte?", 
+                            "RightAnswerText": "Michel Ende", 
+                            "WrongAnswersText": [
+                                "Michael Ende", 
+                                "Michel Ente", 
+                                "Michael Ente"
+                            ]
+                        }
+                    }, 
+                    {
+                        "Question": {
+                            "QuestionText": "Woraus bestehen die H\u00f6cker der Kamele?", 
+                            "RightAnswerText": "Fettgewebe", 
+                            "WrongAnswersText": [
+                                "Wasser", 
+                                "Luft", 
+                                "Calcium"
+                            ]
+                        }
+                    }, 
+                    {
+                        "Question": {
+                            "QuestionText": "Was ist Wolfram", 
+                            "RightAnswerText": "Ein Metall", 
+                            "WrongAnswersText": [
+                                "Eine Suchmaschine", 
+                                "Ein verbreiteter Nachname"
+                            ]
+                        }
+                    }, 
+                    {
+                        "Question": {
+                            "QuestionText": "Wo liegt die Antarktis?", 
+                            "RightAnswerText": "Beim Nordpol", 
+                            "WrongAnswersText": [
+                                "Beim S\u00fcdpol", 
+                                "Beim Westpol", 
+                                "Beim Ostpol"
+                            ]
+                        }
+                    }, 
+                    {
+                        "Question": {
+                            "QuestionText": "Woraus bestehen die H\u00f6cker der Kamele?", 
+                            "RightAnswerText": "Fettgewebe", 
+                            "WrongAnswersText": [
+                                "Wasser", 
+                                "Luft", 
+                                "Erde"
+                            ]
+                        }
+                    }, 
+                    {
+                        "Question": {
+                            "QuestionText": "Wo fanden die ersten Olympischen Spiele der Neuzeit statt?", 
+                            "RightAnswerText": "Athen", 
+                            "WrongAnswersText": [
+                                "Berlin", 
+                                "London", 
+                                "Heraklion"
+                            ]
+                        }
+                    }, 
+                    {
+                        "Question": {
+                            "QuestionText": "Wie viele Saiten hat eine Mandoline?", 
+                            "RightAnswerText": "12", 
+                            "WrongAnswersText": [
+                                "13", 
+                                "7", 
+                                "9"
+                            ]
+                        }
+                    }
+                ]
+            }, 
+            "Level3": {
+                "Questions": [
+                    {
+                        "Question": {
+                            "QuestionText": "Wann attackierte Japan Pearl Harbour", 
+                            "RightAnswerText": "1941", 
+                            "WrongAnswersText": [
+                                "1940", 
+                                "1942", 
+                                "1943"
+                            ]
+                        }
+                    }, 
+                    {
+                        "Question": {
+                            "QuestionText": "Wann wurde Indien selbstst\u00e4ndig", 
+                            "RightAnswerText": "1947", 
+                            "WrongAnswersText": [
+                                "1940", 
+                                "1946", 
+                                "1945"
+                            ]
+                        }
+                    }, 
+                    {
+                        "Question": {
+                            "QuestionText": "Wann ging Neil Armstrong auf dem Mond spazieren", 
+                            "RightAnswerText": "1969", 
+                            "WrongAnswersText": [
+                                "1968", 
+                                "1970", 
+                                "1966"
+                            ]
+                        }
+                    }, 
+                    {
+                        "Question": {
+                            "QuestionText": "Wann ging die Titanic unter?", 
+                            "RightAnswerText": "1912", 
+                            "WrongAnswersText": [
+                                "1849", 
+                                "1929", 
+                                "1917"
+                            ]
+                        }
+                    }, 
+                    {
+                        "Question": {
+                            "QuestionText": "In welcher Stadt befindet sich der Tierpark Hellabrunn?", 
+                            "RightAnswerText": "M\u00fcnchen", 
+                            "WrongAnswersText": [
+                                "Leizip", 
+                                "N\u00fcrnberg", 
+                                "Augsburg"
+                            ]
+                        }
+                    }, 
+                    {
+                        "Question": {
+                            "QuestionText": "Wann traten die USA in den Ersten Weltkrieg ein?", 
+                            "RightAnswerText": "1917", 
+                            "WrongAnswersText": [
+                                "1941", 
+                                "1915", 
+                                "1942"
+                            ]
+                        }
+                    }, 
+                    {
+                        "Question": {
+                            "QuestionText": "Wann kamen die ersten compact discs auf den Markt?", 
+                            "RightAnswerText": "1982", 
+                            "WrongAnswersText": [
+                                "1985", 
+                                "1972", 
+                                "1984"
+                            ]
+                        }
+                    }, 
+                    {
+                        "Question": {
+                            "QuestionText": "Wann wurden die ersten olympischen Winterspiele abgehalten?", 
+                            "RightAnswerText": "1924", 
+                            "WrongAnswersText": [
+                                "1817", 
+                                "1912", 
+                                "1437"
+                            ]
+                        }
+                    }, 
+                    {
+                        "Question": {
+                            "QuestionText": "Wann gewann Frankreich die Fu\u00dfball WM?", 
+                            "RightAnswerText": "1998", 
+                            "WrongAnswersText": [
+                                "1986", 
+                                "2002", 
+                                "1938"
+                            ]
+                        }
+                    }, 
+                    {
+                        "Question": {
+                            "QuestionText": "Wann wurde \u00d6sterreichs Thronfolger Franz Ferdinand in Sarajewo erschossen?", 
+                            "RightAnswerText": "1914", 
+                            "WrongAnswersText": [
+                                "1910", 
+                                "1918", 
+                                "1901"
+                            ]
+                        }
+                    }
+                ]
+            }
+        }
+    ]
+}

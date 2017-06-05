@@ -106,12 +106,13 @@ public class TopicSelectionActivity extends AppCompatActivity implements EventLi
                     public void onGlobalLayout() {
                         layout.getViewTreeObserver().removeOnGlobalLayoutListener(this);
 
-                        for(Button button:topicButtons){
-                            if(button.getVisibility()==View.INVISIBLE){
-                                button.setWidth(topicButtons.get(0).getWidth());
-                                button.setHeight(topicButtons.get(0).getHeight());
-                            }
-                        }
+
+//                        for(Button button:topicButtons){
+//                            if(button.getVisibility()==View.INVISIBLE){
+//                                button.setWidth(topicButtons.get(0).getWidth());
+//                                button.setHeight(topicButtons.get(0).getHeight());
+//                            }
+//                        }
 
                         cursor.moveCursor(topicButtons.get(0).getLeft(),topicButtons.get(0).getTop());
                         //cursor.setVisibility(View.VISIBLE);

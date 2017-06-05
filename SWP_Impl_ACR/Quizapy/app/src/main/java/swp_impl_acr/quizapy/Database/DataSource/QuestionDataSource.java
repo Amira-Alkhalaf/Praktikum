@@ -48,13 +48,14 @@ public class QuestionDataSource {
      * @param question
      * @throws SQLException
      */
-    public void saveQuestion(Question question) throws SQLException {
-        if (instance.checkIfDataExistsInDb(QuizapyContract.QuestionTable.TABLE_NAME,
+    public Question saveQuestion(Question question) throws SQLException {
+        if (question.getId() != null && instance.checkIfDataExistsInDb(QuizapyContract.QuestionTable.TABLE_NAME,
                 QuizapyContract.QuestionTable._ID,
                 Integer.toString(question.getId()))) {
             updateQuestion(question);
+            return null;
         } else {
-            addQuestion(question);
+            return addQuestion(question);
         }
     }
 
@@ -82,15 +83,18 @@ public class QuestionDataSource {
      * @param question
      * @throws SQLException
      */
-    private void addQuestion(Question question) throws SQLException {
+    private Question addQuestion(Question question) throws SQLException {
         ContentValues contentValues = new ContentValues();
-        contentValues.put(QuizapyContract.QuestionTable._ID, question.getId());
+        if(question.getId() != null){
+            contentValues.put(QuizapyContract.QuestionTable._ID, question.getId());
+        }
         contentValues.put(QuizapyContract.QuestionTable.COLUMN_TOPIC, question.getTopic().getId());
         contentValues.put(QuizapyContract.QuestionTable.COLUMN_NAME, question.getName());
         contentValues.put(QuizapyContract.QuestionTable.COLUMN_DIFFICULTY, question.getDifficulty());
         contentValues.put(QuizapyContract.QuestionTable.COLUMN_ANSWERED, 0);
         contentValues.put(QuizapyContract.QuestionTable.COLUMN_CORRECTLY, -1);
-        db.insertOrThrow(QuizapyContract.QuestionTable.TABLE_NAME, null, contentValues);
+        question.setId((int)db.insertOrThrow(QuizapyContract.QuestionTable.TABLE_NAME, null, contentValues));
+        return question;
     }
 
     /**

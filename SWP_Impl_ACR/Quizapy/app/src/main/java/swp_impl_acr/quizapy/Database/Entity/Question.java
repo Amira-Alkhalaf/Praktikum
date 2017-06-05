@@ -1,16 +1,18 @@
 package swp_impl_acr.quizapy.Database.Entity;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
 import swp_impl_acr.quizapy.Database.DataSource.QuestionDataSource;
+import swp_impl_acr.quizapy.Helper.CollectionUtils;
 
 /**
  * question entity
  */
 public class Question {
 
-    private int id;
+    private Integer id;
     private Topic topic;
     private String name;
     private int difficulty;
@@ -50,7 +52,7 @@ public class Question {
      * returns the question id
      * @return
      */
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
@@ -150,11 +152,18 @@ public class Question {
      * returns a list of answers belonging to the question
      * @return
      */
-    public List<Answer> getAnswers() {
+    public List<Answer> getAnswers(int count) {
         if(answers.size()==0){
             try {
                 QuestionDataSource questionDataSource = new QuestionDataSource();
-                this.answers = questionDataSource.getAllAnswers(this.id);
+                this.answers.add(questionDataSource.getCorrectAnswer(this.id));
+                List<Answer> tempAnswers = questionDataSource.getWrongAnswers(this.id);
+                if(count == -1){
+                    this.answers.addAll(tempAnswers);
+                } else {
+                    tempAnswers = CollectionUtils.generateRandomList(tempAnswers, count-1);
+                    this.answers.addAll(tempAnswers);
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             }

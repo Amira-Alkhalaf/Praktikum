@@ -42,13 +42,15 @@ public class TopicDataSource {
      * @param topic
      * @throws SQLException
      */
-    public void saveTopic(Topic topic) throws SQLException {
-        if (instance.checkIfDataExistsInDb(QuizapyContract.TopicTable.TABLE_NAME,
+    public Topic saveTopic(Topic topic) throws SQLException {
+        if (topic.getId() != null && instance.checkIfDataExistsInDb(QuizapyContract.TopicTable.TABLE_NAME,
                 QuizapyContract.TopicTable._ID,
                 Integer.toString(topic.getId()))) {
             updateTopic(topic);
+            return null;
         } else {
-            addTopic(topic);
+            return addTopic(topic);
+
         }
     }
 
@@ -57,11 +59,14 @@ public class TopicDataSource {
      * @param topic
      * @throws SQLException
      */
-    private void addTopic(Topic topic) throws SQLException {
+    private Topic addTopic(Topic topic) throws SQLException {
         ContentValues contentValues = new ContentValues();
-        contentValues.put(QuizapyContract.TopicTable._ID, topic.getId());
+        if(topic.getId() != null){
+            contentValues.put(QuizapyContract.TopicTable._ID, topic.getId());
+        }
         contentValues.put(QuizapyContract.TopicTable.COLUMN_NAME, topic.getName());
-        db.insertOrThrow(QuizapyContract.TopicTable.TABLE_NAME, null, contentValues);
+        topic.setId((int)db.insertOrThrow(QuizapyContract.TopicTable.TABLE_NAME, null, contentValues));
+        return topic;
     }
 
     /**

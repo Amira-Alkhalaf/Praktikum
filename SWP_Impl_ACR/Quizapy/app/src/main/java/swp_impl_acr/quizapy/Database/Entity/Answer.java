@@ -5,7 +5,7 @@ package swp_impl_acr.quizapy.Database.Entity;
  */
 public class Answer {
 
-    private int id;
+    private Integer id;
     private Question question;
     private String name;
     private boolean correctAnswer;
@@ -35,7 +35,7 @@ public class Answer {
      * returns the answer id
      * @return
      */
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 

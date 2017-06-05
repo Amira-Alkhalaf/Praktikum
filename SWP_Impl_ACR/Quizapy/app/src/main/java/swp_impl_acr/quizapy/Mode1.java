@@ -78,7 +78,7 @@ public class Mode1 extends QuestionActivity implements View.OnClickListener {
 
     @Override
     void getAnswers() {
-        answers = sessionStorage.getQuestions().get(0).getAnswers();
+        answers = sessionStorage.getQuestions().get(0).getAnswers(3);
         answers = CollectionUtils.generateRandomList(answers, answers.size());
     }
 

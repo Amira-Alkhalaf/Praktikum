@@ -1,0 +1,142 @@
+{
+  "Categories" : [
+    { "CategoryName" : "Science",
+      "Level1": {"Questions" :[
+        {"Question" : { "QuestionText" : "Wie viele mägen hat eine Kuh?",
+                        "RightAnswerText" : "4",
+                        "WrongAnswersText" : ["1", "2","3"]}
+        },
+		        {"Question" : { "QuestionText" : "Wie nennt man die Auf einer Wetterkarte eingezeichneten Linien gleichen Luftdrucks?",
+                        "RightAnswerText" : "Isobaren",
+                        "WrongAnswersText" : ["Antibaren", "Kostbaren","Elobaren"]}
+        },
+		        {"Question" : { "QuestionText" : "Welches der fogenden Elemente ist ein Metall?",
+                        "RightAnswerText" : "Lithium",
+                        "WrongAnswersText" : ["Krypton", "Schwefel","Silizium"]}
+        },
+		        {"Question" : { "QuestionText" : "Welches Elementsymbol hat Meitnerium im Periodensystem?",
+                        "RightAnswerText" : "Mt",
+                        "WrongAnswersText" : ["Mn", "Me","Mi"]}
+        },
+		        {"Question" : { "QuestionText" : "Was passiert, wenn man viele Teelichter in einem Kreis aufstellt?",
+                        "RightAnswerText" : "Die Flammen neigen sich nach innen",
+                        "WrongAnswersText" : ["Die flammen neigen sich nach außen", "Die Flammen erlöschen","Nichts besonderes"]}
+        },
+		        {"Question" : { "QuestionText" : "Zu welcher Gruppe im Periodensystem gehört das Element Neptunium?",
+                        "RightAnswerText" : "Actinoide",
+                        "WrongAnswersText" : ["Lantanoide", "Alkalimetalle","Nickelgruppe"]}
+        },
+		        {"Question" : { "QuestionText" : "Wofür steht die Abkürzung REM?",
+                        "RightAnswerText" : "Rapid Eye Movement",
+                        "WrongAnswersText" : ["Reich Ergeizig Mächtig", "Rektalergonomische Massage","Relative Entity Model"]}
+        },
+		        {"Question" : { "QuestionText" : "Zu welchem Land gehört Kap Hoorn?",
+                        "RightAnswerText" : "Chile",
+                        "WrongAnswersText" : ["Argentinien", "Uruguay","Groß Britannien"]}
+        },
+		        {"Question" : { "QuestionText" : "Aus welchem Material besteht der Ring einer 2-Euro-Münze?",
+                        "RightAnswerText" : "Kupfernickel",
+                        "WrongAnswersText" : ["Messing", "Bronze","Nickelmessing"]}
+        },
+		        {"Question" : { "QuestionText" : "CMT ist eine Abkürzung für eine seltene neurologische Erkrankung. Wofür steht sie?",
+                        "RightAnswerText" : "Charcot-Marie-Tooth",
+                        "WrongAnswersText" : ["Central-Muscular-Tension", "Cerebral-Micro-Trinning","Cytolgy-Muscel-Tunnel"]}
+        }
+      ]},
+     "Level2": {"Questions" :[
+        {"Question" : { "QuestionText" : "Welche Spezies bildet die größte Biomasse der Erde?",
+                        "RightAnswerText" : "Ruderfußkrebse",
+                        "WrongAnswersText" : ["Mensch", "Mücke","Blauwal"]}
+        },
+		        {"Question" : { "QuestionText" : "Wo findet man die Vatersche Papille?",
+                        "RightAnswerText" : "Im Zwölffingerdarm",
+                        "WrongAnswersText" : ["Am Mund", "Im Ohr","Im Auge"]}
+        },
+		        {"Question" : { "QuestionText" : "In welchem Körperteil befindet sich die Pupille?",
+                        "RightAnswerText" : "Im Auge",
+                        "WrongAnswersText" : ["Im Ohr", "Im Zwölffingerdarm","Am Mund"]}
+        },
+		        {"Question" : { "QuestionText" : "Wie viele Pinguine frisst ein Eisbär durchschnittlich im Jahr?",
+                        "RightAnswerText" : "0 bis 100",
+                        "WrongAnswersText" : ["100 bis 200", "200 bis 300","mehr als 300"]}
+        },
+		        {"Question" : { "QuestionText" : "Was ist ein Würger?",
+                        "RightAnswerText" : "Vogel",
+                        "WrongAnswersText" : ["Insekt", "Wurm","Säugetier"]}
+        },
+		        {"Question" : { "QuestionText" : "Welcher der folgenden Begriffe hat nichts mit dem Gehirn zu tun?",
+                        "RightAnswerText" : "Fundus",
+                        "WrongAnswersText" : ["Thalamus", "Frontallappen","Cerebellum"]}
+        },
+		        {"Question" : { "QuestionText" : "Wie nennt der Mediziner eine Hohlvene?",
+                        "RightAnswerText" : "Vena Cava",
+                        "WrongAnswersText" : ["Vena Vulla", "Vena Comuns","Vena Generalis"]}
+        },        {"Question" : { "QuestionText" : "Welches Vitamin fehlt im Körper bei der Erkrankung Rachitis?",
+                        "RightAnswerText" : "D",
+                        "WrongAnswersText" : ["A", "B","K"]}
+        },
+		        {"Question" : { "QuestionText" : "In welchem Land wurde als Erstes Vanille als Zutat verwendet?",
+                        "RightAnswerText" : "Mexiko",
+                        "WrongAnswersText" : ["Spanien", "China","Indien"]}
+        },
+		        {"Question" : { "QuestionText" : "Über welchen Bereich im Körper wird gesprochen, wenn das Wort vertebralis fällt?",
+                        "RightAnswerText" : "Wirbel",
+                        "WrongAnswersText" : ["Rippe", "Magen","Lunge"]}
+        },
+		        {"Question" : { "QuestionText" : "Was versteht man unter Pseudologica Phantastica?",
+                        "RightAnswerText" : "Zwanghaftes Lügen",
+                        "WrongAnswersText" : ["Zwanghaftes Reden", "Zwanghaftes Träumen","Zwanghaftes Denken"]}
+        }
+      ]},
+     "Level3": {"Questions" :[
+         {"Question" : { "QuestionText" : "Wie lange lebt eine ausgewachsene Libelle?",
+                        "RightAnswerText" : "einige Wochen",
+                        "WrongAnswersText" : ["einige Tage","einige Jahre","einige Minuten"]}
+        },
+		        {"Question" : { "QuestionText" : "Über wlchen Bereich wird gesprochen, wenn das Wort pulmonalis fällt?",
+                        "RightAnswerText" : "Lunge",
+                        "WrongAnswersText" : ["Herz", "Niere","Ohr"]}
+        },
+		        {"Question" : { "QuestionText" : "Was ist Krill?",
+                        "RightAnswerText" : "Krebstiere",
+                        "WrongAnswersText" : ["Seegras", "Kleine Fische","Korallen"]}
+        },
+		        {"Question" : { "QuestionText" : "Was bedeutet Bradykardie?",
+                        "RightAnswerText" : "Langsamer Herzschlag",
+                        "WrongAnswersText" : ["Sehr hoher Puls", "Unregelmäßiger Puls","Aussetzender Puls"]}
+        },
+		        {"Question" : { "QuestionText" : "Wie heißt die Bakterielle Infektion einer Talkdrüse am Rand des Lides?",
+                        "RightAnswerText" : "Gerstenkorn",
+                        "WrongAnswersText" : ["Star", "Ödem","Uveitis"]}
+        },
+		        {"Question" : { "QuestionText" : "Was ist die Hauptnahrung des Koalas?",
+                        "RightAnswerText" : "Eukalyptus",
+                        "WrongAnswersText" : ["Bambus", "Insekten und kleine Vögel","Soja"]}
+        },
+		        {"Question" : { "QuestionText" : "Welche Flügelspannweite hat ein Seeadler?",
+                        "RightAnswerText" : "2.5m",
+                        "WrongAnswersText" : ["1.5m", "0.5m","3.5m"]}
+        },
+		        {"Question" : { "QuestionText" : "Was passiert mit einer Biene, wenn sie ihren Stachel verliert?",
+                        "RightAnswerText" : "Sie stirbt",
+                        "WrongAnswersText" : ["Er fällt aus und wächst nach", "nichts","Er fällt aus und wächst nicht nach"]}
+        },
+		        {"Question" : { "QuestionText" : "Welches ist das einfachste aller Atome?",
+                        "RightAnswerText" : "Wasserstoff",
+                        "WrongAnswersText" : ["Helium", "Sauerstoff","Singularatom"]}
+        },
+				{"Question" : { "QuestionText" : "Wo befindet sich das Jochbein?",
+                        "RightAnswerText" : "Im Kopf",
+                        "WrongAnswersText" : ["Im Bein", "Im Arm","Im Fuß"]}
+        },
+		        {"Question" : { "QuestionText" : "Wie kann man den Umfang eines Kreises berechnen?",
+                        "RightAnswerText" : "Pi x 2 Radius",
+                        "WrongAnswersText" : ["Pi x Radius^2", "Pi x Fläche / 2","Höhe x Tiefe"]}
+        },        {"Question" : { "QuestionText" : "Wie viel wiegt in etwa ein menschliches Gehirn?",
+                        "RightAnswerText" : "1 - 1.5kg",
+                        "WrongAnswersText" : ["2 - 2.5kg", "3 - 3.5kg","4 - 4.5kg"]}
+        }
+      ]}
+    }
+  ]
+}

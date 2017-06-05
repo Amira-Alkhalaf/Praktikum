@@ -30,8 +30,154 @@ public class ImportParser {
      * @return
      * @throws IOException
      */
-    public static boolean parseQuestionJSON(InputStream in) throws IOException {
+    public static boolean parseQuestionJSON(InputStream in, int schema) throws IOException {
         JsonReader reader = new JsonReader(new InputStreamReader(in, "UTF-8"));
+        List<Topic> topics = new ArrayList<>();
+        switch(schema){
+            case 0: topics = parseJSONOld(reader);
+                break;
+            case 1: topics = parseJSONNew(reader);
+                break;
+            default:
+        }
+
+        persistToDatabase(topics);
+
+        return true;
+    }
+
+    @NonNull
+    private static List<Topic> parseJSONNew(JsonReader reader) throws IOException {
+        List<Topic> topics = new ArrayList<>();
+        try {
+            reader.beginObject();
+            while (reader.hasNext()) {
+                String name = reader.nextName();
+                if (name.equals("Categories")) {
+                    reader.beginArray();
+                    while (reader.hasNext()) {
+                        Topic topic = parseTopicNew(reader);
+                        topics.add(topic);
+                    }
+                    reader.endArray();
+                } else {
+                    reader.skipValue();
+                }
+            }
+            reader.endObject();
+        }  finally {
+            reader.close();
+        }
+        return topics;
+    }
+
+    @NonNull
+    private static Topic parseTopicNew(JsonReader reader) throws IOException {
+        reader.beginObject();
+        Topic topic = new Topic();
+        while(reader.hasNext()){
+            String name = reader.nextName();
+            if(name.equals("CategoryName")){
+                topic.setName(reader.nextString());
+            } else if(name.equals("Level1")) {
+                reader.beginObject();
+                while (reader.hasNext()) {
+                    String name2 = reader.nextName();
+                    if (name2.equals("Questions")) {
+                        reader.beginArray();
+                        while(reader.hasNext()){
+                            Question question = parseQuestionNew(reader, 1);
+                            topic.addQuestion(question);
+                        }
+                        reader.endArray();
+                    } else {
+                        reader.skipValue();
+                    }
+                }
+                reader.endObject();
+            } else if(name.equals("Level2")) {
+                reader.beginObject();
+                while (reader.hasNext()) {
+                    String name2 = reader.nextName();
+                    if (name2.equals("Questions")) {
+                        reader.beginArray();
+                        while(reader.hasNext()){
+                            Question question = parseQuestionNew(reader, 2);
+                            topic.addQuestion(question);
+                        }
+                        reader.endArray();
+                    } else {
+                        reader.skipValue();
+                    }
+                }
+                reader.endObject();
+            } else if(name.equals("Level3")){
+                reader.beginObject();
+                while (reader.hasNext()) {
+                    String name2 = reader.nextName();
+                    if(name2.equals("Questions")) {
+                        reader.beginArray();
+                        while(reader.hasNext()){
+                            Question question = parseQuestionNew(reader, 3);
+                            topic.addQuestion(question);
+                        }
+                        reader.endArray();
+                    } else {
+                        reader.skipValue();
+                    }
+                }
+                reader.endObject();
+            } else {
+                reader.skipValue();
+            }
+        }
+        reader.endObject();
+        return topic;
+    }
+    @NonNull
+    private static Question parseQuestionNew(JsonReader reader, int level) throws IOException {
+        reader.beginObject();
+        Question question = new Question();
+        question.setDifficulty(level);
+        while(reader.hasNext()) {
+            String name = reader.nextName();
+            if(name.equals("Question")){
+                reader.beginObject();
+                while(reader.hasNext()){
+                    String name2 = reader.nextName();
+                    if(name2.equals("QuestionText")){
+                        question.setName(reader.nextString());
+                    } else if(name2.equals("RightAnswerText")){
+                        Answer answer = parseAnswerNew(reader, true);
+                        question.addAnswer(answer);
+                    } else if(name2.equals("WrongAnswersText")){
+                        reader.beginArray();
+                        while (reader.hasNext()) {
+                            Answer answer = parseAnswerNew(reader, false);
+                            question.addAnswer(answer);
+                        }
+                        reader.endArray();
+                    } else {
+                        reader.skipValue();
+                    }
+                }
+                reader.endObject();
+            }
+        }
+        reader.endObject();
+        return question;
+    }
+
+    @NonNull
+    private static Answer parseAnswerNew(JsonReader reader, boolean correctAnswer) throws IOException {
+        Answer answer = new Answer();
+        answer.setCorrectAnswer(correctAnswer);
+        answer.setName(reader.nextString());
+        return answer;
+    }
+
+    @NonNull
+    private static List<Topic> parseJSONOld(JsonReader reader) throws IOException {
         List<Topic> topics = new ArrayList<>();
         try {
             reader.beginObject();
@@ -40,7 +186,7 @@ public class ImportParser {
                 if (name.equals("topics")) {
                     reader.beginArray();
                     while (reader.hasNext()) {
-                        Topic topic = parseTopic(reader);
+                        Topic topic = parseTopicOld(reader);
                         topics.add(topic);
                     }
                     reader.endArray();
@@ -51,10 +197,7 @@ public class ImportParser {
         } finally {
             reader.close();
         }
-
-        persistToDatabase(topics);
-
-        return true;
+        return topics;
     }
 
     /**
@@ -64,7 +207,7 @@ public class ImportParser {
      * @throws IOException
      */
     @NonNull
-    private static Topic parseTopic(JsonReader reader) throws IOException {
+    private static Topic parseTopicOld(JsonReader reader) throws IOException {
         reader.beginObject();
         Topic topic = new Topic();
         while (reader.hasNext()) {
@@ -76,7 +219,7 @@ public class ImportParser {
             } else if (name.equals("questions")) {
                 reader.beginArray();
                 while (reader.hasNext()) {
-                    Question question = parseQuestion(reader);
+                    Question question = parseQuestionOld(reader);
                     topic.addQuestion(question);
                 }
                 reader.endArray();
@@ -95,7 +238,7 @@ public class ImportParser {
      * @throws IOException
      */
     @NonNull
-    private static Question parseQuestion(JsonReader reader) throws IOException {
+    private static Question parseQuestionOld(JsonReader reader) throws IOException {
         reader.beginObject();
         Question question = new Question();
         while (reader.hasNext()) {
@@ -109,7 +252,7 @@ public class ImportParser {
             } else if (name.equals("answers")) {
                 reader.beginArray();
                 while (reader.hasNext()) {
-                    Answer answer = parseAnswer(reader);
+                    Answer answer = parseAnswerOld(reader);
                     question.addAnswer(answer);
                 }
                 reader.endArray();
@@ -128,7 +271,7 @@ public class ImportParser {
      * @throws IOException
      */
     @NonNull
-    private static Answer parseAnswer(JsonReader reader) throws IOException {
+    private static Answer parseAnswerOld(JsonReader reader) throws IOException {
         reader.beginObject();
         Answer answer = new Answer();
         while (reader.hasNext()) {
@@ -157,12 +300,12 @@ public class ImportParser {
             QuestionDataSource questionDataSource = new QuestionDataSource();
             TopicDataSource topicDataSource = new TopicDataSource();
             for (Topic topic:topics) {
-                topicDataSource.saveTopic(topic);
+                Topic topicWithId = topicDataSource.saveTopic(topic);
                 for (Question question:topic.getQuestions()) {
-                    question.setTopic(topic);
-                    questionDataSource.saveQuestion(question);
-                    for (Answer answer:question.getAnswers()) {
-                        answer.setQuestion(question);
+                    question.setTopic(topicWithId);
+                    Question questionWithId = questionDataSource.saveQuestion(question);
+                    for (Answer answer:question.getAnswers(-1)) {
+                        answer.setQuestion(questionWithId);
                         answerDataSource.saveAnswer(answer);
                     }
                 }

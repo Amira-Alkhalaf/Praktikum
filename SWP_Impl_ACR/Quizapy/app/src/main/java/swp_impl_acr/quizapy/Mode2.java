@@ -47,14 +47,14 @@ public class Mode2 extends QuestionActivity {
     }
 
     @Override
-    protected void setCursor() {
-        cursor.moveCursor(answerButtons.get(0).getLeft()-50,answerButtons.get(0).getTop());
+    protected void setCursor(int position) {
+        cursor.moveCursor(position-50,answerButtons.get(0).getTop());
         cursor.setVisibility(View.VISIBLE);
     }
 
     @Override
     void getAnswers() {
-        answers = sessionStorage.getQuestions().get(0).getAnswers();
+        answers = sessionStorage.getQuestions().get(0).getAnswers(3);
         answers = CollectionUtils.generateRandomList(answers, answers.size());
     }
 

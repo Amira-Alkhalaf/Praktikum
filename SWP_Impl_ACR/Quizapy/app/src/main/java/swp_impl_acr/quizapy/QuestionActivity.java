@@ -118,10 +118,10 @@ public abstract class QuestionActivity extends AppCompatActivity implements Even
                         int maxRight = answerButtons.get(0).getRight();
 
                         for(Button button:answerButtons){
-                            if(button.getLeft()<minLeft){
+                            if(button.getLeft()<minLeft && button.getVisibility()==View.VISIBLE){
                                 minLeft=button.getLeft();
                             }
-                            if(button.getRight()>maxRight){
+                            if(button.getRight()>maxRight && button.getVisibility()==View.VISIBLE){
                                 maxRight=button.getRight();
                             }
                         }
@@ -130,7 +130,7 @@ public abstract class QuestionActivity extends AppCompatActivity implements Even
                             button.setWidth(maxRight-minLeft);
                         }
 
-                        setCursor();
+                        setCursor(minLeft);
 
                     }
 
@@ -138,7 +138,7 @@ public abstract class QuestionActivity extends AppCompatActivity implements Even
         );
 
     }
-    protected void setCursor(){}
+    protected void setCursor(int position){}
 
     /**
      * displays the current question and its answers

@@ -1,6 +1,8 @@
 package swp_impl_acr.quizapy;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -46,19 +48,55 @@ public class StartActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_import_questions:
-                InputStream in = getResources().openRawResource(
-                        getResources().getIdentifier("testdata",
-                                "raw", getPackageName()));
-                try {
-                    ImportParser.parseQuestionJSON(in);
-                    allQuestionsCount.setText(Integer.toString(questionDataSource.getAllQuestionsCount()));
-                    answeredQuestionsCount.setText(Integer.toString(questionDataSource.getAllAnsweredQuestionsCount()));
-                    Toast.makeText(this, "Fragen (erfolgreich) importiert", Toast.LENGTH_SHORT).show();
-                    //todo: implement progress bar 
+                CharSequence jsonlist[] = new CharSequence[] {"testdata", "testdaten1", "testdaten2"};
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle("Wähle Datei");
+                builder.setItems(jsonlist, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        InputStream in;
+                        int schema;
+                        switch(which){
+                            case 0:
+                                in = getResources().openRawResource(
+                                        getResources().getIdentifier("testdata",
+                                                "raw", getPackageName()));
+                                schema = 0;
+                                break;
+                            case 1:
+                                in = getResources().openRawResource(
+                                        getResources().getIdentifier("testdaten1",
+                                                "raw", getPackageName()));
+                                schema = 1;
+                                break;
+                            case 2:
+                                in = getResources().openRawResource(
+                                        getResources().getIdentifier("testdaten2",
+                                                "raw", getPackageName()));
+                                schema = 1;
+                                break;
+                            default:
+                                schema = -1;
+                                in =null;
+                                break;
+                        }
+                        if(in != null || schema != -1){
+                            try {
+                                ImportParser.parseQuestionJSON(in, schema);
+                                allQuestionsCount.setText(Integer.toString(questionDataSource.getAllQuestionsCount()));
+                                answeredQuestionsCount.setText(Integer.toString(questionDataSource.getAllAnsweredQuestionsCount()));
+                                Toast.makeText(StartActivity.this, "Fragen (erfolgreich) importiert", Toast.LENGTH_SHORT).show();
+                                //todo: implement progress bar
 
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        } else {
+                            Toast.makeText(StartActivity.this, "error", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+                builder.show();
                 return true;
             case R.id.action_options:
                 Intent i = new Intent(getBaseContext(), OptionsActivity.class);

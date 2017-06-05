@@ -7,7 +7,7 @@ import android.provider.BaseColumns;
  */
 public class QuizapyContract {
 
-    public static final int DATABASE_VERSION = 2;
+    public static final int DATABASE_VERSION = 3;
     public static final String DATABASE_NAME = "quizapy.db";
     public static final String TEXT_TYPE = " TEXT ";
     public static final String INTEGER_TYPE = " INTEGER ";
@@ -29,7 +29,7 @@ public class QuizapyContract {
 
         public static final String CREATE_TABLE = "CREATE TABLE " +
                 TABLE_NAME + " ( " +
-                _ID + " INTEGER PRIMARY KEY AUTOINCREMENT " + COMMA_SEP +
+                _ID + " INTEGER PRIMARY KEY AUTOINCREMENT  NOT NULL " + COMMA_SEP +
                 COLUMN_NAME + TEXT_TYPE + " );";
 
         public static final String DELETE_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME;
@@ -48,7 +48,7 @@ public class QuizapyContract {
 
         public static final String CREATE_TABLE = "CREATE TABLE " +
                 TABLE_NAME + " ( " +
-                _ID + " INTEGER PRIMARY KEY AUTOINCREMENT " + COMMA_SEP +
+                _ID + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL " + COMMA_SEP +
                 COLUMN_NAME + TEXT_TYPE + COMMA_SEP +
                 COLUMN_DIFFICULTY + INTEGER_TYPE + COMMA_SEP +
                 COLUMN_ANSWERED + BOOLEAN_TYPE + COMMA_SEP +
@@ -70,7 +70,7 @@ public class QuizapyContract {
 
         public static final String CREATE_TABLE = "CREATE TABLE " +
                 TABLE_NAME + " ( " +
-                _ID + " INTEGER PRIMARY KEY AUTOINCREMENT " + COMMA_SEP +
+                _ID + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL " + COMMA_SEP +
                 COLUMN_NAME + TEXT_TYPE + COMMA_SEP +
                 COLUMN_CORRECT_ANSWER + BOOLEAN_TYPE + COMMA_SEP +
                 COLUMN_QUESTION + INTEGER_TYPE + COMMA_SEP +
@@ -89,8 +89,8 @@ public class QuizapyContract {
 
         public static final String CREATE_TABLE = "CREATE TABLE " +
                 TABLE_NAME + " ( " +
-                _ID + " INTEGER PRIMARY KEY AUTOINCREMENT " + COMMA_SEP +
-                COLUMN_NAME + TEXT_TYPE + COMMA_SEP +
+                _ID + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL " + COMMA_SEP +
+                COLUMN_NAME + TEXT_TYPE + " UNIQUE " + COMMA_SEP +
                 COLUMN_VALUE + TEXT_TYPE + ");";
 
         public static final String DELETE_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME;

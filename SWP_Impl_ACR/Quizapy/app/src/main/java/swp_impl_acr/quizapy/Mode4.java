@@ -15,8 +15,6 @@ public class Mode4 extends QuestionActivity {
 boolean clicked= false;
 AlertDialog.Builder builder;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         simButtons = Buttons.BUTTON_BREATH_IN | Buttons.BUTTON_BREATH_OUT| Buttons.BUTTON_HOLD_BREATH;
@@ -27,18 +25,13 @@ AlertDialog.Builder builder;
         button3.setVisibility(View.INVISIBLE);
         button4.setVisibility(View.INVISIBLE);
 
-
-
-
         Toast.makeText(getApplicationContext(),"halten Sie kurz die Luft an",Toast.LENGTH_SHORT).show();
 
     }
 
-
-
     @Override
     void getAnswers() {
-        answers = sessionStorage.getQuestions().get(0).getAnswers();
+        answers = sessionStorage.getQuestions().get(0).getAnswers(2);
         answers = CollectionUtils.generateRandomList(answers, answers.size());
     }
 
@@ -55,8 +48,6 @@ AlertDialog.Builder builder;
 
     }
 
-
-
     /**
      * either starts the animation or saves and moves to next action depending on the mode
      */
@@ -68,10 +59,6 @@ AlertDialog.Builder builder;
 
 
     }
-
-
-
-
 
     public void onHoldBreathStart(){
 
@@ -86,16 +73,6 @@ AlertDialog.Builder builder;
 
 
     }
-
-
-    public void onHoldBreathStop(){
-    }
-
-
-
-
-
-
 
 }
 
