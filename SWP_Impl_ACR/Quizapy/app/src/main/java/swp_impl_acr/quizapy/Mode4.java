@@ -15,7 +15,7 @@ import static swp_impl_acr.quizapy.RespiratoryTrainerSimulation.Buttons.breathOu
 
 public class Mode4 extends QuestionActivity {
 
-    private boolean hasQuestionSeen;
+    private boolean hasSeenQuestion;
     Toast helpText1;
     Toast helpText2;
 
@@ -28,7 +28,7 @@ public class Mode4 extends QuestionActivity {
         for(Button button:answerButtons){
             button.setVisibility(View.INVISIBLE);
         }
-        hasQuestionSeen = false;
+        hasSeenQuestion = false;
 
         helpText1 = Toast.makeText(getApplicationContext(),"halten Sie die Luft an um die Frage einzublenden",Toast.LENGTH_SHORT);
         helpText2 = Toast.makeText(getApplicationContext(),"Einatmen um die obere Antwort auszuwählen, Ausatmen um die untere ANtwort auszuwählen",Toast.LENGTH_LONG);
@@ -53,7 +53,7 @@ public class Mode4 extends QuestionActivity {
      */
     @Override
     public void onBreathInStart() {
-        if(hasQuestionSeen){
+        if(hasSeenQuestion){
             helpText2.cancel();
             helpText1.cancel();
             answerButtons.get(0).setBackgroundColor(Color.CYAN);
@@ -68,7 +68,7 @@ public class Mode4 extends QuestionActivity {
      */
     @Override
     public void onBreathOutStart() {
-        if(hasQuestionSeen){
+        if(hasSeenQuestion){
             helpText1.cancel();
             helpText2.cancel();
             answerButtons.get(1).setBackgroundColor(Color.CYAN);
@@ -87,14 +87,16 @@ public class Mode4 extends QuestionActivity {
             }
         }
         questionText.setVisibility(View.VISIBLE);
-        hasQuestionSeen=true;
+        hasSeenQuestion=true;
+        breathIn.setEnabled(true);
+        breathOut.setEnabled(true);
         helpText2.show();
     }
 
     public void onHoldBreathStop(){
 
-        breathIn.setEnabled(true);
-        breathOut.setEnabled(true);
+        //breathIn.setEnabled(true);
+        //breathOut.setEnabled(true);
         helpText2.cancel();
         for(Button button:answerButtons){
             if(button.isEnabled()){
