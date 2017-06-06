@@ -25,7 +25,7 @@ public class ImportParser {
 
     /**
      * parses a JSON containing questions and persists them to the database
-     * returns true for a reason i dont remember
+     * returns true if all Questions are valid
      *
      * @param in
      * @return
