@@ -111,9 +111,9 @@ public class Mode1 extends QuestionActivity {
             @Override
             public void onFinish() {
 
-                if (userFrequency <= breathingFrequency*1.05 && userFrequency >= breathingFrequency*0.95) {
+                if (userFrequency <= breathingFrequency*1.10 && userFrequency >= breathingFrequency*0.90) {
                     Toast.makeText(getApplicationContext(), "ُDie Antwort wurde ausgewählt", Toast.LENGTH_SHORT).show();
-                } else if (userFrequency > breathingFrequency*1.05) {
+                } else if (userFrequency < breathingFrequency*1.10) {
                     v.setBackgroundColor(Color.LTGRAY);
                     int i = (int)v.getTag()-1;
                     boolean foundAnswer = false;
@@ -130,7 +130,7 @@ public class Mode1 extends QuestionActivity {
                             i--;
                         }
                     }
-                } else if (userFrequency < breathingFrequency*0.95){
+                } else if (userFrequency > breathingFrequency*0.90){
                     v.setBackgroundColor(Color.LTGRAY);
                     int i = (int)v.getTag()+1;
                     boolean foundAnswer = false;
@@ -162,17 +162,17 @@ public class Mode1 extends QuestionActivity {
      */
     public void CompareFrequency() {  // if(secondToCountDown-1==second) {
         //  Frequency=clickCounter; }
-        if (userFrequency <= breathingFrequency*1.05 && userFrequency >= breathingFrequency*0.95) {
+        if (userFrequency <= breathingFrequency*1.10 && userFrequency >= breathingFrequency*0.90) {
             Log.d("message", "great "+breathingFrequency+" "+userFrequency);
             helpText.setText("Zielfrequenz: "+breathingFrequency);
         }
-        else if (userFrequency > breathingFrequency*1.05) {
+        else if (userFrequency > breathingFrequency*1.10) {
 
             Log.d("message", "go lower "+breathingFrequency+" "+userFrequency);
             helpText.setText("Zielfrequenz: "+breathingFrequency+" Atme langsamer");
             //lastFrequency=clickCounter;
         }
-        else if (userFrequency < breathingFrequency*0.95) {
+        else if (userFrequency < breathingFrequency*0.90) {
             Log.d("message", "go faster "+breathingFrequency+" "+userFrequency);
             helpText.setText("Zielfrequenz: "+breathingFrequency+" Atme schneller");
             //  lastFrequency=clickCounter;
