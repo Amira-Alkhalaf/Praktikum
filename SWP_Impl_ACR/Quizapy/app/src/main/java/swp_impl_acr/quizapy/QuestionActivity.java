@@ -35,10 +35,6 @@ public abstract class QuestionActivity extends AppCompatActivity implements Even
     protected List<Answer> answers;
     protected StuffDataSource stuffDataSource;
     protected int simButtons;
-    protected Button button;
-    protected Button button2;
-    protected Button button3;
-    protected Button button4;
     protected TextView difficulty;
     protected TextView mode;
 

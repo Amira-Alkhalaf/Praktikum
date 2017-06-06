@@ -54,7 +54,7 @@ public class Mode2 extends QuestionActivity {
 
     @Override
     void getAnswers() {
-        answers = sessionStorage.getQuestions().get(0).getAnswers(3);
+        answers = sessionStorage.getQuestions().get(0).getAnswers(4);
         answers = CollectionUtils.generateRandomList(answers, answers.size());
     }
 
@@ -123,7 +123,7 @@ public class Mode2 extends QuestionActivity {
      */
 
     private void startCursorAnimation() {
-        animator = ObjectAnimator.ofFloat(cursor, "y", answerButtons.get(0).getTop()+25,answerButtons.get(3).getBottom()-25);
+        animator = ObjectAnimator.ofFloat(cursor, "y", answerButtons.get(0).getTop()+25,answerButtons.get(answers.size()-1).getBottom()-25);
         animator.setDuration(5000);
         animator.setRepeatMode(ValueAnimator.RESTART);
         animator.setRepeatCount(ValueAnimator.INFINITE);

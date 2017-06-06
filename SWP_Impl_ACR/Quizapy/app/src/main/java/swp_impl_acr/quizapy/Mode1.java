@@ -14,9 +14,6 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
-import org.w3c.dom.Text;
-
 import swp_impl_acr.quizapy.Helper.CollectionUtils;
 import swp_impl_acr.quizapy.RespiratoryTrainerSimulation.Buttons;
 
@@ -118,36 +115,36 @@ public class Mode1 extends QuestionActivity {
                     Toast.makeText(getApplicationContext(), "ُDie Antwort wurde ausgewählt", Toast.LENGTH_SHORT).show();
                 } else if (userFrequency > breathingFrequency*1.05) {
                     v.setBackgroundColor(Color.LTGRAY);
-                    int test = (int)v.getTag()-1;
+                    int i = (int)v.getTag()-1;
                     boolean foundAnswer = false;
                     while(!foundAnswer) {
-                        if (test == -1) {
-                            test = 3;
+                        if (i == -1) {
+                            i = 3;
                         }
-                        Button answer = answerButtons.get(test);
-                        if (answer.isEnabled() && answer.isEnabled()) {
+                        Button answer = answerButtons.get(i);
+                        if (answer.isEnabled() && answer.getVisibility() == View.VISIBLE) {
                             answer.setBackgroundColor(Color.CYAN);
                             Toast.makeText(getApplicationContext(), "ُDie vorausgehende Antwort wurde ausgewählt", Toast.LENGTH_LONG).show();
                             foundAnswer = true;
                         } else {
-                            test--;
+                            i--;
                         }
                     }
                 } else if (userFrequency < breathingFrequency*0.95){
                     v.setBackgroundColor(Color.LTGRAY);
-                    int test = (int)v.getTag()+1;
+                    int i = (int)v.getTag()+1;
                     boolean foundAnswer = false;
                     while(!foundAnswer) {
-                        if (test == 4) {
-                            test = 0;
+                        if (i == 4) {
+                            i = 0;
                         }
-                        Button answer = answerButtons.get(test);
-                        if (answer.isEnabled() && answer.isEnabled()) {
+                        Button answer = answerButtons.get(i);
+                        if (answer.isEnabled() && answer.getVisibility() == View.VISIBLE) {
                             answer.setBackgroundColor(Color.CYAN);
                             Toast.makeText(getApplicationContext(), "ُDie nachfolgende Antwort wurde ausgewählt", Toast.LENGTH_LONG).show();
                             foundAnswer = true;
                         } else {
-                            test++;
+                            i++;
                         }
                     }
                 }
