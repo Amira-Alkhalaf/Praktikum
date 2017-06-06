@@ -92,8 +92,10 @@ public class TopicDataSource {
                 QuizapyContract.TopicTable._ID + " = ?",
                 new String[]{Integer.toString(id)}, null, null, null);
 
-        cursor.moveToFirst();
-        Topic topic = createTopic(cursor);
+        Topic topic = null;
+        if (cursor.moveToFirst()) {
+            topic = createTopic(cursor);
+        }
 
         cursor.close();
         return topic;

@@ -48,7 +48,7 @@ public class StartActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_import_questions:
-                CharSequence jsonlist[] = new CharSequence[] {"testdata", "testdaten1", "testdaten2"};
+                CharSequence jsonlist[] = new CharSequence[] {"testdata", "testdaten1", "testdaten2", "testdaten3"};
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
                 builder.setTitle("Wähle Datei");
                 builder.setItems(jsonlist, new DialogInterface.OnClickListener() {
@@ -75,6 +75,12 @@ public class StartActivity extends AppCompatActivity {
                                                 "raw", getPackageName()));
                                 schema = 1;
                                 break;
+                            case 3:
+                                in = getResources().openRawResource(
+                                        getResources().getIdentifier("testdaten3",
+                                                "raw", getPackageName()));
+                                schema = 1;
+                                break;
                             default:
                                 schema = -1;
                                 in =null;
@@ -82,10 +88,14 @@ public class StartActivity extends AppCompatActivity {
                         }
                         if(in != null || schema != -1){
                             try {
-                                ImportParser.parseQuestionJSON(in, schema);
+                                boolean valid = ImportParser.parseQuestionJSON(in, schema);
                                 allQuestionsCount.setText(Integer.toString(questionDataSource.getAllQuestionsCount()));
                                 answeredQuestionsCount.setText(Integer.toString(questionDataSource.getAllAnsweredQuestionsCount()));
-                                Toast.makeText(StartActivity.this, "Fragen (erfolgreich) importiert", Toast.LENGTH_SHORT).show();
+                                if(valid){
+                                    Toast.makeText(StartActivity.this, "Fragen (erfolgreich) importiert", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Toast.makeText(StartActivity.this, "Es wurden nicht alle Fragen importiert", Toast.LENGTH_SHORT).show();
+                                }
                                 //todo: implement progress bar
 
                             } catch (Exception e) {

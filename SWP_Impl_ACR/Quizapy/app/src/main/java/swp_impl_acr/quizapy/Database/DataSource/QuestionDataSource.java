@@ -71,8 +71,10 @@ public class QuestionDataSource {
                 QuizapyContract.QuestionTable._ID + " = ?",
                 new String[]{Integer.toString(id)}, null, null, null);
 
-        cursor.moveToFirst();
-        Question question = createQuestion(cursor);
+        Question question = null;
+        if (cursor.moveToFirst()) {
+            question = createQuestion(cursor);
+        }
 
         cursor.close();
         return question;
@@ -176,8 +178,10 @@ public class QuestionDataSource {
                 QuizapyContract.AnswerTable.COLUMN_QUESTION + " = ? AND " + QuizapyContract.AnswerTable.COLUMN_CORRECT_ANSWER + " = 1",
                 new String[]{Integer.toString(id)}, null, null, null);
 
-        cursor.moveToFirst();
-        Answer answer = createAnswer(cursor);
+        Answer answer = null;
+        if (cursor.moveToFirst()) {
+            answer = createAnswer(cursor);
+        }
 
         cursor.close();
         return answer;

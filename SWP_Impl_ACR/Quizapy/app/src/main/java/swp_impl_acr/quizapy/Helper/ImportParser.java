@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,9 +42,8 @@ public class ImportParser {
             default:
         }
 
-        persistToDatabase(topics);
+        return persistToDatabase(topics);
 
-        return true;
     }
 
     @NonNull
@@ -294,7 +294,8 @@ public class ImportParser {
      * saves everything to the database
      * @param topics
      */
-    private static void persistToDatabase(List<Topic> topics) {
+    private static boolean persistToDatabase(List<Topic> topics) {
+        boolean valid = true;
         try {
             AnswerDataSource answerDataSource = new AnswerDataSource();
             QuestionDataSource questionDataSource = new QuestionDataSource();
@@ -308,10 +309,67 @@ public class ImportParser {
                         answer.setQuestion(questionWithId);
                         answerDataSource.saveAnswer(answer);
                     }
+                    if(!validateQuestion(questionWithId, questionDataSource)) {
+                        valid = false;
+                    }
+                }
+                if(!validateTopic(topicWithId, topicDataSource, questionDataSource)){
+                    valid = false;
                 }
             }
         } catch (Exception e) {
             e.printStackTrace();
+        }
+        return valid;
+    }
+    private static boolean validateTopic(Topic topic, TopicDataSource t, QuestionDataSource q){
+        boolean isTopicValid = true;
+        try {
+            for(int i = 1; i<=3; i++){
+                if(t.getAllUnansweredQuestionsByDifficultyCount(topic.getId(),i) <10){
+                    isTopicValid = false;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        if(isTopicValid){
+            return true;
+        } else {
+            try {
+                List<Question> questions = t.getAllQuestions(topic.getId());
+                for(Question question:questions){
+                    q.deleteQuestion(question.getId());
+                }
+                t.deleteTopic(topic.getId());
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return false;
+        }
+    }
+
+    private static boolean validateQuestion(Question question, QuestionDataSource q){
+        boolean isQuestionValid = true;
+        try {
+            if(q.getCorrectAnswer(question.getId()) == null){
+                isQuestionValid = false;
+            }
+            if(q.getWrongAnswers(question.getId()).size() < 1){
+                isQuestionValid = false;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        if(isQuestionValid){
+            return true;
+        } else {
+            try {
+                q.deleteQuestion(question.getId());
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return false;
         }
     }
 }

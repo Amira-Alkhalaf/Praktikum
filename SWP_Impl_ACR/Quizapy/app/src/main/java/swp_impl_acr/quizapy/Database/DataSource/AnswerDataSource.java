@@ -98,8 +98,10 @@ public class AnswerDataSource {
                 QuizapyContract.AnswerTable._ID + " = ?",
                 new String[]{Integer.toString(id)}, null, null, null);
 
-        cursor.moveToFirst();
-        Answer answer = createAnswer(cursor);
+        Answer answer = null;
+        if (cursor.moveToFirst()) {
+            answer = createAnswer(cursor);
+        }
 
         cursor.close();
         return answer;
