@@ -22,7 +22,7 @@ public interface EventListenerInterface {
     void  onRepeatedlyBreathINandOUTstart();
     void  onRepeatedlyBreathINandOUTstop();
 
-    void onBreathingRateChange();
+    void onBreathingRateChange(int progress);
 
 
 

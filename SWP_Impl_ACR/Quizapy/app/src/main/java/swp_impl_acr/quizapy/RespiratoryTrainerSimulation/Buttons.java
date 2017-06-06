@@ -194,17 +194,17 @@ public class Buttons extends LinearLayout {
 
         if( (buttons & SEEKBAR_BREATHING_RATE) != 0) {
             breathingRate = new SeekBar(context);
-            breathingRate.setMax(100);
+            breathingRate.setMax(30);
             breathingRate.setProgress(0);
             breathingRate.setId(SEEKBAR_BREATHING_RATE);
-            breathingRate.setLayoutParams(new LayoutParams(400, LayoutParams.MATCH_PARENT));
+            breathingRate.setLayoutParams(new LayoutParams(600, LayoutParams.MATCH_PARENT));
 
             this.addView(breathingRate);
             breathingRate.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
                 @Override
                 public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                     for (EventListenerInterface ev : eventListeners) {
-                        ev.onBreathingRateChange();
+                        ev.onBreathingRateChange(progress);
                     }
                 }
 

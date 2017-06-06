@@ -266,7 +266,7 @@ public class TopicSelectionActivity extends AppCompatActivity implements EventLi
     }
 
     @Override
-    public void onBreathingRateChange() {
+    public void onBreathingRateChange(int progress) {
 
     }
 

@@ -7,12 +7,13 @@ import android.os.CountDownTimer;
 import android.support.constraint.ConstraintLayout;
 import android.support.constraint.ConstraintSet;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
 
 import org.w3c.dom.Text;
 
@@ -20,35 +21,26 @@ import swp_impl_acr.quizapy.Helper.CollectionUtils;
 import swp_impl_acr.quizapy.RespiratoryTrainerSimulation.Buttons;
 
 
-/*
+/**
  * Mode1 : where the user answers the questions one at a time
  */
+public class Mode1 extends QuestionActivity {
 
-
-public class Mode1 extends QuestionActivity implements View.OnClickListener {
-
-
-    boolean clicked2 = false;
-    private Integer secondLeft = 60;
-
-    private Integer clickCounter = 0;
-
-    private Integer Frequency = 1;
+    private int timeToHold = 30;
+    private int breathingFrequency = 15;
+    private int userFrequency = 0;
 
     private SeekBar seekbar;
     private TextView timerText;
     private ImageView imageView;
+    private TextView helpText;
+    private TextView helpText2;
 
-    /* Variable to determine whether the frequency entered equals the previously
-    * initialized frequency, is less than that, or is bigger than that.
-    */
-
-    private Integer FrequencyRate = 0;
-
+    private boolean clicked;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        simButtons = Buttons.BUTTON_RepeatedlyBreathINandOUT;
+        simButtons = Buttons.SEEKBAR_BREATHING_RATE;
         super.onCreate(savedInstanceState);
         mode.setText("Modus 1");
 
@@ -61,35 +53,37 @@ public class Mode1 extends QuestionActivity implements View.OnClickListener {
 
         seekbar = (SeekBar)findViewById(R.id.seekBar);
         timerText = (TextView)findViewById(R.id.timerText);
+        timerText.setText(timeToHold + "s");
         imageView = (ImageView)findViewById(R.id.imageView);
+        helpText = (TextView)findViewById(R.id.helpTextMode1);
+        helpText2 = (TextView)findViewById(R.id.userFrequency);
+        helpText.setText("Zielfrequenz: "+breathingFrequency);
+        helpText2.setText("Benutzer Frequenz: "+userFrequency);
 
 
-        /*
-         *  seekbar to display time selection
-         */
+        seekbar.setVisibility(View.INVISIBLE);
+        clicked = false;
 
-        seekbar.setMax(60);
-        seekbar.setProgress(15);
-
-        seekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                int minutes = (int) progress / 60;
-                int seconds = progress - minutes * 60;
-                timerText.setText(Integer.toString(seconds) + "s");
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-
-            }
-        });
+        for(Button button:answerButtons){
+            button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(!clicked){
+                        clicked=true;
+                        v.setBackgroundColor(Color.CYAN);
+                        Toast.makeText(getApplicationContext(), "ُErzeugen Sie wiederholtes Ausatmen und Einatmen", Toast.LENGTH_SHORT).show();
+                        startTimer(v);
+                    }
+                }
+            });
+        }
+    }
 
 
+    @Override
+    public void onBreathingRateChange(int progress) {
+        userFrequency=progress;
+        helpText2.setText("Benutzer Frequenz: "+userFrequency);
     }
 
 
@@ -99,160 +93,93 @@ public class Mode1 extends QuestionActivity implements View.OnClickListener {
         answers = CollectionUtils.generateRandomList(answers, answers.size());
     }
 
+    private void startTimer(final View v){
 
+        final int secondToCountDown = timeToHold;
+        new CountDownTimer(secondToCountDown * 1000, 1000) {
 
-    /*
-     *  Counts the number of breaths taken ( inhales followed by exhales)
-     */
-
-    @Override
-    public void onRepeatedlyBreathINandOUTstart() {
-        clickCounter++;
-
-    }
-
-
-
-/*
- *  The timer starts when a choice is made.
- */
-
-    @Override
-    public void onClick(final View v) {
-        if (!clicked2) {
-            clicked2 = true;
-            (v).setBackgroundColor(Color.CYAN);
-            seekbar.setEnabled(false);                              // make seekbar invisible
-            Toast.makeText(getApplicationContext(), "ُErzeugen Sie wiederholtes Ausatmen und Einatmen", Toast.LENGTH_SHORT).show();
-            final int secondToCountDown = seekbar.getProgress();
-            new CountDownTimer(secondToCountDown * 1000, 1000) {
-
-                @Override
-                public void onTick(long millisUntilFinished) {
-                     Log.i("message", String.valueOf(millisUntilFinished / 1000));
-                    int second = Math.round(millisUntilFinished / 1000);
-                    if (second % 2 == 0) {
-                          CompareFrequency();
-                          clickCounter = 0;
-                          secondLeft = second;
-                          timerText.setText(second + "s");
-                          timerText.setTextColor(Color.parseColor("#FFFFFF"));
-                    } else {
-                          secondLeft = second;
-                          timerText.setText(second + "s");
-                          timerText.setTextColor(Color.parseColor("#FFFFFF"));
-                    }
-
-
-                }
+            @Override
+            public void onTick(long millisUntilFinished) {
+                Log.i("message", String.valueOf(millisUntilFinished / 1000));
+                int second = Math.round(millisUntilFinished / 1000);
+                CompareFrequency();
+                timerText.setText(second + "s");
+                timerText.setTextColor(Color.parseColor("#FFFFFF"));
+            }
 
                 /*
                  * An answer will be saved when the timer ends.
                  */
 
-                @Override
-                public void onFinish() {
+            @Override
+            public void onFinish() {
 
-                    if (FrequencyRate == 0) {
-                        Toast.makeText(getApplicationContext(), "ُDie Antwort wurde ausgewählt", Toast.LENGTH_SHORT).show();
-                    } else if (FrequencyRate == 1) {
-                        v.setBackgroundColor(Color.LTGRAY);
-                        switch (v.getId()) {
-                            case R.id.button: {
-                                Toast.makeText(getApplicationContext(), "ُDie vorausgehende Antwort wurde ausgewählt", Toast.LENGTH_LONG).show();
-                                button4.setBackgroundColor(Color.CYAN);
-                            }
-                            break;
-                            case R.id.button2: {
-                                Toast.makeText(getApplicationContext(), "ُDie vorausgehende Antwort wurde ausgewählt", Toast.LENGTH_LONG).show();
-                                button.setBackgroundColor(Color.CYAN);
-                            }
-                            break;
-                            case R.id.button3: {
-                                Toast.makeText(getApplicationContext(), "ُDie vorausgehende Antwort wurde ausgewählt", Toast.LENGTH_LONG).show();
-                                button2.setBackgroundColor(Color.CYAN);
-                            }
-                            break;
-                            case R.id.button4: {
-                                Toast.makeText(getApplicationContext(), "ُDie vorausgehende Antwort wurde ausgewählt", Toast.LENGTH_LONG).show();
-                                button3.setBackgroundColor(Color.CYAN);
-                            }
-                            break;
+                if (userFrequency <= breathingFrequency*1.05 && userFrequency >= breathingFrequency*0.95) {
+                    Toast.makeText(getApplicationContext(), "ُDie Antwort wurde ausgewählt", Toast.LENGTH_SHORT).show();
+                } else if (userFrequency > breathingFrequency*1.05) {
+                    v.setBackgroundColor(Color.LTGRAY);
+                    int test = (int)v.getTag()-1;
+                    boolean foundAnswer = false;
+                    while(!foundAnswer) {
+                        if (test == -1) {
+                            test = 3;
                         }
-
-                    } else {
-                        v.setBackgroundColor(Color.LTGRAY);
-                        switch (v.getId()) {
-                            case R.id.button: {
-                                Toast.makeText(getApplicationContext(), "ُDie nachfolgendee Antwort wurde ausgewählt", Toast.LENGTH_LONG).show();
-                                button2.setBackgroundColor(Color.CYAN);
-                            }
-                            break;
-                            case R.id.button2: {
-                                Toast.makeText(getApplicationContext(), "ُDie nachfolgende Antwort wurde ausgewählt", Toast.LENGTH_LONG).show();
-                                button3.setBackgroundColor(Color.CYAN);
-                            }
-                            break;
-                            case R.id.button3: {
-                                Toast.makeText(getApplicationContext(), "ُDie nachfolgende Antwort wurde ausgewählt", Toast.LENGTH_LONG).show();
-                                button4.setBackgroundColor(Color.CYAN);
-                            }
-                            break;
-                            case R.id.button4: {
-                                Toast.makeText(getApplicationContext(), "ُDie nachfolgende Antwort wurde ausgewählt", Toast.LENGTH_LONG).show();
-                                button.setBackgroundColor(Color.CYAN);
-                            }
-                            break;
+                        Button answer = answerButtons.get(test);
+                        if (answer.isEnabled() && answer.isEnabled()) {
+                            answer.setBackgroundColor(Color.CYAN);
+                            Toast.makeText(getApplicationContext(), "ُDie vorausgehende Antwort wurde ausgewählt", Toast.LENGTH_LONG).show();
+                            foundAnswer = true;
+                        } else {
+                            test--;
                         }
-
                     }
-
-
-                    timerText.setText("0 s");
-                    timerText.setTextColor(Color.parseColor("#FFA61113"));
-                    saveSelectedAnswer();
-                    next();
+                } else if (userFrequency < breathingFrequency*0.95){
+                    v.setBackgroundColor(Color.LTGRAY);
+                    int test = (int)v.getTag()+1;
+                    boolean foundAnswer = false;
+                    while(!foundAnswer) {
+                        if (test == 4) {
+                            test = 0;
+                        }
+                        Button answer = answerButtons.get(test);
+                        if (answer.isEnabled() && answer.isEnabled()) {
+                            answer.setBackgroundColor(Color.CYAN);
+                            Toast.makeText(getApplicationContext(), "ُDie nachfolgende Antwort wurde ausgewählt", Toast.LENGTH_LONG).show();
+                            foundAnswer = true;
+                        } else {
+                            test++;
+                        }
+                    }
                 }
-
-            }.start();
-        } else {
-            Toast.makeText(getApplicationContext(), "ُEine Antwort ist ausgewählt", Toast.LENGTH_LONG).show();
-        }
-
-
+                timerText.setText("0 s");
+                timerText.setTextColor(Color.parseColor("#FFA61113"));
+                saveSelectedAnswer();
+                next();
+            }
+        }.start();
     }
 
     
-    /*
+    /**
      * Compares the entered frequency and the previously initialized frequency
      */
-
-
     public void CompareFrequency() {  // if(secondToCountDown-1==second) {
         //  Frequency=clickCounter; }
-        if (Frequency == clickCounter) {
-            Log.d("message", "great "+Frequency+" "+clickCounter);
-            FrequencyRate=0;
+        if (userFrequency <= breathingFrequency*1.05 && userFrequency >= breathingFrequency*0.95) {
+            Log.d("message", "great "+breathingFrequency+" "+userFrequency);
+            helpText.setText("Zielfrequenz: "+breathingFrequency);
         }
-        else if (Frequency < clickCounter) {
+        else if (userFrequency > breathingFrequency*1.05) {
 
-            Log.d("message", "go lower "+Frequency+" "+clickCounter);
-            Toast.makeText(getApplicationContext(),"ُgo lower "+Frequency+" "+clickCounter,Toast.LENGTH_SHORT).show();
-            FrequencyRate=1;
+            Log.d("message", "go lower "+breathingFrequency+" "+userFrequency);
+            helpText.setText("Zielfrequenz: "+breathingFrequency+" Atme langsamer");
             //lastFrequency=clickCounter;
         }
-        else if (Frequency > clickCounter) {
-            Log.d("message", "go faster "+Frequency+" "+clickCounter);
-            Toast.makeText(getApplicationContext(),"ُgo faster "+Frequency+" "+clickCounter,Toast.LENGTH_SHORT).show();
-            FrequencyRate=2;
+        else if (userFrequency < breathingFrequency*0.95) {
+            Log.d("message", "go faster "+breathingFrequency+" "+userFrequency);
+            helpText.setText("Zielfrequenz: "+breathingFrequency+" Atme schneller");
             //  lastFrequency=clickCounter;
         }
     }
-
-
-
-
-
-
 }
 

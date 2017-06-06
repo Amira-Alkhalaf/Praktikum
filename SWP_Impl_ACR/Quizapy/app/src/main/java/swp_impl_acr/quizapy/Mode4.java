@@ -2,7 +2,6 @@ package swp_impl_acr.quizapy;
 
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -13,7 +12,6 @@ import swp_impl_acr.quizapy.RespiratoryTrainerSimulation.Buttons;
 
 public class Mode4 extends QuestionActivity {
 
-AlertDialog.Builder builder;
     private boolean hasQuestionSeen;
     Toast helpText1;
     Toast helpText2;

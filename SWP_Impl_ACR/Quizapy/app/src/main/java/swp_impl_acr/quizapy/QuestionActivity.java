@@ -11,8 +11,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.SeekBar;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -45,15 +43,6 @@ public abstract class QuestionActivity extends AppCompatActivity implements Even
     protected TextView mode;
 
 
-    boolean clicked= false;
-    boolean clicked2=false;
-    private Integer secondLeft=60;
-    private Integer clickCounter=0;
-    private Integer lastFrequency;
-    private Integer FrequencyRate=0;
-    private static final int NOTHING = 0;
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,16 +52,11 @@ public abstract class QuestionActivity extends AppCompatActivity implements Even
         difficulty = (TextView) findViewById(R.id.text);
         mode = (TextView) findViewById(R.id.chosenMode);
 
-        button=(Button)findViewById(R.id.button);
-        button2=(Button)findViewById(R.id.button2);
-        button3=(Button)findViewById(R.id.button3);
-        button4=(Button)findViewById(R.id.button4);
-
         answerButtons = new ArrayList<>();
-        answerButtons.add(button);
-        answerButtons.add(button2);
-        answerButtons.add(button3);
-        answerButtons.add(button4);
+        answerButtons.add((Button)findViewById(R.id.button));
+        answerButtons.add((Button)findViewById(R.id.button2));
+        answerButtons.add((Button)findViewById(R.id.button3));
+        answerButtons.add((Button)findViewById(R.id.button4));
 
         questionText = (TextView)(findViewById(R.id.questionText));
 
@@ -139,10 +123,12 @@ public abstract class QuestionActivity extends AppCompatActivity implements Even
         int i = 1;
         for(Button button:answerButtons){
             if(i<= answers.size()) {
+                button.setTag(i-1);
                 button.setBackgroundColor(Color.LTGRAY);
                 button.setText(answers.get(i - 1).getName());
                 button.setEnabled(true);
             } else {
+                button.setTag(i-1);
                 button.setEnabled(false);
                 button.setVisibility(View.INVISIBLE);
             }
@@ -284,7 +270,7 @@ public abstract class QuestionActivity extends AppCompatActivity implements Even
     }
 
     @Override
-    public void onBreathingRateChange() {
+    public void onBreathingRateChange(int progress) {
 
     }
 

@@ -234,7 +234,7 @@ public class ComplexityScaleActivity extends AppCompatActivity implements EventL
     }
 
     @Override
-    public void onBreathingRateChange() {
+    public void onBreathingRateChange(int progress) {
 
     }
     @Override
