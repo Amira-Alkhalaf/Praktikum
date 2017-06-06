@@ -53,7 +53,7 @@ public class QuestionDataSource {
                 QuizapyContract.QuestionTable._ID,
                 Integer.toString(question.getId()))) {
             updateQuestion(question);
-            return null;
+            return question;
         } else {
             return addQuestion(question);
         }

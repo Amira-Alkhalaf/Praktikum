@@ -47,7 +47,7 @@ public class TopicDataSource {
                 QuizapyContract.TopicTable._ID,
                 Integer.toString(topic.getId()))) {
             updateTopic(topic);
-            return null;
+            return topic;
         } else {
             return addTopic(topic);
 

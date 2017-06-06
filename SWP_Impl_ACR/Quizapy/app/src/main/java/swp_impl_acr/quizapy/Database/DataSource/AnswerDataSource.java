@@ -49,7 +49,8 @@ public class AnswerDataSource {
         if (answer.getId() != null && instance.checkIfDataExistsInDb(QuizapyContract.AnswerTable.TABLE_NAME,
                 QuizapyContract.AnswerTable._ID,
                 Integer.toString(answer.getId()))) {
-            return null;
+            updateAnswer(answer);
+            return answer;
         } else {
             return addAnswer(answer);
         }
