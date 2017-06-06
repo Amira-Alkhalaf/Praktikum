@@ -31,8 +31,8 @@ public class Buttons extends LinearLayout {
 
 
 
-    public Button breathIn;
-    private Button breathOut;
+    public static Button breathIn;
+    public static Button breathOut;
     private Button holdBreath;
     private SeekBar breathingRate;
     private Context context;

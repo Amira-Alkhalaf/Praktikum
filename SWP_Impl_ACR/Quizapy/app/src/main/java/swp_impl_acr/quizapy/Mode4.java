@@ -9,6 +9,9 @@ import android.widget.Toast;
 import swp_impl_acr.quizapy.Helper.CollectionUtils;
 import swp_impl_acr.quizapy.RespiratoryTrainerSimulation.Buttons;
 
+import static swp_impl_acr.quizapy.RespiratoryTrainerSimulation.Buttons.breathIn;
+import static swp_impl_acr.quizapy.RespiratoryTrainerSimulation.Buttons.breathOut;
+
 
 public class Mode4 extends QuestionActivity {
 
@@ -28,9 +31,14 @@ public class Mode4 extends QuestionActivity {
         hasQuestionSeen = false;
 
         helpText1 = Toast.makeText(getApplicationContext(),"halten Sie die Luft an um die Frage einzublenden",Toast.LENGTH_SHORT);
-        helpText2 = Toast.makeText(getApplicationContext(),"Einatmen um die obere ANtwort auszuwählen, Ausatmen um die untere ANtwort auszuwählen",Toast.LENGTH_LONG);
+        helpText2 = Toast.makeText(getApplicationContext(),"Einatmen um die obere Antwort auszuwählen, Ausatmen um die untere ANtwort auszuwählen",Toast.LENGTH_LONG);
 
         helpText1.show();
+        breathIn.setEnabled(false);
+        breathOut.setEnabled(false);
+
+
+
 
     }
 
@@ -49,6 +57,7 @@ public class Mode4 extends QuestionActivity {
             helpText2.cancel();
             helpText1.cancel();
             answerButtons.get(0).setBackgroundColor(Color.CYAN);
+            Toast.makeText(getApplicationContext(),"Die erste Antwort ausgewählt wurde",Toast.LENGTH_SHORT).show();
             saveSelectedAnswer();
             next();
         }
@@ -63,6 +72,7 @@ public class Mode4 extends QuestionActivity {
             helpText1.cancel();
             helpText2.cancel();
             answerButtons.get(1).setBackgroundColor(Color.CYAN);
+            Toast.makeText(getApplicationContext(),"Die zweite Antwort ausgewählt wurde",Toast.LENGTH_SHORT).show();
             saveSelectedAnswer();
             next();
         }
@@ -70,6 +80,7 @@ public class Mode4 extends QuestionActivity {
 
     public void onHoldBreathStart(){
     helpText1.cancel();
+
         for(Button button:answerButtons){
             if(button.isEnabled()){
                 button.setVisibility(View.VISIBLE);
@@ -81,6 +92,9 @@ public class Mode4 extends QuestionActivity {
     }
 
     public void onHoldBreathStop(){
+
+        breathIn.setEnabled(true);
+        breathOut.setEnabled(true);
         helpText2.cancel();
         for(Button button:answerButtons){
             if(button.isEnabled()){
@@ -88,7 +102,7 @@ public class Mode4 extends QuestionActivity {
             }
         }
         questionText.setVisibility(View.INVISIBLE);
-        helpText1.show();
+       // helpText1.show();
     }
 
 }

@@ -1,5 +1,6 @@
 package swp_impl_acr.quizapy;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -54,6 +55,8 @@ public class OptionsActivity extends AppCompatActivity {
                     stuffDataSource.setValue("frequency_mode_5", frequencyMode5.getText().toString());
                     Toast.makeText(OptionsActivity.this, "Speicherung erfolgreich", Toast.LENGTH_SHORT).show();
                 }
+                Intent b2 = new Intent(OptionsActivity.this,StartActivity.class);
+                startActivity(b2);
             }
         });
 
