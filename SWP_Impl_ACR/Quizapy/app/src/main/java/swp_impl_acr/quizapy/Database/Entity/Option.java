@@ -1,9 +1,9 @@
 package swp_impl_acr.quizapy.Database.Entity;
 
 /**
- * key / value entity
+ * key / value (options) entity
  */
-public class Stuff {
+public class Option {
 
     private int id;
     private String name;
@@ -16,7 +16,7 @@ public class Stuff {
      * @param name
      * @param value
      */
-    public Stuff(int id, String name, String value) {
+    public Option(int id, String name, String value) {
         this.id = id;
         this.name = name;
         this.value = value;

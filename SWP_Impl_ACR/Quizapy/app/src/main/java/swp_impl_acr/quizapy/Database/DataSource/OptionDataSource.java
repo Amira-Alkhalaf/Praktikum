@@ -8,9 +8,9 @@ import swp_impl_acr.quizapy.Database.QuizapyContract;
 import swp_impl_acr.quizapy.Database.QuizapyDataSource;
 
 /**
- *  class to handle key / value table queries
+ *  class to handle option table related queries
  */
-public class StuffDataSource {
+public class OptionDataSource {
 
     private SQLiteDatabase db;
     private QuizapyDataSource instance;
@@ -19,7 +19,7 @@ public class StuffDataSource {
      * constructor
      * @throws Exception
      */
-    public StuffDataSource() throws Exception {
+    public OptionDataSource() throws Exception {
         this.instance = QuizapyDataSource.getInstance();
         this.db = instance.getConnection();
     }
@@ -30,11 +30,11 @@ public class StuffDataSource {
      * @return
      */
     public String getValue(String key) {
-        Cursor cursor = db.query(QuizapyContract.StuffTable.TABLE_NAME,
-                null, QuizapyContract.StuffTable.COLUMN_NAME + " = ?",
+        Cursor cursor = db.query(QuizapyContract.OptionTable.TABLE_NAME,
+                null, QuizapyContract.OptionTable.COLUMN_NAME + " = ?",
                 new String[]{key}, null, null, null);
         cursor.moveToFirst();
-        String rtn = cursor.getString(cursor.getColumnIndex(QuizapyContract.StuffTable.COLUMN_VALUE));
+        String rtn = cursor.getString(cursor.getColumnIndex(QuizapyContract.OptionTable.COLUMN_VALUE));
         return rtn;
     }
 
@@ -45,11 +45,11 @@ public class StuffDataSource {
      */
     public void setValue(String key, String value) {
         ContentValues contentValues = new ContentValues();
-        contentValues.put(QuizapyContract.StuffTable.COLUMN_VALUE, value);
+        contentValues.put(QuizapyContract.OptionTable.COLUMN_VALUE, value);
 
-        db.update(QuizapyContract.StuffTable.TABLE_NAME,
+        db.update(QuizapyContract.OptionTable.TABLE_NAME,
                 contentValues,
-                QuizapyContract.StuffTable.COLUMN_NAME + " = ?",
+                QuizapyContract.OptionTable.COLUMN_NAME + " = ?",
                 new String[]{key});
     }
 }

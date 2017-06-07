@@ -17,7 +17,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Random;
 
-import swp_impl_acr.quizapy.Database.DataSource.StuffDataSource;
+import swp_impl_acr.quizapy.Database.DataSource.OptionDataSource;
 import swp_impl_acr.quizapy.Database.DataSource.TopicDataSource;
 import swp_impl_acr.quizapy.Database.Entity.Question;
 import swp_impl_acr.quizapy.Helper.CollectionUtils;
@@ -44,7 +44,7 @@ public class ComplexityScaleActivity extends AppCompatActivity implements EventL
 
     private TopicDataSource topicDataSource;
     private SessionStorage sessionStorage;
-    private StuffDataSource stuffDataSource;
+    private OptionDataSource optionDataSource;
 
     private Toast gradNotAvailableToast;
 
@@ -67,7 +67,7 @@ public class ComplexityScaleActivity extends AppCompatActivity implements EventL
         }
         try {
             topicDataSource = new TopicDataSource();
-            stuffDataSource = new StuffDataSource();
+            optionDataSource = new OptionDataSource();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -100,7 +100,7 @@ public class ComplexityScaleActivity extends AppCompatActivity implements EventL
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        if(count >= Integer.parseInt(stuffDataSource.getValue("questions_in_sequence"))){
+        if(count >= Integer.parseInt(optionDataSource.getValue("questions_in_sequence"))){
             return true;
         } else {
             return false;
@@ -164,7 +164,7 @@ public class ComplexityScaleActivity extends AppCompatActivity implements EventL
             try {
                 List<Question> questions;
                 questions = topicDataSource.getAllUnansweredQuestionsByDifficulty(sessionStorage.getTopic().getId(), sessionStorage.getDifficulty());
-                questions = CollectionUtils.generateRandomList(questions, Integer.parseInt(stuffDataSource.getValue("questions_in_sequence")));
+                questions = CollectionUtils.generateRandomList(questions, Integer.parseInt(optionDataSource.getValue("questions_in_sequence")));
                 sessionStorage.setQuestions(questions);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -181,19 +181,19 @@ public class ComplexityScaleActivity extends AppCompatActivity implements EventL
         int r1 = rand.nextInt(101-1) + 1;
         int val = 0;
         Intent b2 = null;
-        if(r1 <= (val += Integer.parseInt(stuffDataSource.getValue("frequency_mode_1").toString()))){
+        if(r1 <= (val += Integer.parseInt(optionDataSource.getValue("frequency_mode_1").toString()))){
             sessionStorage.setMode(SessionStorage.MODE_1);
             Toast.makeText(this, "MODUS 1", Toast.LENGTH_SHORT).show();
             b2 = new Intent(ComplexityScaleActivity.this, Mode1.class);
-        } else if(r1 <= (val += Integer.parseInt(stuffDataSource.getValue("frequency_mode_2").toString()))){
+        } else if(r1 <= (val += Integer.parseInt(optionDataSource.getValue("frequency_mode_2").toString()))){
             sessionStorage.setMode(SessionStorage.MODE_2);
             Toast.makeText(this, "MODUS 2", Toast.LENGTH_SHORT).show();
             b2 = new Intent(ComplexityScaleActivity.this, Mode2.class);
-        } else if(r1 <= (val += Integer.parseInt(stuffDataSource.getValue("frequency_mode_3").toString()))) {
+        } else if(r1 <= (val += Integer.parseInt(optionDataSource.getValue("frequency_mode_3").toString()))) {
             sessionStorage.setMode(SessionStorage.MODE_3);
             Toast.makeText(this, "MODUS 3", Toast.LENGTH_SHORT).show();
             b2 = new Intent(ComplexityScaleActivity.this, Mode3.class);
-        } else if(r1 <= (val += Integer.parseInt(stuffDataSource.getValue("frequency_mode_4").toString()))){
+        } else if(r1 <= (val += Integer.parseInt(optionDataSource.getValue("frequency_mode_4").toString()))){
             sessionStorage.setMode(SessionStorage.MODE_4);
             Toast.makeText(this, "MODUS 4", Toast.LENGTH_SHORT).show();
             b2 = new Intent(ComplexityScaleActivity.this, Mode4.class);

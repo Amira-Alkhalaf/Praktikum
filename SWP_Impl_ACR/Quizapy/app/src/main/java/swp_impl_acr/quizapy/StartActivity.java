@@ -21,7 +21,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import swp_impl_acr.quizapy.Database.DataSource.QuestionDataSource;
-import swp_impl_acr.quizapy.Database.DataSource.StuffDataSource;
+import swp_impl_acr.quizapy.Database.DataSource.OptionDataSource;
 import swp_impl_acr.quizapy.Database.DataSource.TopicDataSource;
 import swp_impl_acr.quizapy.Database.Entity.Topic;
 import swp_impl_acr.quizapy.Database.QuizapyDataSource;
@@ -174,8 +174,8 @@ public class StartActivity extends AppCompatActivity {
                 sessionStorage.resetInstance();
                 try {
                     TopicDataSource topicDataSource = new TopicDataSource();
-                    StuffDataSource stuffDataSource = new StuffDataSource();
-                    List<Topic> topics = topicDataSource.getChoosableTopics(sessionStorage.getPoints(), Integer.parseInt(stuffDataSource.getValue("questions_in_sequence").toString()));
+                    OptionDataSource optionDataSource = new OptionDataSource();
+                    List<Topic> topics = topicDataSource.getChoosableTopics(sessionStorage.getPoints(), Integer.parseInt(optionDataSource.getValue("questions_in_sequence").toString()));
                     if(topics.size()==0 || sessionStorage.getPoints()==0){
                         Toast.makeText(StartActivity.this, "Nicht genügend Fragen oder Punkte zur Verfügung", Toast.LENGTH_SHORT).show();
                     } else {

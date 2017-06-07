@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import swp_impl_acr.quizapy.Database.DataSource.StuffDataSource;
+import swp_impl_acr.quizapy.Database.DataSource.OptionDataSource;
 import swp_impl_acr.quizapy.Database.DataSource.TopicDataSource;
 import swp_impl_acr.quizapy.Database.Entity.Answer;
 import swp_impl_acr.quizapy.Helper.RespiratoryTrainer;
@@ -33,7 +33,7 @@ public abstract class QuestionActivity extends AppCompatActivity implements Even
     protected TextView questionText;
     protected SessionStorage sessionStorage;
     protected List<Answer> answers;
-    protected StuffDataSource stuffDataSource;
+    protected OptionDataSource optionDataSource;
     protected int simButtons;
     protected TextView difficulty;
     protected TextView mode;
@@ -58,7 +58,7 @@ public abstract class QuestionActivity extends AppCompatActivity implements Even
 
         sessionStorage = SessionStorage.getInstance();
         try {
-            stuffDataSource = new StuffDataSource();
+            optionDataSource = new OptionDataSource();
             TopicDataSource topicDataSource = new TopicDataSource();
         } catch (Exception e) {
             e.printStackTrace();

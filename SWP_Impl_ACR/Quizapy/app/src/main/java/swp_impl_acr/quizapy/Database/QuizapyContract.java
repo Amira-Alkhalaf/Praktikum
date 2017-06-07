@@ -7,7 +7,7 @@ import android.provider.BaseColumns;
  */
 public class QuizapyContract {
 
-    public static final int DATABASE_VERSION = 3;
+    public static final int DATABASE_VERSION = 4;
     public static final String DATABASE_NAME = "quizapy.db";
     public static final String TEXT_TYPE = " TEXT ";
     public static final String INTEGER_TYPE = " INTEGER ";
@@ -80,10 +80,10 @@ public class QuizapyContract {
     }
 
     /**
-     * a key / value table schema
+     * options table
      */
-    public static class StuffTable implements BaseColumns {
-        public static final String TABLE_NAME = "stuff";
+    public static class OptionTable implements BaseColumns {
+        public static final String TABLE_NAME = "option";
         public static final String COLUMN_NAME = "name";
         public static final String COLUMN_VALUE = "value";
 

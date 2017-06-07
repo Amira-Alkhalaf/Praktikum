@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import swp_impl_acr.quizapy.Cursor.Cursor;
-import swp_impl_acr.quizapy.Database.DataSource.StuffDataSource;
+import swp_impl_acr.quizapy.Database.DataSource.OptionDataSource;
 import swp_impl_acr.quizapy.Database.DataSource.TopicDataSource;
 import swp_impl_acr.quizapy.Database.Entity.Topic;
 import swp_impl_acr.quizapy.Helper.CollectionUtils;
@@ -40,7 +40,7 @@ public class TopicSelectionActivity extends AppCompatActivity implements EventLi
     private Cursor cursor;
     private ObjectAnimator animator;
     private TopicDataSource topicDataSource;
-    private StuffDataSource stuffDataSource;
+    private OptionDataSource optionDataSource;
 
 
     private static final int LEFT = 0;
@@ -76,9 +76,9 @@ public class TopicSelectionActivity extends AppCompatActivity implements EventLi
 
         sessionStorage = SessionStorage.getInstance();
         try {
-            stuffDataSource = new StuffDataSource();
+            optionDataSource = new OptionDataSource();
             topicDataSource = new TopicDataSource();
-            topics = topicDataSource.getChoosableTopics(sessionStorage.getPoints(), Integer.parseInt(stuffDataSource.getValue("questions_in_sequence").toString()));
+            topics = topicDataSource.getChoosableTopics(sessionStorage.getPoints(), Integer.parseInt(optionDataSource.getValue("questions_in_sequence").toString()));
             topics = CollectionUtils.generateRandomList(topics, 9);
         } catch (Exception e) {
             e.printStackTrace();
@@ -309,7 +309,7 @@ public class TopicSelectionActivity extends AppCompatActivity implements EventLi
         for(int i = 1; i<=j; i++){
             try {
                 int count = topicDataSource.getAllUnansweredQuestionsByDifficultyCount(sessionStorage.getTopic().getId(),i);
-                if(count>=Integer.parseInt(stuffDataSource.getValue("questions_in_sequence"))){
+                if(count>=Integer.parseInt(optionDataSource.getValue("questions_in_sequence"))){
                     gradCount++;
                 }
             } catch (SQLException e) {

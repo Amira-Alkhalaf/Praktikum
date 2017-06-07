@@ -34,6 +34,9 @@ public class QuizapyHelper extends SQLiteOpenHelper {
             case 1:
                 //addOptions(db);
             case 2:
+                //resetTables(db);
+                //addOptions(db);
+            case 3:
                 resetTables(db);
                 addOptions(db);
             default: break;
@@ -44,7 +47,7 @@ public class QuizapyHelper extends SQLiteOpenHelper {
         db.execSQL(QuizapyContract.TopicTable.DELETE_TABLE);
         db.execSQL(QuizapyContract.AnswerTable.DELETE_TABLE);
         db.execSQL(QuizapyContract.QuestionTable.DELETE_TABLE);
-        db.execSQL(QuizapyContract.StuffTable.DELETE_TABLE);
+        db.execSQL(QuizapyContract.OptionTable.DELETE_TABLE);
 
         db.execSQL(QuizapyContract.TopicTable.CREATE_TABLE);
         Log.d(TAG, QuizapyContract.TopicTable.CREATE_TABLE);
@@ -55,38 +58,38 @@ public class QuizapyHelper extends SQLiteOpenHelper {
         db.execSQL(QuizapyContract.AnswerTable.CREATE_TABLE);
         Log.d(TAG, QuizapyContract.AnswerTable.CREATE_TABLE);
 
-        db.execSQL(QuizapyContract.StuffTable.CREATE_TABLE);
-        Log.d(TAG, QuizapyContract.StuffTable.CREATE_TABLE);
+        db.execSQL(QuizapyContract.OptionTable.CREATE_TABLE);
+        Log.d(TAG, QuizapyContract.OptionTable.CREATE_TABLE);
     }
 
     private void addOptions(SQLiteDatabase db) {
         ContentValues contentValues = new ContentValues();
-        contentValues.put(QuizapyContract.StuffTable.COLUMN_NAME, "points_in_save");
-        contentValues.put(QuizapyContract.StuffTable.COLUMN_VALUE, "0");
-        db.insert(QuizapyContract.StuffTable.TABLE_NAME, null, contentValues);
+        //contentValues.put(QuizapyContract.OptionTable.COLUMN_NAME, "points_in_save");
+        //contentValues.put(QuizapyContract.OptionTable.COLUMN_VALUE, "0");
+        //db.insert(QuizapyContract.OptionTable.TABLE_NAME, null, contentValues);
+        //contentValues = new ContentValues();
+        contentValues.put(QuizapyContract.OptionTable.COLUMN_NAME, "questions_in_sequence");
+        contentValues.put(QuizapyContract.OptionTable.COLUMN_VALUE, "10");
+        db.insert(QuizapyContract.OptionTable.TABLE_NAME, null, contentValues);
         contentValues = new ContentValues();
-        contentValues.put(QuizapyContract.StuffTable.COLUMN_NAME, "questions_in_sequence");
-        contentValues.put(QuizapyContract.StuffTable.COLUMN_VALUE, "10");
-        db.insert(QuizapyContract.StuffTable.TABLE_NAME, null, contentValues);
+        contentValues.put(QuizapyContract.OptionTable.COLUMN_NAME, "frequency_mode_1");
+        contentValues.put(QuizapyContract.OptionTable.COLUMN_VALUE, "20");
+        db.insert(QuizapyContract.OptionTable.TABLE_NAME, null, contentValues);
         contentValues = new ContentValues();
-        contentValues.put(QuizapyContract.StuffTable.COLUMN_NAME, "frequency_mode_1");
-        contentValues.put(QuizapyContract.StuffTable.COLUMN_VALUE, "20");
-        db.insert(QuizapyContract.StuffTable.TABLE_NAME, null, contentValues);
+        contentValues.put(QuizapyContract.OptionTable.COLUMN_NAME, "frequency_mode_2");
+        contentValues.put(QuizapyContract.OptionTable.COLUMN_VALUE, "20");
+        db.insert(QuizapyContract.OptionTable.TABLE_NAME, null, contentValues);
         contentValues = new ContentValues();
-        contentValues.put(QuizapyContract.StuffTable.COLUMN_NAME, "frequency_mode_2");
-        contentValues.put(QuizapyContract.StuffTable.COLUMN_VALUE, "20");
-        db.insert(QuizapyContract.StuffTable.TABLE_NAME, null, contentValues);
+        contentValues.put(QuizapyContract.OptionTable.COLUMN_NAME, "frequency_mode_3");
+        contentValues.put(QuizapyContract.OptionTable.COLUMN_VALUE, "20");
+        db.insert(QuizapyContract.OptionTable.TABLE_NAME, null, contentValues);
         contentValues = new ContentValues();
-        contentValues.put(QuizapyContract.StuffTable.COLUMN_NAME, "frequency_mode_3");
-        contentValues.put(QuizapyContract.StuffTable.COLUMN_VALUE, "20");
-        db.insert(QuizapyContract.StuffTable.TABLE_NAME, null, contentValues);
+        contentValues.put(QuizapyContract.OptionTable.COLUMN_NAME, "frequency_mode_4");
+        contentValues.put(QuizapyContract.OptionTable.COLUMN_VALUE, "20");
+        db.insert(QuizapyContract.OptionTable.TABLE_NAME, null, contentValues);
         contentValues = new ContentValues();
-        contentValues.put(QuizapyContract.StuffTable.COLUMN_NAME, "frequency_mode_4");
-        contentValues.put(QuizapyContract.StuffTable.COLUMN_VALUE, "20");
-        db.insert(QuizapyContract.StuffTable.TABLE_NAME, null, contentValues);
-        contentValues = new ContentValues();
-        contentValues.put(QuizapyContract.StuffTable.COLUMN_NAME, "frequency_mode_5");
-        contentValues.put(QuizapyContract.StuffTable.COLUMN_VALUE, "20");
-        db.insert(QuizapyContract.StuffTable.TABLE_NAME, null, contentValues);
+        contentValues.put(QuizapyContract.OptionTable.COLUMN_NAME, "frequency_mode_5");
+        contentValues.put(QuizapyContract.OptionTable.COLUMN_VALUE, "20");
+        db.insert(QuizapyContract.OptionTable.TABLE_NAME, null, contentValues);
     }
 }
