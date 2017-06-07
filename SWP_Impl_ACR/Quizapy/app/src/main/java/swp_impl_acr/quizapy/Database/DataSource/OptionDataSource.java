@@ -33,9 +33,11 @@ public class OptionDataSource {
         Cursor cursor = db.query(QuizapyContract.OptionTable.TABLE_NAME,
                 null, QuizapyContract.OptionTable.COLUMN_NAME + " = ?",
                 new String[]{key}, null, null, null);
-        cursor.moveToFirst();
-        String rtn = cursor.getString(cursor.getColumnIndex(QuizapyContract.OptionTable.COLUMN_VALUE));
-        return rtn;
+        if(cursor.moveToFirst()){
+            return cursor.getString(cursor.getColumnIndex(QuizapyContract.OptionTable.COLUMN_VALUE));
+        } else {
+            return null;
+        }
     }
 
     /**
