@@ -37,6 +37,7 @@ public abstract class QuestionActivity extends AppCompatActivity implements Even
     protected int simButtons;
     protected TextView difficulty;
     protected TextView mode;
+    protected Buttons controlButtons;
 
 
     @Override
@@ -138,20 +139,20 @@ public abstract class QuestionActivity extends AppCompatActivity implements Even
      * adds Buttons to simulate the Respiratory Trainer to the bottom of the screen
      */
     void getSimulatorButtons(){
-        Buttons buttons = new Buttons(this, null, simButtons);
-        buttons.setId(1111);
-        layout.addView(buttons);
+        controlButtons = new Buttons(this, null, simButtons);
+        controlButtons.setId(1111);
+        layout.addView(controlButtons);
 
         ConstraintSet set = new ConstraintSet();
         set.clone(layout);
 
-        set.connect(buttons.getId(), ConstraintSet.BOTTOM, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM, 0);
-        set.connect(buttons.getId(), ConstraintSet.LEFT, ConstraintSet.PARENT_ID, ConstraintSet.RIGHT, 0);
-        set.connect(buttons.getId(), ConstraintSet.RIGHT, ConstraintSet.PARENT_ID, ConstraintSet.LEFT, 0);
+        set.connect(controlButtons.getId(), ConstraintSet.BOTTOM, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM, 0);
+        set.connect(controlButtons.getId(), ConstraintSet.LEFT, ConstraintSet.PARENT_ID, ConstraintSet.RIGHT, 0);
+        set.connect(controlButtons.getId(), ConstraintSet.RIGHT, ConstraintSet.PARENT_ID, ConstraintSet.LEFT, 0);
 
         set.applyTo(layout);
 
-        buttons.addEventListener(this);
+        controlButtons.addEventListener(this);
     }
 
 

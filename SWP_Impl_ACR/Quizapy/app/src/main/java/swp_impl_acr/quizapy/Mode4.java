@@ -9,8 +9,7 @@ import android.widget.Toast;
 import swp_impl_acr.quizapy.Helper.CollectionUtils;
 import swp_impl_acr.quizapy.RespiratoryTrainerSimulation.Buttons;
 
-import static swp_impl_acr.quizapy.RespiratoryTrainerSimulation.Buttons.breathIn;
-import static swp_impl_acr.quizapy.RespiratoryTrainerSimulation.Buttons.breathOut;
+
 
 
 public class Mode4 extends QuestionActivity {
@@ -34,8 +33,8 @@ public class Mode4 extends QuestionActivity {
         helpText2 = Toast.makeText(getApplicationContext(),"Einatmen um die obere Antwort auszuwählen, Ausatmen um die untere ANtwort auszuwählen",Toast.LENGTH_LONG);
 
         helpText1.show();
-        breathIn.setEnabled(false);
-        breathOut.setEnabled(false);
+        controlButtons.enableButton(Buttons.BUTTON_BREATH_IN, false);
+        controlButtons.enableButton(Buttons.BUTTON_BREATH_OUT, false);
 
 
 
@@ -88,8 +87,9 @@ public class Mode4 extends QuestionActivity {
         }
         questionText.setVisibility(View.VISIBLE);
         hasSeenQuestion=true;
-        breathIn.setEnabled(true);
-        breathOut.setEnabled(true);
+        controlButtons.enableButton(Buttons.BUTTON_BREATH_IN, true);
+        controlButtons.enableButton(Buttons.BUTTON_BREATH_OUT, true);
+
         helpText2.show();
     }
 

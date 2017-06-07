@@ -2,7 +2,6 @@ package swp_impl_acr.quizapy.RespiratoryTrainerSimulation;
 
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
@@ -13,8 +12,6 @@ import android.widget.SeekBar;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static android.R.id.button1;
 
 /**
  * offers Buttons for Touch Control in case no Respiratory Trainer is connected
@@ -31,8 +28,8 @@ public class Buttons extends LinearLayout {
 
 
 
-    public static Button breathIn;
-    public static Button breathOut;
+    private Button breathIn;
+    private Button breathOut;
     private Button holdBreath;
     private SeekBar breathingRate;
     private Context context;
@@ -241,6 +238,32 @@ public class Buttons extends LinearLayout {
         eventListeners.remove(eventListener);
     }
 
+    public void enableButton(int button, boolean enable){
+        switch(button){
+            case 1:
+                this.breathIn.setEnabled(enable);
+                break;
+            case 2:
+                this.breathOut.setEnabled(enable);
+                break;
+            case 4:
+                this.holdBreath.setEnabled(enable);
+                break;
+            case 8:
+                this.breathingRate.setEnabled(enable);
+                break;
+            case 16:
+                this.graduallyBreathIN.setEnabled(enable);
+                break;
+            case 32:
+                this.graduallyBreathOUT.setEnabled(enable);
+                break;
+            case 64:
+                this.repeatedlyBreathINandOUT.setEnabled(enable);
+                break;
+        }
+
+    }
 
 
 
