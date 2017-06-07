@@ -111,7 +111,7 @@ public class Mode2 extends QuestionActivity {
      * stops the animation
      */
     @Override
-    public void onBreathOutStop() {
+    public void graduallyBreathInStop() {
         animator.cancel();
 
     }
