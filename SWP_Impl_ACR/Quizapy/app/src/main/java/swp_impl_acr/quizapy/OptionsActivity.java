@@ -54,9 +54,10 @@ public class OptionsActivity extends AppCompatActivity {
                     stuffDataSource.setValue("frequency_mode_4", frequencyMode4.getText().toString());
                     stuffDataSource.setValue("frequency_mode_5", frequencyMode5.getText().toString());
                     Toast.makeText(OptionsActivity.this, "Speicherung erfolgreich", Toast.LENGTH_SHORT).show();
+                    Intent b2 = new Intent(OptionsActivity.this,StartActivity.class);
+                    startActivity(b2);
                 }
-                Intent b2 = new Intent(OptionsActivity.this,StartActivity.class);
-                startActivity(b2);
+
             }
         });
 
